@@ -14,4 +14,5 @@ mkdir -p $dir
 git clone --recursive git://github.com/sandcastle/dotfiles.git $dir
 
 # symlink files
-sudo sh "$dir/symlink-dotfiles.sh"
+cd $dir
+sudo sh "symlink-dotfiles.sh"
