@@ -1,5 +1,7 @@
 # Dotfiles
-Colourful & robust OS X configuration files and utilities.
+My dot files and OSX setup.
+
+Heavily inspired by Paul Miller's excellent [dotfiles](https://github.com/paulmillr/dotfiles) repo.
 
 
 ## Install
@@ -50,10 +52,3 @@ curl --silent https://raw.githubusercontent.com/sandcastle/dotfiles/master/boots
 * `git-extras` — useful git functions, defined in `home/gitconfig`
 * `home` — files that are symlinked to `$HOME` directory
 * `terminal` — terminal theme & prompt
-
-
-## Attribution
-
-Forked from the excellent Paul Miller dotfiles repo:
-
-[](https://github.com/paulmillr/dotfiles)
