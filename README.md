@@ -21,8 +21,6 @@ curl --silent https://raw.githubusercontent.com/sandcastle/dotfiles/master/boots
 
 ## Features
 
-![](https://cloud.githubusercontent.com/assets/574696/3210643/80f11554-eed7-11e3-8c8f-5509bc304fc7.png)
-
 ### zsh
 
 * Auto-completion
