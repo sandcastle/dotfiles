@@ -5,7 +5,7 @@ chsh -s /bin/zsh
 dir="$HOME/dev/.files"
 
 # remove old version
-rm -rf /Users/glenn/dev/.files
+rm -rf $dir
 
 # create clone folder
 mkdir -p $dir
