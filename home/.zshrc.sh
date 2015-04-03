@@ -1,21 +1,18 @@
 #!/usr/bin/env zsh
 
-curr="$pm/dotfiles"
+curr="$HOME/dev/.files"
 
 # Load main files.
-# echo "Load start\t" $(gdate "+%s-%N")
 source "$curr/terminal/startup.sh"
-# echo "$curr/terminal/startup.sh"
 source "$curr/terminal/completion.sh"
 source "$curr/terminal/highlight.sh"
-# echo "Load end\t" $(gdate "+%s-%N")
 
 autoload -U colors && colors
 
 # Load and execute the prompt theming system.
 fpath=("$curr/terminal" $fpath)
 autoload -Uz promptinit && promptinit
-prompt 'paulmillr'
+prompt 'sandcastle'
 
 # ==================================================================
 # = Aliases =
@@ -30,11 +27,9 @@ alias wget='wget --no-check-certificate'
 # JSHint short-cut.
 alias lint=jshint
 
-# Faster NPM for europeans.
-alias npme='npm --registry http://registry.npmjs.eu'
-
 # Some OS X-only stuff.
 if [[ "$OSTYPE" == darwin* ]]; then
+
   # Short-cuts for copy-paste.
   alias c='pbcopy'
   alias p='pbpaste'
@@ -57,9 +52,12 @@ if [[ "$OSTYPE" == darwin* ]]; then
 
   # Process grep should output full paths to binaries.
   alias pgrep='pgrep -fli'
+  
 else
+
   # Process grep should output full paths to binaries.
   alias pgrep='pgrep -fl'
+  
 fi
 
 # Git short-cuts.
@@ -103,12 +101,6 @@ alias gsync='git pull origin master && git push hy master'
 
 
 # Dev short-cuts.
-
-# Brunch.
-alias bb='brunch build'
-alias bbp='brunch build --production'
-alias bw='brunch watch'
-alias bws='brunch watch --server'
 
 # Package managers.
 alias bi='bower install'
