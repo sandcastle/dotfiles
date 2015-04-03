@@ -1,5 +1,7 @@
-# Some stuff was taken from
+# Inspiration:
+# -----------------
 # https://github.com/mathiasbynens/dotfiles/blob/master/.osx
+# https://github.com/holman/dotfiles/tree/master/osx
 
 
 # Main
@@ -27,13 +29,6 @@ defaults write com.apple.screensaver askForPasswordDelay -int 0
 defaults write com.apple.screencapture location "$HOME/Downloads/"
 
 
-# Sound
-# =====
-
-# Disable the sound effects on boot
-# sudo nvram SystemAudioVolume=0
-
-
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input
 # ===========================================================
 
@@ -50,9 +45,8 @@ defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
 # defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
 
-###############################################################################
-# SSD-specific tweaks                                                         #
-###############################################################################
+# SSD-specific tweaks
+# ======
 
 # Prevent Time Machine from prompting to use new hard drives as backup volume
 defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
@@ -84,7 +78,6 @@ defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
 # When performing a search, search the current folder by default
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
-
 
 # Disable press-and-hold for keys in favor of key repeat.
 defaults write -g ApplePressAndHoldEnabled -bool false
@@ -147,16 +140,7 @@ sudo mdutil -E / > /dev/null
 # ========
 
 # Use a modified version of the Pro theme by default in Terminal.app
-# open "$pm/dotfiles/terminal/paulmillr.terminal"
-# sleep 1 # Wait a bit to make sure the theme is loaded
-# defaults write com.apple.terminal 'Default Window Settings' -string 'paulmillr'
-# defaults write com.apple.terminal 'Startup Window Settings' -string 'paulmillr'
-
-
-# Memory management
-# =================
-# Disable swap file. OS X will crash if mem will exceed max mem.
-# sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.dynamic_pager.plist
-
-# Enable swap back.
-# sudo launchctl load -wF /System/Library/LaunchDaemons/com.apple.dynamic_pager.plist
+open "$dev/.files/terminal/sandcastle.terminal"
+sleep 1 # Wait a bit to make sure the theme is loaded
+defaults write com.apple.terminal 'Default Window Settings' -string 'sandcastle'
+defaults write com.apple.terminal 'Startup Window Settings' -string 'sandcastle'
