@@ -29,7 +29,7 @@ defaults write com.apple.screensaver askForPasswordDelay -int 0
 defaults write com.apple.screencapture location "$HOME/Downloads/"
 
 
-# Trackpad, mouse, keyboard, Bluetooth accessories, and input
+# Inputs
 # ===========================================================
 
 # Trackpad: enable tap to click for this user and for the login screen
@@ -40,9 +40,6 @@ sudo defaults write com.apple.AppleMultitouchTrackpad Clicking 1
 
 # Use scroll gesture with the Ctrl (^) modifier key to zoom
 defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
-
-# Disable auto-correct
-# defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
 
 # SSD-specific tweaks
@@ -98,42 +95,8 @@ defaults write NSGlobalDomain KeyRepeat -int 0
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool false
 
-
-
-# Spotlight
-# =========
-
-# Disable Spotlight indexing for any volume that gets mounted and has not yet
-# been indexed before.
-# Use `sudo mdutil -i off "/Volumes/foo"` to stop indexing any volume.
-sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
-
-defaults write com.apple.spotlight orderedItems -array \
-        '{"enabled" = 1;"name" = "APPLICATIONS";}' \
-        '{"enabled" = 1;"name" = "SYSTEM_PREFS";}' \
-        '{"enabled" = 1;"name" = "DIRECTORIES";}' \
-        '{"enabled" = 1;"name" = "PDF";}' \
-        '{"enabled" = 0;"name" = "FONTS";}' \
-        '{"enabled" = 0;"name" = "DOCUMENTS";}' \
-        '{"enabled" = 0;"name" = "MESSAGES";}' \
-        '{"enabled" = 0;"name" = "CONTACT";}' \
-        '{"enabled" = 0;"name" = "EVENT_TODO";}' \
-        '{"enabled" = 0;"name" = "IMAGES";}' \
-        '{"enabled" = 0;"name" = "BOOKMARKS";}' \
-        '{"enabled" = 0;"name" = "MUSIC";}' \
-        '{"enabled" = 0;"name" = "MOVIES";}' \
-        '{"enabled" = 0;"name" = "PRESENTATIONS";}' \
-        '{"enabled" = 0;"name" = "SPREADSHEETS";}' \
-        '{"enabled" = 0;"name" = "SOURCE";}'
-
-# Load new settings before rebuilding the index
-killall mds > /dev/null 2>&1
-
-# Make sure indexing is enabled for the main volume
-sudo mdutil -i on / > /dev/null
-
-# Rebuild the index from scratch
-sudo mdutil -E / > /dev/null
+# Allow text selection in Quick Look
+defaults write com.apple.finder QLEnableTextSelection -bool true
 
 
 # Terminal
@@ -144,3 +107,10 @@ open "$dev/.files/terminal/sandcastle.terminal"
 sleep 1 # Wait a bit to make sure the theme is loaded
 defaults write com.apple.terminal 'Default Window Settings' -string 'sandcastle'
 defaults write com.apple.terminal 'Startup Window Settings' -string 'sandcastle'
+
+
+# Fin
+# ========
+
+# reset finder
+killall Finder

@@ -7,16 +7,59 @@ pushd .
 mkdir -p $dev
 cd $dev
 
-echo 'Enter new hostname of the machine (e.g. macbook-paulmillr)'
-  read hostname
+echo 'Enter new hostname of the machine (e.g. macbook-glenn)'
+    read hostname
   
 echo "Setting new hostname to $hostname..."
-  scutil --set HostName "$hostname"
-  compname=$(sudo scutil --get HostName | tr '-' '.')
+    scutil --set HostName "$hostname"
+    compname=$(sudo scutil --get HostName | tr '-' '.')
   
 echo "Setting computer name to $compname"
-  scutil --set ComputerName "$compname"
-  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$compname"
+    scutil --set ComputerName "$compname"
+    sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$compname"
+
+
+# Ensure we are on OSX
+if [[ `uname` == 'Darwin' ]]; then
+  
+    # OSX config
+    echo 'Tweaking OS X...'
+    source 'etc/osx.sh'
+  
+    # check if brew is installed
+    which -s brew
+
+    # install, if required
+    if [[ $? != 0 ]]; then
+    
+        echo 'Installing Homebrew...'
+        ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/homebrew/go/install)"
+        brew update
+        
+    fi
+
+    # install cask
+    brew install caskroom/cask/brew-cask
+    
+    # set cask link folder
+    export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
+    # install quick lookup plugins - http://github.com/sindresorhus/quick-look-plugins
+    brew cask install suspicious-package      
+    brew cask install quicklook-json
+    brew cask install qlmarkdown
+    brew cask install qlstephen
+    brew cask install qlcolorcode
+    brew cask install qlimagesize
+    brew cask install webpquicklook
+
+    # install dev tools
+    brew install htop
+    brew install nginx
+    brew install trash
+    
+fi
+
 
 pub=$HOME/.ssh/id_rsa.pub
 echo 'Checking for SSH key, generating one if it does not exist...'
@@ -26,33 +69,8 @@ echo 'Copying public key to clipboard. Paste it into your Github account...'
   [[ -f $pub ]] && cat $pub | pbcopy
   open 'https://github.com/account/ssh'
 
-# Ensure we are on OSX
-if [[ `uname` == 'Darwin' ]]; then
-  
-  which -s brew
-  
-  if [[ $? != 0 ]]; then
-    echo 'Installing Homebrew...'
-      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/homebrew/go/install)"
-      brew update
-      brew install htop mysql nginx node ruby
-  fi
-
-  echo 'Tweaking OS X...'
-    source 'etc/osx.sh'
-
-  # http://github.com/sindresorhus/quick-look-plugins
-  echo 'Installing Quick Look plugins...'
-    brew tap phinze/homebrew-cask
-    brew install brew-cask
-    brew cask install suspicious-package quicklook-json qlmarkdown qlstephen qlcolorcode
-  
-  echo 'Installing dev tools'
-    brew install ghi
-    brew install trash
-fi
 
 echo 'Symlinking config files...'
-  source 'bin/symlink-dotfiles.sh'
+source 'bin/symlink-dotfiles.sh'
 
 popd
