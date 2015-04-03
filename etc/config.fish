@@ -2,8 +2,6 @@
 
 set dev $HOME/Development
 set pm $dev/paulmillr
-set br $dev/brunch
-set ch $dev/chaplinjs
 set com $dev/com
 set as "$HOME/Library/Application Support"
 set GEM_HOME "$HOME/Library/Ruby/Gems/1.8"

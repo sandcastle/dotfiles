@@ -23,6 +23,8 @@ curl --silent https://raw.githubusercontent.com/sandcastle/dotfiles/master/boots
 
 ![](https://cloud.githubusercontent.com/assets/574696/3210643/80f11554-eed7-11e3-8c8f-5509bc304fc7.png)
 
+### zsh
+
 * Auto-completion
 * Syntax highlighting
 * Automatic setting up of terminal tab / window title to current dir
@@ -35,18 +37,21 @@ curl --silent https://raw.githubusercontent.com/sandcastle/dotfiles/master/boots
     * `ff file-name-or-pattern` - fast recursive search for a file name in directories.
     * `curl http://site/v1/api.json | json` - pretty-print JSON
     * `aes-enc`, `aes-dec` - safely encrypt files.
-* Neat git extras:
-    * Opinionated `git log`, `git graph`
-    * `gcp` for fast `git commit -m ... && git push`
-    * `git pr <pull-req> [origin]` for fetching pull request branches
-    * `git cleanup` — clean up merged git branches. Very useful if you’re doing github pull requests in topic branches.
-    * `git summary` — outputs commit email statistics.
-    * `git release` — save changes, tag commit. If used on node.js project, also push to npm.
-    * `git url` - opens GitHub repo for current git repo.
-    * `git-changelog`, `git-setup` etc.
+
+### git
+
+* Opinionated `git log`, `git graph`
+* `gcp` for fast `git commit -m ... && git push`
+* `git pr <pull-req> [origin]` for fetching pull request branches
+* `git cleanup` — clean up merged git branches. Very useful if you’re doing github pull requests in topic branches.
+* `git summary` — outputs commit email statistics.
+* `git release` — save changes, tag commit. If used on node.js project, also push to npm.
+* `git url` - opens GitHub repo for current git repo.
+* `git-changelog`, `git-setup` etc.
 
 
 ## Structure
+
 * `bin` — files that are symlinked to any directory with binaries in `$PATH`
 * `etc` — various stuff like osx text substitutions / hosts backup
 * `git-extras` — useful git functions, defined in `home/gitconfig`
