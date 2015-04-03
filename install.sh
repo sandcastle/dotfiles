@@ -7,8 +7,8 @@ mkdir -p $dir
 cd $dir
 
 # clone repo
-git clone --recursive git://github.com/sandcastle/dotfiles.git
+git clone --recursive git://github.com/sandcastle/dotfiles.git $dir
 cd dotfiles
 
 # symlink files
-sudo sh symlink-dotfiles.sh
+sudo sh "$dir/symlink-dotfiles.sh"
