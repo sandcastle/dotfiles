@@ -1,6 +1,7 @@
 # Some stuff was taken from
 # https://github.com/mathiasbynens/dotfiles/blob/master/.osx
 
+
 # Main
 # ====
 
@@ -14,6 +15,7 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo Hos
 # Check for software updates daily, not just once per week
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 
+
 # Screen
 # ======
 
@@ -24,11 +26,13 @@ defaults write com.apple.screensaver askForPasswordDelay -int 0
 # Save screenshots to the downlaods.
 defaults write com.apple.screencapture location "$HOME/Downloads/"
 
+
 # Sound
 # =====
 
 # Disable the sound effects on boot
 # sudo nvram SystemAudioVolume=0
+
 
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input
 # ===========================================================
@@ -45,6 +49,7 @@ defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
 # Disable auto-correct
 # defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
+
 ###############################################################################
 # SSD-specific tweaks                                                         #
 ###############################################################################
@@ -59,14 +64,14 @@ sudo tmutil disablelocal
 sudo pmset -a hibernatemode 0
 
 # Remove the sleep image file to save disk space
+# Create a zero-byte file instead … and make sure it can’t be rewritten
 sudo rm /Private/var/vm/sleepimage
-# Create a zero-byte file instead…
 sudo touch /Private/var/vm/sleepimage
-# …and make sure it can’t be rewritten
 sudo chflags uchg /Private/var/vm/sleepimage
 
 # Disable the sudden motion sensor as it’s not useful for SSDs
 sudo pmset -a sms 0
+
 
 # Finder
 # ======
@@ -91,31 +96,6 @@ defaults write com.apple.finder WarnOnEmptyTrash -bool false
 # Show the ~/Library folder
 chflags nohidden ~/Library
 
-# Safari
-# ======
-
-# Set Safari’s home page to `about:blank` for faster loading
-defaults write com.apple.Safari HomePage -string "about:blank"
-
-# Prevent Safari from opening ‘safe’ files automatically after downloading
-defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
-
-# Hide Safari’s bookmarks bar by default
-defaults write com.apple.Safari ShowFavoritesBar -bool false
-
-# Enable the Develop menu and the Web Inspector in Safari
-defaults write com.apple.Safari IncludeDevelopMenu -bool true
-defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
-
-# Mail
-# ====
-
-# Copy email addresses as `foo@example.com` instead of `Foo Bar <foo@example.com>` in Mail.app
-defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
-
-# Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app
-defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" -string "@\\U21a9"
 
 # Spotlight
 # =========
@@ -150,6 +130,7 @@ sudo mdutil -i on / > /dev/null
 # Rebuild the index from scratch
 sudo mdutil -E / > /dev/null
 
+
 # Terminal
 # ========
 
@@ -159,23 +140,6 @@ sudo mdutil -E / > /dev/null
 # defaults write com.apple.terminal 'Default Window Settings' -string 'paulmillr'
 # defaults write com.apple.terminal 'Startup Window Settings' -string 'paulmillr'
 
-# Transmission
-# ============
-
-# Use `~/Documents/Torrents` to store incomplete downloads
-defaults write org.m0k.transmission UseIncompleteDownloadFolder -bool true
-defaults write org.m0k.transmission IncompleteDownloadFolder -string "${HOME}/Documents/Torrents"
-
-# Don’t prompt for confirmation before downloading
-defaults write org.m0k.transmission DownloadAsk -bool false
-
-# Trash original torrent files
-defaults write org.m0k.transmission DeleteOriginalTorrent -bool true
-
-# Hide the donate message
-defaults write org.m0k.transmission WarningDonate -bool false
-# Hide the legal disclaimer
-defaults write org.m0k.transmission WarningLegal -bool false
 
 # Memory management
 # =================

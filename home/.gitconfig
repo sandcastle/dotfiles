@@ -1,9 +1,9 @@
 [user]
-	name = Paul Miller
-	email = paul@paulmillr.com
+	name = Glenn Morton
+	email = glenn@sandcastle.io
 
 [github]
-  user = paulmillr
+  user = sandcastle
 
 [alias]
   br = branch
@@ -24,17 +24,17 @@
   discard = checkout -- .
   rmtag = "!sh -c 'git tag -d $1; git push origin :refs/tags/$1'"
 
-  changelog = !sh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-changelog.sh"
-  rstatus   = !zsh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-rstatus.sh"
-  release   = !sh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-release.sh"
-  setup     = !zsh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-setup.sh"
-  summary   = !zsh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-summary.sh"
-  delete-branch = !sh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-delete-branch.sh"
+  changelog = !sh "$HOME/dev/.files/git-extras/git-changelog.sh"
+  rstatus   = !zsh "$HOME/dev/.files/git-extras/git-rstatus.sh"
+  release   = !sh "$HOME/dev/.files/git-extras/git-release.sh"
+  setup     = !zsh "$HOME/dev/.files/git-extras/git-setup.sh"
+  summary   = !zsh "$HOME/dev/.files/git-extras/git-summary.sh"
+  delete-branch = !sh "$HOME/dev/.files/git-extras/git-delete-branch.sh"
 
   pr = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1; } ; f"
 
-  ghfork = !sh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-ghpull.sh"
-  cleanup = !ruby "$HOME/Developer/paulmillr/dotfiles/git-extras/git-cleanup.rb"
+  ghfork = !sh "$HOME/dev/.files/git-extras/git-ghpull.sh"
+  cleanup = !ruby "$HOME/dev/.files/git-extras/git-cleanup.rb"
 
 [push]
   default = current
@@ -43,7 +43,7 @@
   ui = true
 
 [core]
-  editor = subl
+  editor = brackets
   excludesfile = ~/.gitignore
 
 [format]
@@ -57,7 +57,7 @@
   abbrevCommit = true
 
 # URL shorthands
-# gh:paulmillr/dotfiles
+# gh:sandcastle/dotfiles
 [url "git@github.com:"]
   insteadOf = "gh:"
   pushInsteadOf = "gh:"
@@ -71,7 +71,9 @@
 
 [mergetool]
 	keepBackup = false
+
 [init]
 	templatedir = ~/.git_template
+
 [ghi]
-	token = !security find-internet-password -a paulmillr -s github.com -l 'ghi token' -w
+	token = !security find-internet-password -a sandcastle -s github.com -l 'ghi token' -w

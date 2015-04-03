@@ -2,7 +2,7 @@
 
 # A simple script for setting up OSX dev environment.
 
-dev="$HOME/Developer"
+dev="$HOME/dev"
 pushd .
 mkdir -p $dev
 cd $dev
@@ -42,6 +42,9 @@ if [[ `uname` == 'Darwin' ]]; then
     brew tap phinze/homebrew-cask
     brew install brew-cask
     brew cask install suspicious-package quicklook-json qlmarkdown qlstephen qlcolorcode
+    
+    brew install ghi
+    brew install ghi
 fi
 
 echo 'Symlinking config files...'

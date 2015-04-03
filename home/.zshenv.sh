@@ -50,7 +50,7 @@ typeset -gU cdpath fpath mailpath manpath path
 typeset -gUT INFOPATH infopath
 
 # Commonly used directories.
-dev="$HOME/Developer"
+dev="$HOME/dev"
 br="$dev/brunch"
 ch="$dev/chaplinjs"
 com="$dev/com"

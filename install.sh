@@ -1,8 +1,14 @@
-echo 'You might need to change your default shell to zsh: `chsh -s /bin/zsh` (or `sudo vim /etc/passwd`)'
+# change default shell to zsh
+chsh -s /bin/zsh
 
-dir="$HOME/Developer/paulmillr"
+# create clone folder
+dir="$HOME/dev/.files"
 mkdir -p $dir
 cd $dir
-git clone --recursive git://github.com/paulmillr/dotfiles.git
+
+# clone repo
+git clone --recursive git://github.com/sandcastle/dotfiles.git
 cd dotfiles
-sudo bash symlink-dotfiles.sh
+
+# symlink files
+sudo sh symlink-dotfiles.sh
