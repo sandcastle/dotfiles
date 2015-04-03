@@ -88,6 +88,9 @@ path=(
   /usr/local/opt/ruby/bin
   /usr/local/lib/python2.7/site-packages
   /usr/local/share/npm/bin
+  /$NODE_PATH
+  /$HOME/.npm-packages/bin
+  /$HOME/.npm-packages/lib/node_modules
   /usr/{bin,sbin}
   /{bin,sbin}
   $path
