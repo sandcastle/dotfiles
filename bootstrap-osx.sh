@@ -38,10 +38,6 @@ if [[ `uname` == 'Darwin' ]]; then
 
     fi
 
-	# add taps
-	brew tap aspnet/dnx
-	brew update
-
     # install cask
     brew install caskroom/cask/brew-cask
 
@@ -62,9 +58,10 @@ if [[ `uname` == 'Darwin' ]]; then
     brew install nginx
     brew install trash
 
-	# install .net
-	brew install dnvm
-	dnvm upgrade
+	# install languages
+	sh "langs/dnx.sh"
+	sh "langs/go.sh"
+
 fi
 
 

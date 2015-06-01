@@ -7,7 +7,7 @@ source "$curr/terminal/startup.sh"
 source "$curr/terminal/completion.sh"
 source "$curr/terminal/highlight.sh"
 
-# load in .net vm
+# load .net vm
 source dnvm.sh
 
 autoload -U colors && colors

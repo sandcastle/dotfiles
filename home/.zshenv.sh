@@ -54,7 +54,6 @@ dev="$HOME/dev"
 br="$dev/brunch"
 ch="$dev/chaplinjs"
 com="$dev/com"
-pm="$dev/paulmillr"
 as="$HOME/Library/Application Support"
 
 # Set the the list of directories that cd searches.
@@ -82,7 +81,6 @@ done
 unset path_file
 
 # Set the list of directories that Zsh searches for programs.
-# export PYTHONPATH=/usr/local/lib/python2.7/site-packages
 path=(
   /usr/local/{bin,sbin}
   /usr/local/opt/ruby/bin
@@ -91,6 +89,7 @@ path=(
   /$NODE_PATH
   /$HOME/.npm-packages/bin
   /$HOME/.npm-packages/lib/node_modules
+  /$HOME/.go
   /usr/{bin,sbin}
   /{bin,sbin}
   $path
