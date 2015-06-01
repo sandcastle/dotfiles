@@ -14,7 +14,13 @@ export EDITOR='/usr/local/bin/subl'
 export VISUAL='/usr/local/bin/subl'
 export PAGER='less'
 
-# Language.
+# node (non-root) lang
+export NODE_PATH=$HOME/.npm-packages/lib/node_modules
+
+# go lang
+export GOPATH =$HOME/.go
+
+# locale
 # ---------
 if [[ -z "$LANG" ]]; then
   eval "$(locale)"
@@ -56,6 +62,8 @@ ch="$dev/chaplinjs"
 com="$dev/com"
 as="$HOME/Library/Application Support"
 
+
+
 # Set the the list of directories that cd searches.
 cdpath=(
   $		cdpath
@@ -88,7 +96,7 @@ path=(
   /usr/local/share/npm/bin
   /$NODE_PATH
   /$HOME/.npm-packages/bin
-  /$HOME/.npm-packages/lib/node_modules
+  /usr/local/opt/go/libexec/bin
   /$HOME/.go
   /usr/{bin,sbin}
   /{bin,sbin}
@@ -111,6 +119,3 @@ fi
 
 BROWSER=''
 unset BROWSER
-
-# set node path (non-root)
-export NODE_PATH=$HOME/.npm-packages/lib/node_modules
