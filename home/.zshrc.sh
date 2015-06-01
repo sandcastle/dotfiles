@@ -66,23 +66,25 @@ fi
 # Git short-cuts.
 alias g='git'
 alias ga='git add'
-alias gr='git rm'
+alias gd='git add'
+alias gr='git reset'
+alias grh='git reset --hard'
 
-alias gf='git fetch origin'
-alias gu='git pull origin'
-alias gup='git pull origin && git push origin'
-alias ghu='git pull hy master'
-alias ghp='git push hy master'
+alias gf='git fetch'
+alias gp='git pull'
+alias gpr='git pull --rebase'
+alias gpp='git pull && git push'
 
 alias gs='git status --short'
-alias gd='git diff'
-alias gds='git diff --staged'
+alias gdiff='git diff'
+alias gdiffs='git diff --staged'
 alias gdisc='git discard'
 
 function gc() {
   args=$@
   git commit -m "$args"
 }
+
 function gca() {
   args=$@
   git commit --amend -m "$args"
@@ -92,15 +94,14 @@ alias gp='git push'
 
 function gcp() {
   args=$@
-  git commit -a -m "$args" && git push -u origin
+  git commit -am "$args" && git push
 }
+
 alias gcl='git clone'
 alias gch='git checkout'
 alias gbr='git branch'
 alias gbrd='git branch -D'
 alias gl='git log --no-merges'
-# own git workflow in hy origin with Tower
-alias gsync='git pull origin master && git push hy master'
 
 
 # Dev short-cuts.
