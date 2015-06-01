@@ -113,4 +113,5 @@ fi
 BROWSER=''
 unset BROWSER
 
-export NODE_PATH='/usr/local/lib/node_modules'
+# set node path (non-root)
+export NODE_PATH=$NODE_PATH:$HOME/.npm-packages/lib/node_modules
