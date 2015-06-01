@@ -1,7 +1,7 @@
 # change default shell to zsh
 chsh -s /bin/zsh
 
-# fir
+# set work dir
 dir="$HOME/dev/.files"
 
 # remove old version

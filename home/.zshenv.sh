@@ -59,7 +59,7 @@ as="$HOME/Library/Application Support"
 
 # Set the the list of directories that cd searches.
 cdpath=(
-  $cdpath
+  $		cdpath
 )
 
 # Set the list of directories that info searches for manuals.

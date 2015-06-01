@@ -7,6 +7,9 @@ source "$curr/terminal/startup.sh"
 source "$curr/terminal/completion.sh"
 source "$curr/terminal/highlight.sh"
 
+# load in .net vm
+source dnvm.sh
+
 autoload -U colors && colors
 
 # Load and execute the prompt theming system.
@@ -52,12 +55,12 @@ if [[ "$OSTYPE" == darwin* ]]; then
 
   # Process grep should output full paths to binaries.
   alias pgrep='pgrep -fli'
-  
+
 else
 
   # Process grep should output full paths to binaries.
   alias pgrep='pgrep -fl'
-  
+
 fi
 
 # Git short-cuts.

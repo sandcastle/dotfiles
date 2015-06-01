@@ -9,11 +9,11 @@ cd $dev
 
 echo 'Enter new hostname of the machine (e.g. macbook-glenn)'
     read hostname
-  
+
 echo "Setting new hostname to $hostname..."
     scutil --set HostName "$hostname"
     compname=$(sudo scutil --get HostName | tr '-' '.')
-  
+
 echo "Setting computer name to $compname"
     scutil --set ComputerName "$compname"
     sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$compname"
@@ -21,31 +21,35 @@ echo "Setting computer name to $compname"
 
 # Ensure we are on OSX
 if [[ `uname` == 'Darwin' ]]; then
-  
+
     # OSX config
     echo 'Tweaking OS X...'
     source 'etc/osx.sh'
-  
+
     # check if brew is installed
     which -s brew
 
-    # install, if required
+    # install brew, if required
     if [[ $? != 0 ]]; then
-    
+
         echo 'Installing Homebrew...'
         ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/homebrew/go/install)"
         brew update
-        
+
     fi
+
+	# add taps
+	brew tap aspnet/dnx
+	brew update
 
     # install cask
     brew install caskroom/cask/brew-cask
-    
+
     # set cask link folder
     export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
     # install quick lookup plugins - http://github.com/sindresorhus/quick-look-plugins
-    brew cask install suspicious-package      
+    brew cask install suspicious-package
     brew cask install quicklook-json
     brew cask install qlmarkdown
     brew cask install qlstephen
@@ -57,7 +61,10 @@ if [[ `uname` == 'Darwin' ]]; then
     brew install htop
     brew install nginx
     brew install trash
-    
+
+	# install .net
+	brew install dnvm
+	dnvm upgrade
 fi
 
 
@@ -71,6 +78,6 @@ echo 'Copying public key to clipboard. Paste it into your Github account...'
 
 
 echo 'Symlinking config files...'
-source 'bin/symlink-dotfiles.sh'
+source 'symlink-dotfiles.sh'
 
 popd
