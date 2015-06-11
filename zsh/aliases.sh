@@ -7,11 +7,8 @@
 # Simple clear command.
 alias cl='clear'
 
-# Disable sertificate check for wget.
+# Disable certificate check for wget.
 alias wget='wget --no-check-certificate'
-
-# JSHint short-cut.
-alias lint=jshint
 
 # Some OS X-only stuff.
 if [[ "$OSTYPE" == darwin* ]]; then
@@ -42,48 +39,6 @@ else
 
 fi
 
-# Git short-cuts.
-alias g='git'
-alias ga='git add'
-alias gd='git add'
-alias gr='git reset'
-alias grh='git reset --hard'
-
-alias gf='git fetch'
-alias gp='git pull'
-alias gpr='git pull --rebase'
-alias gpp='git pull && git push'
-
-alias gs='git status --short'
-alias gdiff='git diff'
-alias gdiffs='git diff --staged'
-alias gdisc='git discard'
-
-function gc() {
-  args=$@
-  git commit -m "$args"
-}
-
-function gca() {
-  args=$@
-  git commit --amend -m "$args"
-}
-
-alias gp='git push'
-
-function gcp() {
-  args=$@
-  git commit -am "$args" && git push
-}
-
-alias gcl='git clone'
-alias gch='git checkout'
-alias gbr='git branch'
-alias gbrd='git branch -D'
-alias gl='git log --no-merges'
-
-
-# Dev short-cuts.
 
 # Package managers.
 alias bi='bower install'
@@ -93,13 +48,6 @@ alias nis='npm install --save'
 alias nibi='npm install && bower install'
 alias nibir='rm -rf {bower_components,node_modules} && npm install && bower install'
 alias ns='npm search'
-
-alias jk='jekyll serve --watch' # lol jk
-alias serve='python -m SimpleHTTPServer'
-
-# Ruby.
-alias bx='bundle exec'
-alias bex='bundle exec'
 
 # Nginx short-cuts.
 alias ngup='sudo nginx'

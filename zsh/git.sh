@@ -5,6 +5,47 @@
 # ==================================================================
 
 
+# Aliases
+alias g='git'
+alias ga='git add'
+alias gd='git add'
+alias gr='git reset'
+alias grh='git reset --hard'
+
+alias gf='git fetch'
+alias gp='git pull'
+alias gpr='git pull --rebase'
+alias gpp='git pull && git push'
+
+alias gs='git status --short'
+alias gdiff='git diff'
+alias gdiffs='git diff --staged'
+alias gdisc='git discard'
+
+alias gcl='git clone'
+alias gch='git checkout'
+alias gbr='git branch'
+alias gbrd='git branch -D'
+alias gl='git log --no-merges'
+
+function gc() {
+  args=$@
+  git commit -m "$args"
+}
+
+function gca() {
+  args=$@
+  git commit --amend -m "$args"
+}
+
+alias gp='git push'
+
+function gcp() {
+  args=$@
+  git commit -am "$args" && git push
+}
+
+
 # Git log colors.
 zstyle -s ':prezto:module:git:log:medium' format '_git_log_medium_format' \
   || _git_log_medium_format='%C(bold)Commit:%C(reset) %C(green)%H%C(red)%d%n%C(bold)Author:%C(reset) %C(cyan)%an <%ae>%n%C(bold)Date:%C(reset)   %C(blue)%ai (%ar)%C(reset)%n%+B'
