@@ -2,17 +2,17 @@
 chsh -s /bin/zsh
 
 # set work dir
-dir="$HOME/dev/.files"
+DOT_FILES="$HOME/dev/.files"
 
 # remove old version
-rm -rf $dir
+rm -rf $DOT_FILES
 
 # create clone folder
-mkdir -p $dir
+mkdir -p $DOT_FILES
 
 # clone repo
-git clone --recursive git://github.com/sandcastle/dotfiles.git $dir
+git clone --recursive git://github.com/sandcastle/dotfiles.git $DOT_FILES
 
 # symlink files
-cd $dir
-sudo sh "symlink-dotfiles.sh"
+cd $DOT_FILES
+sudo sh "install-symlink.sh"

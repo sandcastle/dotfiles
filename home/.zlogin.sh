@@ -1,6 +1,7 @@
-#
-# Executes commands at login post-zshrc.
-#
+# ==================================================================
+# Executes commands at login post-zshrc
+# ==================================================================
+
 
 # Execute code that does not affect the current session in the background.
 {
@@ -18,12 +19,9 @@
   fi
 } &!
 
-# Print a random, hopefully interesting, adage.
-if (( $+commands[fortune] )); then
-  fortune -a
-  print
-fi
 
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+# TODO: Set PATH defaults
+#
+# /usr/local/{bin,sbin}
+# /usr/{bin,sbin}
+# /{bin,sbin}

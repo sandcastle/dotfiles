@@ -1,42 +1,15 @@
-# Defines environment variables.
-privenv="$HOME/.private-env"
-[[ -f "$privenv" ]] && source $privenv
 
-# Browser.
-# --------
-if [[ "$OSTYPE" == darwin* ]]; then
-  export BROWSER='open'
-fi
-
-# Editors.
+# Editors
 # --------
 export EDITOR='/usr/local/bin/subl'
 export VISUAL='/usr/local/bin/subl'
 export PAGER='less'
-
-# node (non-root) lang
-export NODE_PATH=$HOME/.npm-packages/lib/node_modules
-
-# go lang
-export GOPATH =$HOME/.go
 
 # locale
 # ---------
 if [[ -z "$LANG" ]]; then
   eval "$(locale)"
 fi
-
-# Git log colors.
-zstyle -s ':prezto:module:git:log:medium' format '_git_log_medium_format' \
-  || _git_log_medium_format='%C(bold)Commit:%C(reset) %C(green)%H%C(red)%d%n%C(bold)Author:%C(reset) %C(cyan)%an <%ae>%n%C(bold)Date:%C(reset)   %C(blue)%ai (%ar)%C(reset)%n%+B'
-zstyle -s ':prezto:module:git:log:oneline' format '_git_log_oneline_format' \
-  || _git_log_oneline_format='%C(green)%h%C(reset) %s%C(red)%d%C(reset)%n'
-zstyle -s ':prezto:module:git:log:brief' format '_git_log_brief_format' \
-  || _git_log_brief_format='%C(green)%h%C(reset) %s%n%C(blue)(%ar by %an)%C(red)%d%C(reset)%n'
-
-# Status
-zstyle -s ':prezto:module:git:status:ignore' submodules '_git_status_ignore_submodules' \
-  || _git_status_ignore_submodules='none'
 
 # Less.
 # -----
@@ -57,16 +30,12 @@ typeset -gUT INFOPATH infopath
 
 # Commonly used directories.
 dev="$HOME/dev"
-br="$dev/brunch"
-ch="$dev/chaplinjs"
-com="$dev/com"
 as="$HOME/Library/Application Support"
-
 
 
 # Set the the list of directories that cd searches.
 cdpath=(
-  $		cdpath
+  $        cdpath
 )
 
 # Set the list of directories that info searches for manuals.
@@ -93,11 +62,7 @@ path=(
   /usr/local/{bin,sbin}
   /usr/local/opt/ruby/bin
   /usr/local/lib/python2.7/site-packages
-  /usr/local/share/npm/bin
-  /$NODE_PATH
-  /$HOME/.npm-packages/bin
   /usr/local/opt/go/libexec/bin
-  /$HOME/.go
   /usr/{bin,sbin}
   /{bin,sbin}
   $path
@@ -115,7 +80,3 @@ if [[ -d "$TMPDIR" ]]; then
     mkdir -p "$TMPPREFIX"
   fi
 fi
-
-
-BROWSER=''
-unset BROWSER

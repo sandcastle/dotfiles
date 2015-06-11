@@ -100,8 +100,6 @@ if zstyle -t ':prezto:environment:termcap' color; then
 fi
 
 
-
-
 #
 # Sets history options and defines history aliases.
 #
@@ -492,31 +490,3 @@ fi
 # Serves a directory via HTTP.
 alias http-serve='python -m SimpleHTTPServer'
 
-#
-# Functions
-#
-
-# Makes a directory and changes to it.
-function mkdcd {
-  [[ -n "$1" ]] && mkdir -p "$1" && builtin cd "$1"
-}
-
-# Changes to a directory and lists its contents.
-function cdls {
-  builtin cd "$argv[-1]" && ls "${(@)argv[1,-2]}"
-}
-
-# Finds files and executes a command on them.
-function find-exec {
-  find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
-}
-
-# Displays user owned processes status.
-function psu {
-  ps -U "${1:-$USER}" -o 'pid,%cpu,%mem,command' "${(@)argv[2,-1]}"
-}
-
-
-function diff {
-  git --no-pager diff --color=auto --no-ext-diff --no-index "$@"
-}

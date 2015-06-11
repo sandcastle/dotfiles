@@ -1,15 +1,12 @@
 #!/bin/bash
 
-dev="$HOME/dev"
-dotfiles="$dev/.files"
+# This file is called by install.sh; it symlinks dotfiles to the $HOME path
+
+
+DOT_FILES="$HOME/dev/.files"
 
 # debug message
-if [[ -d "$dotfiles" ]]; then
-  echo "Symlinking dotfiles from $dotfiles"
-else
-  echo "$dotfiles does not exist"
-  exit 1
-fi
+echo "Symlinking dotfiles from $DOT_FILES"
 
 link() {
   from="$1"
@@ -22,5 +19,5 @@ link() {
 for location in $(find home -name '.*'); do
   file="${location##*/}"
   file="${file%.sh}"
-  link "$dotfiles/$location" "$HOME/$file"
+  link "$DOT_FILES/$location" "$HOME/$file"
 done

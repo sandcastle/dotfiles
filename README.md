@@ -55,3 +55,13 @@ curl --silent https://raw.githubusercontent.com/sandcastle/dotfiles/master/boots
 * `git-extras` — useful git functions, defined in `home/gitconfig`
 * `home` — files that are symlinked to `$HOME` directory
 * `terminal` — terminal theme & prompt
+
+
+## WIP
+
+Look at the following repo's for inspiration:
+
+- [](https://github.com/gregf/dotfiles)
+- [](https://github.com/thisdarktao/dotfiles)
+- [](https://github.com/erichs/dotfiles)
+

@@ -19,50 +19,47 @@ echo "Setting computer name to $compname"
     sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$compname"
 
 
-# Ensure we are on OSX
-if [[ `uname` == 'Darwin' ]]; then
+# OSX config
+echo 'Tweaking OS X...'
+source 'etc/osx.sh'
 
-    # OSX config
-    echo 'Tweaking OS X...'
-    source 'etc/osx.sh'
+# check if brew is installed
+which -s brew
 
-    # check if brew is installed
-    which -s brew
+# install brew, if required
+if [[ $? != 0 ]]; then
 
-    # install brew, if required
-    if [[ $? != 0 ]]; then
-
-        echo 'Installing Homebrew...'
-        ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/homebrew/go/install)"
-        brew update
-
-    fi
-
-    # install cask
-    brew install caskroom/cask/brew-cask
-
-    # set cask link folder
-    export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-
-    # install quick lookup plugins - http://github.com/sindresorhus/quick-look-plugins
-    brew cask install suspicious-package
-    brew cask install quicklook-json
-    brew cask install qlmarkdown
-    brew cask install qlstephen
-    brew cask install qlcolorcode
-    brew cask install qlimagesize
-    brew cask install webpquicklook
-
-    # install dev tools
-    brew install htop
-    brew install nginx
-    brew install trash
-
-	# install languages
-	sh "langs/dnx.sh"
-	sh "langs/go.sh"
+    echo 'Installing Homebrew...'
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/homebrew/go/install)"
+    brew update
 
 fi
+
+# install cask
+brew install caskroom/cask/brew-cask
+
+# set cask link folder
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
+# install quick lookup plugins - http://github.com/sindresorhus/quick-look-plugins
+brew cask install suspicious-package
+brew cask install quicklook-json
+brew cask install qlmarkdown
+brew cask install qlstephen
+brew cask install qlcolorcode
+brew cask install qlimagesize
+brew cask install webpquicklook
+
+# install dev tools
+brew install htop
+brew install nginx
+brew install trash
+
+# install languages
+sh "langs/dnx.sh"
+sh "langs/go.sh"
+sh "langs/nvm.sh"
+
 
 
 pub=$HOME/.ssh/id_rsa.pub
