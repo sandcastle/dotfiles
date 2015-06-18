@@ -25,16 +25,7 @@ curl --silent https://raw.githubusercontent.com/sandcastle/dotfiles/master/boots
 
 * Auto-completion
 * Syntax highlighting
-* Automatic setting up of terminal tab / window title to current dir
 * `rm` moves file to the OS X trash
-* A bunch of useful functions:
-    * `extract archive.tar.bz` — unpack any archive (supports many extensions)
-    * `ram safari` — show app RAM usage
-    * `openfiles` — real-time disk usage monitoring with `dtrace`.
-    * `loc py coffee js html css` — count lines of code in current dir in a colourful way.
-    * `ff file-name-or-pattern` - fast recursive search for a file name in directories.
-    * `curl http://site/v1/api.json | json` - pretty-print JSON
-    * `aes-enc`, `aes-dec` - safely encrypt files.
 
 ### git
 
@@ -48,20 +39,11 @@ curl --silent https://raw.githubusercontent.com/sandcastle/dotfiles/master/boots
 * `git-changelog`, `git-setup` etc.
 
 
-## Structure
-
-* `bin` — files that are symlinked to any directory with binaries in `$PATH`
-* `etc` — various stuff like osx text substitutions / hosts backup
-* `git-extras` — useful git functions, defined in `home/gitconfig`
-* `home` — files that are symlinked to `$HOME` directory
-* `terminal` — terminal theme & prompt
-
-
 ## WIP
 
 Look at the following repo's for inspiration:
 
-- [](https://github.com/gregf/dotfiles)
-- [](https://github.com/thisdarktao/dotfiles)
-- [](https://github.com/erichs/dotfiles)
+- [https://github.com/gregf/dotfiles]()
+- [https://github.com/thisdarktao/dotfiles]()
+- [https://github.com/erichs/dotfiles]()
 

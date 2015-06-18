@@ -59,6 +59,7 @@ brew install trash
 sh "langs/dnx.sh"
 sh "langs/go.sh"
 sh "langs/nvm.sh"
+sh "langs/py.sh"
 
 
 
