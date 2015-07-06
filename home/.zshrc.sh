@@ -14,6 +14,7 @@ source "$DOT_FILES/zsh/nvm.sh"
 source "$DOT_FILES/zsh/dnvm.sh"
 source "$DOT_FILES/zsh/go.sh"
 source "$DOT_FILES/zsh/ruby.sh"
+source "$DOT_FILES/zsh/vscode.sh"
 
 # Colors
 autoload -U colors && colors
