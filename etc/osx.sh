@@ -103,7 +103,7 @@ defaults write com.apple.finder QLEnableTextSelection -bool true
 # ========
 
 # Use a modified version of the Pro theme by default in Terminal.app
-open "$dev/.files/terminal/sandcastle.terminal"
+open "$dev/dotfiles/terminal/sandcastle.terminal"
 sleep 1 # Wait a bit to make sure the theme is loaded
 defaults write com.apple.terminal 'Default Window Settings' -string 'sandcastle'
 defaults write com.apple.terminal 'Startup Window Settings' -string 'sandcastle'

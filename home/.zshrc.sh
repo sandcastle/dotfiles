@@ -1,5 +1,5 @@
 
-DOT_FILES="$HOME/dev/.files"
+DOT_FILES="$HOME/dev/dotfiles"
 
 # Terminal config
 source "$DOT_FILES/terminal/startup.sh"
@@ -15,6 +15,7 @@ source "$DOT_FILES/zsh/dnvm.sh"
 source "$DOT_FILES/zsh/go.sh"
 source "$DOT_FILES/zsh/ruby.sh"
 source "$DOT_FILES/zsh/vscode.sh"
+source "$DOT_FILES/zsh/gcloud.sh"
 
 # Colors
 autoload -U colors && colors
@@ -23,4 +24,3 @@ autoload -U colors && colors
 fpath=("$DOT_FILES/terminal" $fpath)
 autoload -Uz promptinit && promptinit
 prompt 'sandcastle'
-
