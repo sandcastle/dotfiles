@@ -17,3 +17,4 @@ apm install file-icons
 
 # install other
 apm install dash
+apm install term2
