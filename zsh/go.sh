@@ -6,6 +6,4 @@
 
 
 # Paths
-export GOROOT="/usr/local/opt/go/libexec/bin"
-export GOPATH="$HOME/.go"
-export PATH="$GOROOT:$GOPATH:$PATH"
+export GOPATH="$HOME/go"
