@@ -1,20 +1,20 @@
 #!/usr/bin/env zsh
 
-# install atom editor
+# atom editor
 brew cask install atom
 
-# install highlighters
+# highlighters
 apm install language-docker
 apm install language-protobuf
 
-# install go
+# go
 apm install go-plus
 apm install go-rename
 
-# install themes
+# themes
 apm install monokai-seti
 apm install file-icons
 
-# install other
+# other
 apm install dash
 apm install term2

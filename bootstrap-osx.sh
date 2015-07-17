@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-# A simple script for setting up OSX dev environment.
+# Bootstraps an OSX machine
 
 dev="$HOME/dev"
 pushd .
@@ -23,32 +23,10 @@ echo "Setting computer name to $compname"
 echo 'Tweaking OS X...'
 source 'etc/osx.sh'
 
-# check if brew is installed
-which -s brew
 
-# install brew, if required
-if [[ $? != 0 ]]; then
-
-    echo 'Installing Homebrew...'
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    brew update
-
-fi
-
-# install cask
-brew install caskroom/cask/brew-cask
-
-# set cask link folder
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-
-# install languages
-sh "bootstrap/osx-tools.sh"
-sh "bootstrap/atom.sh"
-sh "bootstrap/dnx.sh"
-sh "bootstrap/go.sh"
-sh "bootstrap/nvm.sh"
-sh "bootstrap/py.sh"
-sh "bootstrap/gcloud.sh"
+# bootstrap with brew
+echo 'Homebrew...'
+sh "bootstrap/bootstrap.sh"
 
 
 pub=$HOME/.ssh/id_rsa.pub

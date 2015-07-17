@@ -1,6 +1,10 @@
 #!/usr/bin/env zsh
 
-# install quick lookup plugins - http://github.com/sindresorhus/quick-look-plugins
+# helper tools
+brew install htop
+brew install trash
+
+# quick lookup plugins - http://github.com/sindresorhus/quick-look-plugins
 brew cask install suspicious-package
 brew cask install quicklook-json
 brew cask install qlmarkdown
@@ -9,6 +13,8 @@ brew cask install qlcolorcode
 brew cask install qlimagesize
 brew cask install webpquicklook
 
-# install dev tools
-brew install htop
-brew install trash
+# dev tools
+brew cask install dash
+
+# security
+brew cask install 1password
