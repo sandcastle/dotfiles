@@ -18,3 +18,6 @@ brew cask install dash
 
 # security
 brew cask install 1password
+
+# commandline
+brew install z

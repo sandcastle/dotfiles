@@ -17,6 +17,7 @@ source "$DOT_FILES/zsh/go.sh"
 source "$DOT_FILES/zsh/ruby.sh"
 source "$DOT_FILES/zsh/vscode.sh"
 source "$DOT_FILES/zsh/gcloud.sh"
+source "$DOT_FILES/zsh/tools.sh"
 
 # Colors
 autoload -U colors && colors
