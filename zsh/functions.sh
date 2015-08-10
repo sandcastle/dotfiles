@@ -5,6 +5,12 @@
 # ==================================================================
 
 
+# Copy file(s) from remote ssh path to desktop
+mecp () {
+  scp "$@" ${SSH_CLIENT%% *}:Desktop/;
+}
+
+
 # Show man page in Preview.app.
 # $ manp cd
 function manp {
