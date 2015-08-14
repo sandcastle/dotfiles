@@ -31,3 +31,6 @@ alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall F
 # Hide/show all desktop icons (useful when presenting)
 alias showdeskicons="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 alias hidedeskicons="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+
+# Flush the DNS (Yosemite 10.10.4+)
+alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say cache flushed"
