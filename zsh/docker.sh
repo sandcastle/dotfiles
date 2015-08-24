@@ -1,7 +1,8 @@
 #!/usr/bin/env zsh
 
 # ==================================================================
-# .Net Virtual Machine
+# Docker
 # ==================================================================
 
-source dnvm.sh
+# Docker Compose
+alias dcomp='docker-compose'
