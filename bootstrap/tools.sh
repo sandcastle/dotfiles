@@ -21,3 +21,6 @@ brew cask install 1password
 
 # commandline
 brew install z
+
+# JSON parser for commandline
+brew install jq
