@@ -5,9 +5,6 @@
 # ==================================================================
 
 
-# desktop
-brew cask install github-desktop
-
 # Aliases
 alias g='git'
 alias ga='git add'
