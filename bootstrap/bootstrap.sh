@@ -17,6 +17,7 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 sh "bootstrap/tools.sh"
 sh "bootstrap/dnx.sh"
+sh "bootstrap/aws.sh"
 sh "bootstrap/go.sh"
 sh "bootstrap/nvm.sh"
 sh "bootstrap/py.sh"

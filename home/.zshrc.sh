@@ -9,6 +9,7 @@ source "$DOT_FILES/terminal/highlight.sh"
 # ZSH
 source "$DOT_FILES/zsh/aliases.sh"
 source "$DOT_FILES/zsh/osx.sh"
+source "$DOT_FILES/zsh/aws.sh"
 source "$DOT_FILES/zsh/functions.sh"
 source "$DOT_FILES/zsh/git.sh"
 source "$DOT_FILES/zsh/nvm.sh"
