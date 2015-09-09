@@ -13,7 +13,7 @@ brew cask install qlcolorcode
 brew cask install qlimagesize
 brew cask install webpquicklook
 
-# dev tools
+# dev doco
 brew cask install dash
 
 # security
@@ -24,3 +24,7 @@ brew install z
 
 # JSON parser for commandline
 brew install jq
+
+# databases - postgres
+brew cask install postgres
+brew cask install navicat-for-postgresql
