@@ -6,16 +6,17 @@
   user = sandcastle
 
 [alias]
-  br = branch
-  cb = "!sh -c 'git branch $1 && git ch $1' -"
-  ctb = "!sh -c 'git cb topics/$1' -"
+  feat = "!sh -c 'git branch $1 && git checkout $1' -"
 
-  ci = commit
-  ch = checkout
-  fc = commit -am 'Initial commit.'
-  cpush = "!sh -c 'git commit -au -m \"$1\" && git push -u origin' -"
+  up = git push -u origin
+  down = pull --rebase
+  sync = "!sh -c 'git commit -au -m \"$1\" && git down && git up' -"
+  first = commit -am 'Initial commit.'
+
   d = diff
+
   st = status --short
+  stv = status -v
 
   graph = log --graph
   last = log -n 10
@@ -43,7 +44,7 @@
   ui = true
 
 [core]
-  editor = brackets
+  editor = code
   excludesfile = ~/.gitignore
 
 [format]
@@ -73,11 +74,12 @@
     keepBackup = false
 
 [init]
-    templatedir = ~/.git_template
+  templatedir = ~/.git_template
 
 [ghi]
-    token = !security find-internet-password -a sandcastle -s github.com -l 'ghi token' -w
+  token = !security find-internet-password -a sandcastle -s github.com -l 'ghi token' -w
+
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
-	required = true
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
+  required = true
