@@ -1,41 +1,43 @@
 [user]
-    name = Glenn Morton
-    email = glenn@sandcastle.io
+  name = Glenn Morton
+  email = glenn@sandcastle.io
 
 [github]
   user = sandcastle
 
 [alias]
-  feat = "!sh -c 'git branch $1 && git checkout $1' -"
 
-  up = push -u origin
-  down = pull --rebase
-  sync = "!sh -c 'git commit -au -m \"$1\" && git down && git up' -"
-  first = commit -am 'Initial commit.'
+  up          = push -u origin
+  down        = pull --rebase
+  sync        = "!sh -c 'git commit -au -m \"$1\"; git down; git up' -"
 
-  d = diff
+  d           = diff
+  st          = status --short
+  stv         = status -v
 
-  st = status --short
-  stv = status -v
+  feat        = !sh "$HOME/dev/dotfiles/git-extras/git-branch-new.sh"
+  rmfeat      = !sh "$HOME/dev/dotfiles/git-extras/git-branch-delete.sh"
+
+  save        = "!sh -c 'git commit -au -m \"$1\"' -" 
+  discard     = checkout -- .
+
+  setup       = !sh "$HOME/dev/dotfiles/git-extras/git-setup.sh"
+  first       = commit -au -m 'Initial commit.'
 
   graph = log --graph
   last = log -n 10
   url = !git remote -v|sed "'s|.*git[:@]\\(.*\\).git.*|http://\\1|;s|m:|m/|'"|uniq|xargs open
   whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
-  discard = checkout -- .
-  rmtag = "!sh -c 'git tag -d $1; git push origin :refs/tags/$1'"
 
-  changelog = !sh "$HOME/dev/dotfiles/git-extras/git-changelog.sh"
-  rstatus   = !zsh "$HOME/dev/dotfiles/git-extras/git-rstatus.sh"
-  release   = !sh "$HOME/dev/dotfiles/git-extras/git-release.sh"
-  setup     = !zsh "$HOME/dev/dotfiles/git-extras/git-setup.sh"
-  summary   = !zsh "$HOME/dev/dotfiles/git-extras/git-summary.sh"
-  delete-branch = !sh "$HOME/dev/dotfiles/git-extras/git-delete-branch.sh"
+  changelog   = !sh "$HOME/dev/dotfiles/git-extras/git-changelog.sh"
+  rstatus     = !sh "$HOME/dev/dotfiles/git-extras/git-rstatus.sh"
+  release     = !sh "$HOME/dev/dotfiles/git-extras/git-release.sh"
+  summary     = !sh "$HOME/dev/dotfiles/git-extras/git-summary.sh"
 
-  pr = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1; } ; f"
-
-  ghfork = !sh "$HOME/dev/dotfiles/git-extras/git-ghpull.sh"
-  cleanup = !ruby "$HOME/dev/dotfiles/git-extras/git-cleanup.rb"
+  rmtag       = "!sh -c 'git tag -d $1; git push origin :refs/tags/$1'"
+  pr          = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1; } ; f"
+  ghfork      = !sh "$HOME/dev/dotfiles/git-extras/git-ghpull.sh"
+  cleanup     = !ruby "$HOME/dev/dotfiles/git-extras/git-cleanup.rb"
 
 [push]
   default = current
@@ -71,7 +73,7 @@
   pushInsteadOf = "git://gist.github.com/"
 
 [mergetool]
-    keepBackup = false
+  keepBackup = false
 
 [init]
   templatedir = ~/.git_template
