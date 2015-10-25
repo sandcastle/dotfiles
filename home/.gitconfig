@@ -6,29 +6,29 @@
   user = sandcastle
 
 [alias]
-
   up          = push -u origin
   down        = pull --rebase
-  sync        = "!sh -c 'git commit -au -m \"$1\"; git down; git up' -"
+  sync        = "!sh -c 'git saveall \"$1\"; git down; git up' -"
 
-  d           = diff
   st          = status --short
   stv         = status -v
+
+  save        = "!sh -c 'git add -A .; git commit -m \"$1\"' -"
+  saveall     = "!sh -c 'git commit -au -m \"$1\"' -"
+  discard     = checkout -- .
+  discardall  = reset --hard
+  undo        = reset HEAD~1 --mixed
 
   feat        = !sh "$HOME/dev/dotfiles/git-extras/git-branch-new.sh"
   rmfeat      = !sh "$HOME/dev/dotfiles/git-extras/git-branch-delete.sh"
 
-  save        = "!sh -c 'git add . -A; git commit -m \"$1\"' -" 
-  saveall     = "!sh -c 'git commit -au -m \"$1\"' -" 
-  discard     = checkout -- .
-
   setup       = !sh "$HOME/dev/dotfiles/git-extras/git-setup.sh"
   first       = commit -au -m 'Initial commit.'
 
-  graph = log --graph
-  last = log -n 10
-  url = !git remote -v|sed "'s|.*git[:@]\\(.*\\).git.*|http://\\1|;s|m:|m/|'"|uniq|xargs open
-  whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+  graph       = log --graph
+  last        = log -n 10
+  url         = !git remote -v|sed "'s|.*git[:@]\\(.*\\).git.*|http://\\1|;s|m:|m/|'"|uniq|xargs open
+  whois       = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
 
   changelog   = !sh "$HOME/dev/dotfiles/git-extras/git-changelog.sh"
   rstatus     = !sh "$HOME/dev/dotfiles/git-extras/git-rstatus.sh"
@@ -44,7 +44,7 @@
   default = current
 
 [color]
-  ui = true
+  ui = auto
 
 [core]
   editor = code
@@ -75,9 +75,6 @@
 
 [mergetool]
   keepBackup = false
-
-[init]
-  templatedir = ~/.git_template
 
 [ghi]
   token = !security find-internet-password -a sandcastle -s github.com -l 'ghi token' -w
