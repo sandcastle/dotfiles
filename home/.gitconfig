@@ -18,7 +18,8 @@
   feat        = !sh "$HOME/dev/dotfiles/git-extras/git-branch-new.sh"
   rmfeat      = !sh "$HOME/dev/dotfiles/git-extras/git-branch-delete.sh"
 
-  save        = "!sh -c 'git commit -au -m \"$1\"' -" 
+  save        = "!sh -c 'git add . -A; git commit -m \"$1\"' -" 
+  saveall     = "!sh -c 'git commit -au -m \"$1\"' -" 
   discard     = checkout -- .
 
   setup       = !sh "$HOME/dev/dotfiles/git-extras/git-setup.sh"
