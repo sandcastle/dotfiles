@@ -6,6 +6,6 @@ if [[ -z $branch ]]; then
   exit 1
 fi
 
-git branch -D $branch && \
-  git branch -d -r origin/$branch && \
-  git push origin :$branch
+git branch -D $branch
+git branch -d -r origin/$branch
+git push origin --delete $branch
