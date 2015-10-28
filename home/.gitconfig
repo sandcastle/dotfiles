@@ -8,7 +8,7 @@
 [alias]
   up          = push -u origin
   down        = pull --rebase
-  sync        = "!sh -c 'git saveall \"$1\"; git down; git up' -"
+  sync        = "!sh -c 'git down; git up' -"
 
   st          = status --short
   stv         = status -v
