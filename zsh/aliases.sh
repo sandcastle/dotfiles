@@ -4,8 +4,9 @@
 # Aliases
 # ==================================================================
 
-# Simple clear command.
+# Simple clear command
 alias cl='clear'
+alias cls='clear'
 
 # Disable certificate check for wget.
 alias wget='wget --no-check-certificate'
@@ -18,13 +19,6 @@ alias nis='npm install --save'
 alias nibi='npm install && bower install'
 alias nibir='rm -rf {bower_components,node_modules} && npm install && bower install'
 alias ns='npm search'
-
-# Nginx short-cuts.
-alias ngup='sudo nginx'
-alias ngdown='sudo nginx -s stop'
-alias ngre='sudo nginx -s stop && sudo nginx'
-alias nglog='tail -f /usr/local/var/log/nginx/access.log'
-alias ngerr='tail -f /usr/local/var/log/nginx/error.log'
 
 # Checks whether connection is up.
 alias net="ping ya.ru | grep -E --only-match --color=never '[0-9\.]+ ms'"

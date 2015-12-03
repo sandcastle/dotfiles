@@ -1,7 +1,6 @@
 #!/usr/bin/env zsh
 
 # helper tools
-brew install htop
 brew install trash
 
 # quick lookup plugins - http://github.com/sindresorhus/quick-look-plugins
@@ -24,7 +23,3 @@ brew install z
 
 # JSON parser for commandline
 brew install jq
-
-# databases - postgres
-brew cask install postgres
-brew cask install navicat-for-postgresql
