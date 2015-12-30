@@ -48,78 +48,67 @@ for index ({1..9}) alias "$index"="cd +${index}"; unset index
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
-#
+# ------------------------------
 # Smart URLs
-#
+# ------------------------------
 
 autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic
 
-#
+# ------------------------------
 # General
-#
+# ------------------------------
 
 setopt BRACE_CCL          # Allow brace character class list expansion.
-setopt COMBINING_CHARS    # Combine zero-length punctuation characters (accents)
-                          # with the base character.
+setopt COMBINING_CHARS    # Combine zero-length punctuation characters (accents) with the base character.
 setopt RC_QUOTES          # Allow 'Henry''s Garage' instead of 'Henry'\''s Garage'.
 unsetopt MAIL_WARNING     # Don't print a warning message if a mail file has been accessed.
 
-#
+# ------------------------------
 # Jobs
-#
+# ------------------------------
 
-setopt LONG_LIST_JOBS     # List jobs in the long format by default.
-setopt AUTO_RESUME        # Attempt to resume existing job before creating a new process.
-setopt NOTIFY             # Report status of background jobs immediately.
-unsetopt BG_NICE          # Don't run all background jobs at a lower priority.
-unsetopt HUP              # Don't kill jobs on shell exit.
-unsetopt CHECK_JOBS       # Don't report on jobs when shell exit.
+setopt LONG_LIST_JOBS     # List jobs in the long format by default
+setopt AUTO_RESUME        # Attempt to resume existing job before creating a new process
+setopt NOTIFY             # Report status of background jobs immediately
+unsetopt BG_NICE          # Don't run all background jobs at a lower priority
+unsetopt HUP              # Don't kill jobs on shell exit
+unsetopt CHECK_JOBS       # Don't report on jobs when shell exit
 
-#
+# ------------------------------
 # Grep
-#
+# ------------------------------
 
+# Colorize grep results
 if zstyle -t ':prezto:environment:grep' color; then
   export GREP_COLOR='37;45'
   export GREP_OPTIONS='--color=auto'
 fi
 
-#
+# ------------------------------
 # Termcap
-#
+# ------------------------------
 
 if zstyle -t ':prezto:environment:termcap' color; then
-  export LESS_TERMCAP_mb=$'\E[01;31m'      # Begins blinking.
-  export LESS_TERMCAP_md=$'\E[01;31m'      # Begins bold.
-  export LESS_TERMCAP_me=$'\E[0m'          # Ends mode.
-  export LESS_TERMCAP_se=$'\E[0m'          # Ends standout-mode.
-  export LESS_TERMCAP_so=$'\E[00;47;30m'   # Begins standout-mode.
-  export LESS_TERMCAP_ue=$'\E[0m'          # Ends underline.
-  export LESS_TERMCAP_us=$'\E[01;32m'      # Begins underline.
+  export LESS_TERMCAP_mb=$'\E[01;31m'      # Begins blinking
+  export LESS_TERMCAP_md=$'\E[01;31m'      # Begins bold
+  export LESS_TERMCAP_me=$'\E[0m'          # Ends mode
+  export LESS_TERMCAP_se=$'\E[0m'          # Ends standout-mode
+  export LESS_TERMCAP_so=$'\E[00;47;30m'   # Begins standout-mode
+  export LESS_TERMCAP_ue=$'\E[0m'          # Ends underline
+  export LESS_TERMCAP_us=$'\E[01;32m'      # Begins underline
 fi
 
+# ------------------------------
+# History
+# ------------------------------
 
-#
-# Sets history options and defines history aliases.
-#
-# Authors:
-#   Robby Russell <robby@planetargon.com>
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
-
-#
 # Variables
-#
+HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"   # The path to the history file.
+HISTSIZE=10000                           # The maximum number of events to save in the internal history.
+SAVEHIST=10000                           # The maximum number of events to save in the history file.
 
-HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"       # The path to the history file.
-HISTSIZE=10000                   # The maximum number of events to save in the internal history.
-SAVEHIST=10000                   # The maximum number of events to save in the history file.
-
-#
 # Options
-#
-
 setopt BANG_HIST                 # Treat the '!' character specially during expansion.
 setopt EXTENDED_HISTORY          # Write the history file in the ':start:elapsed;command' format.
 setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
@@ -133,12 +122,8 @@ setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history
 setopt HIST_VERIFY               # Do not execute immediately upon history expansion.
 setopt HIST_BEEP                 # Beep when accessing non-existent history.
 
-#
-# Aliases
-#
-
-# Lists the ten most used commands.
-alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
+# aliases
+alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head" # Lists the ten most used commands.
 
 
 #
@@ -148,11 +133,6 @@ alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r 
 #   P.C. Shyamshankar <sykora@lucentbeing.com>
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
-
-# Return if requirements are not found.
-# if [[ "$TERM" == 'dumb' ]]; then
-#   return 1
-# fi
 
 typeset -gA FX FG BG
 
@@ -329,25 +309,9 @@ function term() {
 
 term
 
-# Set up non-Apple terminals.
-# if zstyle -t ':prezto:module:terminal' auto-title \
-#   && ( ! [[ -n "$STY" || -n "$TMUX" ]] )
-# then
-#   # Sets the tab and window titles before the prompt is displayed.
-#   add-zsh-hook precmd _terminal-set-titles-with-path
-
-#   # Sets the tab and window titles before command execution.
-#   add-zsh-hook preexec _terminal-set-titles-with-command
-# fi
-
 
 #
 # Defines general aliases and functions.
-#
-# Authors:
-#   Robby Russell <robby@planetargon.com>
-#   Suraj N. Kurapati <sunaku@gmail.com>
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
 # Correct commands.
@@ -384,20 +348,6 @@ alias rsync='noglob rsync'
 alias scp='noglob scp'
 alias sftp='noglob sftp'
 
-# Define general aliases.
-alias _='sudo'
-alias b='${(z)BROWSER}'
-alias cp="${aliases[cp]:-cp} -i"
-alias e='${(z)VISUAL:-${(z)EDITOR}}'
-alias ln="${aliases[ln]:-ln} -i"
-alias mkdir="${aliases[mkdir]:-mkdir} -p"
-alias mv="${aliases[mv]:-mv} -i"
-alias p='${(z)PAGER}'
-alias po='popd'
-alias pu='pushd'
-alias rm="${aliases[rm]:-rm} -i"
-alias type='type -a'
-
 # Checks if a name is a command, function, or alias.
 function is-callable {
   (( $+commands[$1] )) || (( $+functions[$1] )) || (( $+aliases[$1] ))
@@ -432,61 +382,3 @@ else
     alias ls='ls -F'
   fi
 fi
-
-alias l='ls -1A'         # Lists in one column, hidden files.
-alias ll='ls -lh'        # Lists human readable sizes.
-alias lr='ll -R'         # Lists human readable sizes, recursively.
-alias la='ll -A'         # Lists human readable sizes, hidden files.
-alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager.
-alias lx='ll -XB'        # Lists sorted by extension (GNU only).
-alias lk='ll -Sr'        # Lists sorted by size, largest last.
-alias lt='ll -tr'        # Lists sorted by date, most recent last.
-alias lc='lt -c'         # Lists sorted by date, most recent last, shows change time.
-alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
-alias sl='ls'            # I often screw this up.
-
-# Mac OS X Everywhere
-if [[ "$OSTYPE" == darwin* ]]; then
-  alias o='open'
-elif [[ "$OSTYPE" == cygwin* ]]; then
-  alias o='cygstart'
-  alias pbcopy='tee > /dev/clipboard'
-  alias pbpaste='cat /dev/clipboard'
-else
-  alias o='xdg-open'
-
-  if (( $+commands[xclip] )); then
-    alias pbcopy='xclip -selection clipboard -in'
-    alias pbpaste='xclip -selection clipboard -out'
-  elif (( $+commands[xsel] )); then
-    alias pbcopy='xsel --clipboard --input'
-    alias pbpaste='xsel --clipboard --output'
-  fi
-fi
-
-alias pbc='pbcopy'
-alias pbp='pbpaste'
-
-# File Download
-if (( $+commands[curl] )); then
-  alias get='curl --continue-at - --location --progress-bar --remote-name --remote-time'
-elif (( $+commands[wget] )); then
-  alias get='wget --continue --progress=bar --timestamping'
-fi
-
-# Resource Usage
-alias df='df -kh'
-alias du='du -kh'
-
-if (( $+commands[htop] )); then
-  alias top=htop
-else
-  alias topc='top -o cpu'
-  alias topm='top -o vsize'
-fi
-
-# Miscellaneous
-
-# Serves a directory via HTTP.
-alias http-serve='python -m SimpleHTTPServer'
-

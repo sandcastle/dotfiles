@@ -47,7 +47,6 @@ function edit() {
   [[ -z "$dir" ]] && dir='.'
   $EDITOR $dir
 }
-alias e=edit
 
 # Execute commands for each file in current directory.
 function each() {

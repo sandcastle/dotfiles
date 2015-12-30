@@ -1,8 +1,7 @@
 
 # Editors
 # --------
-export EDITOR='/usr/local/bin/subl'
-export VISUAL='/usr/local/bin/subl'
+export EDITOR='code'
 export PAGER='less'
 
 # locale
@@ -30,12 +29,10 @@ typeset -gUT INFOPATH infopath
 
 # Commonly used directories.
 dev="$HOME/dev"
-as="$HOME/Library/Application Support"
-
 
 # Set the the list of directories that cd searches.
 cdpath=(
-  $        cdpath
+  $cdpath
 )
 
 # Set the list of directories that info searches for manuals.
