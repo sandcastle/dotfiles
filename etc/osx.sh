@@ -124,6 +124,27 @@ defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool false
 # Don’t automatically rearrange Spaces based on most recent use
 defaults write com.apple.dock mru-spaces -bool false
 
+# Make dock show instantly when hidden
+defaults write com.apple.dock autohide-time-modifier -int 0
+
+# Show which apps are hidden
+defaults write com.apple.dock showhidden -bool TRUE
+
+# Move the dock to the left
+defaults write com.apple.dock orientation -string "left"
+
+# Move the dock to the left
+defaults write com.apple.dock autohide -bool TRUE
+
+# Magnify on hover
+defaults write com.apple.dock magnification -bool TRUE
+
+# Icon size
+defaults write com.apple.dock tilesize -int 128
+
+# Magnification size
+defaults write com.apple.dock largesize -int 64
+
 
 # Terminal
 # ========
