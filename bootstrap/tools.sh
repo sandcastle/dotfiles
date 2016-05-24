@@ -2,6 +2,7 @@
 
 # helper tools
 brew install trash
+brew install tree
 
 # quick lookup plugins - http://github.com/sindresorhus/quick-look-plugins
 brew cask install suspicious-package
@@ -13,6 +14,9 @@ brew cask install qlimagesize
 brew cask install webpquicklook
 
 # general
+brew install hugo
+brew install openssl
+
 brew cask install flux
 brew cask install ccleaner
 brew cask install rescuetime
