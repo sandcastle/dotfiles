@@ -20,7 +20,6 @@ source "$DOT_FILES/zsh/gcloud.sh"
 source "$DOT_FILES/zsh/tools.sh"
 source "$DOT_FILES/zsh/docker.sh"
 source "$DOT_FILES/zsh/mono.sh"
-source "$DOT_FILES/zsh/mesos.sh"
 
 # Colors
 autoload -U colors && colors
