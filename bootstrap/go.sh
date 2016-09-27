@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # install go
-brew install hg go
+brew install go
 
 # create go path
 mkdir "$HOME/go"
