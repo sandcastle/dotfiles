@@ -29,7 +29,7 @@ brew cask install ccleaner
 brew cask install rescuetime
 brew cask install screenflow
 brew cask install expandrive
-brew cask install TimeMachineScheduler
+brew cask install timemachinescheduler
 
 # dev
 brew cask install docker
