@@ -29,21 +29,20 @@ brew cask install ccleaner
 brew cask install rescuetime
 brew cask install screenflow
 brew cask install expandrive
-brew cask install timemachinescheduler
 
 # dev
+brew install cloc
 brew cask install docker
-brew cask install atom
+brew cask install visual-studio-code
 brew cask install dash
 brew cask install colour-contrast-analyser
 brew cask install terraform
-brew cask install charles
+brew cask install surge
 brew cask install java
 brew cask install android-studio
 brew cask install hockey
 brew cask install navicat-for-postgresql
 brew cask install tower
-brew cask install reflector
 brew cask install cyberduck
 
 # security

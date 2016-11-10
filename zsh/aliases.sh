@@ -8,6 +8,9 @@
 alias cl='clear'
 alias cls='clear'
 
+# Lines of Code counter
+alias lines='git ls-files | xargs cloc'
+
 # Disable certificate check for wget.
 alias wget='wget --no-check-certificate'
 
