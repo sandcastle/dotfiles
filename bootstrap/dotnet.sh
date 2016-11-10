@@ -1,3 +1,3 @@
 #!/usr/bin/env zsh
 
-brew cask search dotnet
+brew cask install dotnet
