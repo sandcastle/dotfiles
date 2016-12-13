@@ -32,6 +32,7 @@ brew cask install expandrive
 
 # dev
 brew install cloc
+brew install yarn
 brew cask install docker
 brew cask install visual-studio-code
 brew cask install dash
