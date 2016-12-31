@@ -18,7 +18,6 @@ brew cask install betterzipql
 brew cask install provisionql
 
 # general
-brew install hugo
 brew install openssl
 brew install mercurial
 brew install imagemagick
@@ -33,6 +32,8 @@ brew cask install expandrive
 # dev
 brew install cloc
 brew install yarn
+brew install kubernetes-cli
+brew install kubernetes-helm
 brew cask install docker
 brew cask install visual-studio-code
 brew cask install dash

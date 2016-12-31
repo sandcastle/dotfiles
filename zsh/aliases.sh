@@ -4,21 +4,28 @@
 # Aliases
 # ==================================================================
 
-# Simple clear command
-alias cl='clear'
-alias cls='clear'
+# ------------------------------ DEV -------------------------------
+
+# kubernetes
+alias kube='kubectl'
 
 # Lines of Code counter
 alias lines='git ls-files | xargs cloc'
+
+# Pretty print json
+alias json='python -m json.tool'
+
+
+# --------------------------- NETWORK ------------------------------
+
+# Serves a directory via HTTP
+alias http-serve='python -m SimpleHTTPServer'
 
 # Disable certificate check for wget.
 alias wget='wget --no-check-certificate'
 
 # Checks whether connection is up.
 alias net="ping ya.ru | grep -E --only-match --color=never '[0-9\.]+ ms'"
-
-# Pretty print json
-alias json='python -m json.tool'
 
 # Burl: better curl shortcuts (https://github.com/visionmedia/burl).
 if (( $+commands[burl] )); then
@@ -31,9 +38,21 @@ if (( $+commands[burl] )); then
   alias OPTIONS='burl OPTIONS'
 fi
 
+# Download (Show progress)
+if (( $+commands[curl] )); then
+  alias get='curl --continue-at - --location --progress-bar --remote-name --remote-time'
+elif (( $+commands[wget] )); then
+  alias get='wget --continue --progress=bar --timestamping'
+fi
+
+# ----------------------------- SHELL ------------------------------
+
+# Simple clear command
+alias cl='clear'
+alias cls='clear'
+
 # Lists the ten most used commands.
 alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
-
 
 # Define general aliases.
 alias _='sudo'
@@ -48,7 +67,7 @@ alias pu='pushd'
 alias rm="${aliases[rm]:-rm} -i"
 alias type='type -a'
 
-
+# list
 alias l='ls -1A'         # Lists in one column, hidden files.
 alias ll='ls -lh'        # Lists human readable sizes.
 alias lr='ll -R'         # Lists human readable sizes, recursively.
@@ -60,6 +79,8 @@ alias lt='ll -tr'        # Lists sorted by date, most recent last.
 alias lc='lt -c'         # Lists sorted by date, most recent last, shows change time.
 alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
 alias sl='ls'            # I often screw this up.
+
+# ------------------------------ OSX -------------------------------
 
 # Mac OS X Everywhere
 if [[ "$OSTYPE" == darwin* ]]; then
@@ -84,13 +105,6 @@ fi
 alias pbc='pbcopy'
 alias pbp='pbpaste'
 
-# Download (Show progress)
-if (( $+commands[curl] )); then
-  alias get='curl --continue-at - --location --progress-bar --remote-name --remote-time'
-elif (( $+commands[wget] )); then
-  alias get='wget --continue --progress=bar --timestamping'
-fi
-
 # Disk Usage (Human Readable)
 alias df='df -kh'
 alias du='du -kh'
@@ -104,6 +118,3 @@ else
   alias topc='top -o cpu'
   alias topm='top -o vsize'
 fi
-
-# Serves a directory via HTTP
-alias http-serve='python -m SimpleHTTPServer'
