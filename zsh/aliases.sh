@@ -9,6 +9,9 @@
 # kubernetes
 alias kube='kubectl'
 
+# git tower
+alias tower=gittower
+
 # Lines of Code counter
 alias lines='git ls-files | xargs cloc'
 
