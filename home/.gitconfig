@@ -19,7 +19,7 @@
   discardall  = reset --hard
   undo        = reset HEAD~1 --mixed
 
-  feat        = "!sh -c 'git branch \"$1\"; git checkout \"$1\"' -"
+  feat        = "!sh -c 'git branch \"feature/$1\"; git checkout \"feature/$1\"' -"
   rmfeat      = !sh "$HOME/dev/dotfiles/git-extras/git-branch-delete.sh"
 
   setup       = !sh "$HOME/dev/dotfiles/git-extras/git-setup.sh"
