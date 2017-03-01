@@ -9,6 +9,9 @@
 # kubernetes
 alias kube='kubectl'
 
+#vs code
+alias code='code-insiders'
+
 # git tower
 alias tower=gittower
 
