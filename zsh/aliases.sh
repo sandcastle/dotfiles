@@ -21,6 +21,8 @@ alias lines='git ls-files | xargs cloc'
 # Pretty print json
 alias json='python -m json.tool'
 
+# React Native
+alias rn='react-native'
 
 # --------------------------- NETWORK ------------------------------
 
