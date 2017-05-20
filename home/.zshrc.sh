@@ -27,3 +27,5 @@ autoload -U colors && colors
 fpath=("$DOT_FILES/terminal" $fpath)
 autoload -Uz promptinit && promptinit
 prompt 'sandcastle'
+
+eval $(/usr/libexec/path_helper -s)

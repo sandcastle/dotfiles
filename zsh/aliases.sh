@@ -6,6 +6,8 @@
 
 # ------------------------------ DEV -------------------------------
 
+alias az='$HOME/bin/az'
+
 # kubernetes
 alias kube='kubectl'
 
