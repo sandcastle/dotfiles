@@ -74,7 +74,7 @@
   pushInsteadOf = "git://gist.github.com/"
 
 [mergetool]
-  keepBackup = false
+	keepBackup = true
 
 [ghi]
   token = !security find-internet-password -a sandcastle -s github.com -l 'ghi token' -w
@@ -83,3 +83,16 @@
   clean = git-lfs clean %f
   smudge = git-lfs smudge %f
   required = true
+
+[diff]
+  tool = Kaleidoscope
+
+[difftool "Kaleidoscope"]
+  cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+
+[merge]
+  tool = Kaleidoscope
+
+[mergetool "Kaleidoscope"]
+  cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+  trustExitCode = true

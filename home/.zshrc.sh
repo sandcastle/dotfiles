@@ -29,3 +29,6 @@ autoload -Uz promptinit && promptinit
 prompt 'sandcastle'
 
 eval $(/usr/libexec/path_helper -s)
+
+export PATH="$HOME/.fastlane/bin:$PATH"
+
