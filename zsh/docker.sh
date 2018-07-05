@@ -6,8 +6,6 @@
 
 # Docker
 alias dk='docker'
-alias dkm='docker-machine'
-alias dks='docker-swarm'
 
 # Docker Compose
 alias dkc='docker-compose'

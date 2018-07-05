@@ -6,12 +6,14 @@
 
 # ------------------------------ DEV -------------------------------
 
+# azure
 alias az='$HOME/bin/az'
 
 # kubernetes
 alias kube='kubectl'
+alias kubeproxy='kube proxy &'
 
-#vs code
+# vs code
 alias code='code-insiders'
 
 # git tower
@@ -22,9 +24,6 @@ alias lines='git ls-files | xargs cloc'
 
 # Pretty print json
 alias json='python -m json.tool'
-
-# React Native
-alias rn='react-native'
 
 # --------------------------- NETWORK ------------------------------
 
