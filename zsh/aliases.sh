@@ -6,6 +6,14 @@
 
 # ------------------------------ DEV -------------------------------
 
+# Common project scripts - used on all project irrespective of lang
+alias sc='sh script/clean'  # clean te application
+alias sl='sh script/lint'   # lint the application
+alias st='sh script/test'   # test the application
+alias sb='sh script/build'  # build the application
+alias ss='sh script/server' # run the server application
+alias su='sh script/update' # update packages/dependencies
+
 # azure
 alias az='$HOME/bin/az'
 
@@ -87,7 +95,6 @@ alias lk='ll -Sr'        # Lists sorted by size, largest last.
 alias lt='ll -tr'        # Lists sorted by date, most recent last.
 alias lc='lt -c'         # Lists sorted by date, most recent last, shows change time.
 alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
-alias sl='ls'            # I often screw this up.
 
 # ------------------------------ OSX -------------------------------
 
