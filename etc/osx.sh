@@ -21,6 +21,9 @@ defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 # Screen
 # ======
 
+# Add font smoothing
+defaults -currentHost write -globalDomain AppleFontSmoothing -int 2
+
 # Require password immediately after sleep or screen saver begins
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
