@@ -2,3 +2,4 @@
 
 # install node version manager
 brew install nvm
+brew install yarn

@@ -19,27 +19,26 @@ brew cask install provisionql
 
 # general
 brew install openssl
-brew install imagemagick
 brew install htop-osx
 brew cask install vlc
 brew cask install rescuetime
 brew cask install screenflow
+brew cask install cardhop
+brew cask install fantastical
 
 # dev
-brew install cloc
 brew install yarn
 brew install kubernetes-cli
 brew install kubernetes-helm
 brew install kubectx
 brew cask install docker
 brew cask install visual-studio-code
-brew cask install dash
 brew cask install colour-contrast-analyser
 brew cask install terraform
 brew cask install surge
 brew cask install java
-brew cask install navicat-for-postgresql
 brew cask install tower
+brew cask install vlc
 
 # security
 brew cask install 1password

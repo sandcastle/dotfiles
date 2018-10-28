@@ -12,7 +12,7 @@ source "$DOT_FILES/zsh/osx.sh"
 source "$DOT_FILES/zsh/aws.sh"
 source "$DOT_FILES/zsh/functions.sh"
 source "$DOT_FILES/zsh/git.sh"
-source "$DOT_FILES/zsh/nvm.sh"
+source "$DOT_FILES/zsh/node.sh"
 source "$DOT_FILES/zsh/go.sh"
 source "$DOT_FILES/zsh/ruby.sh"
 source "$DOT_FILES/zsh/vscode.sh"
@@ -30,7 +30,5 @@ prompt 'sandcastle'
 
 eval $(/usr/libexec/path_helper -s)
 
+# fastlane
 export PATH="$HOME/.fastlane/bin:$PATH"
-
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
