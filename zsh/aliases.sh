@@ -7,11 +7,13 @@
 # ------------------------------ DEV -------------------------------
 
 # Common project scripts - used on all project irrespective of lang
-alias sc='sh script/clean'  # clean te application
+alias sc='sh script/clean'  # clean the application
+alias sf='sh script/format'  # format the code
 alias sl='sh script/lint'   # lint the application
 alias st='sh script/test'   # test the application
 alias sb='sh script/build'  # build the application
 alias ss='sh script/server' # run the server application
+alias si='sh script/install' # install packages/dependencies
 alias su='sh script/update' # update packages/dependencies
 
 # azure
