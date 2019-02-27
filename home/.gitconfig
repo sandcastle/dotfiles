@@ -6,6 +6,8 @@
   user = sandcastle
 
 [alias]
+  c           = config --list  --local
+
   up          = push -u origin
   down        = pull --rebase
   sync        = "!sh -c 'git down; git up' -"
