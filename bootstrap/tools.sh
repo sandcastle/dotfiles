@@ -26,19 +26,41 @@ brew cask install screenflow
 brew cask install cardhop
 brew cask install fantastical
 
-# dev
-brew install yarn
+# browsers
+brew cask install firefox
+brew cask install google-chrome
+brew cask install postman
+
+# cloud
 brew install kubernetes-cli
 brew install kubernetes-helm
 brew install kubectx
-brew cask install docker
-brew cask install visual-studio-code
-brew cask install colour-contrast-analyser
-brew cask install terraform
-brew cask install surge
+brew install awscli
+brew cask install google-cloud-sdk
+
+# databases
+brew cask install postgres
+brew cask install navicat-for-postgresql
+
+# languages
+brew cask install dotnet-sdk
 brew cask install java
+brew install python
+brew install nvm
+brew install yarn
+
+# go
+brew install go
+mkdir "$HOME/go"
+go get -u golang.org/x/tools/cmd/...
+
+# tools
 brew cask install tower
-brew cask install vlc
+brew cask install visual-studio-code
+brew cask install terraform
+brew cask install docker
+brew cask install colour-contrast-analyser
+brew cask install surge
 
 # security
 brew cask install 1password

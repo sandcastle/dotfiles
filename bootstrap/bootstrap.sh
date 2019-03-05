@@ -16,10 +16,3 @@ brew install caskroom/cask/brew-cask
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 sh "bootstrap/tools.sh"
-sh "bootstrap/dotnet.sh"
-sh "bootstrap/cloud.sh"
-sh "bootstrap/go.sh"
-sh "bootstrap/node.sh"
-sh "bootstrap/py.sh"
-sh "bootstrap/browsers.sh"
-sh "bootstrap/databases.sh"
