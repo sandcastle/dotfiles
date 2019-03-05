@@ -1,3 +1,3 @@
 #!/usr/bin/env zsh
 
-brew cask install dotnet
+brew cask install dotnet-sdk
