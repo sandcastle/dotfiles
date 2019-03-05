@@ -25,6 +25,7 @@ brew cask install rescuetime
 brew cask install screenflow
 brew cask install cardhop
 brew cask install fantastical
+brew cask install zoomus
 
 # browsers
 brew cask install firefox
