@@ -20,12 +20,20 @@ brew cask install provisionql
 # general
 brew install openssl
 brew install htop-osx
-brew cask install vlc
 brew cask install rescuetime
 brew cask install screenflow
 brew cask install cardhop
 brew cask install fantastical
 brew cask install zoomus
+brew cask install setapp
+
+# security
+brew cask install 1password
+
+# media
+brew cask install vlc
+brew cask install plex-media-server
+brew cask install sabnzbd
 
 # browsers
 brew cask install firefox
@@ -60,11 +68,9 @@ brew cask install tower
 brew cask install visual-studio-code
 brew cask install terraform
 brew cask install docker
+brew cask install kitematic
 brew cask install colour-contrast-analyser
 brew cask install surge
-
-# security
-brew cask install 1password
 
 # commandline
 brew install z
