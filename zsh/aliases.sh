@@ -7,6 +7,7 @@
 # ------------------------------ DEV -------------------------------
 
 # Common project scripts - used on all project irrespective of lang
+alias s='echo "s  = script shortcut help\nsc = sh script/clean\nsf = sh script/format\nsl = sh script/lint\nst = sh script/test\nsb = sh script/build\nss = sh script/server\nsi = sh script/install\nsu = sh script/update"'
 alias sc='sh script/clean'  # clean the application
 alias sf='sh script/format'  # format the code
 alias sl='sh script/lint'   # lint the application
@@ -15,6 +16,13 @@ alias sb='sh script/build'  # build the application
 alias ss='sh script/server' # run the server application
 alias si='sh script/install' # install packages/dependencies
 alias su='sh script/update' # update packages/dependencies
+
+# yarn shortcuts
+alias y='echo "y  = yarn shortcut help\nyi = yarn init\nyb = yarn build\nyt = yarn test\nys = yarn start"'
+alias yi='yarn init'
+alias yb='yarn build'
+alias yt='yarn test'
+alias ys='yarn start'
 
 # azure
 alias az='$HOME/bin/az'
