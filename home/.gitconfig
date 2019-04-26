@@ -21,6 +21,8 @@
   discardall  = reset --hard
   undo        = reset HEAD~1 --mixed
 
+  mr          = "!sh -c 'git push -u origin -o merge_request.create -o merge_request.target=${1:-develop} -o merge_request.merge_when_pipeline_succeeds' -"
+
   feat        = "!sh -c 'git branch \"feature/$1\"; git checkout \"feature/$1\"' -"
   rmfeat      = !sh "$HOME/dev/dotfiles/git-extras/git-branch-delete.sh"
 
