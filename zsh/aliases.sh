@@ -18,12 +18,22 @@ alias ss='sh script/server'  # run the server application
 alias sf='sh script/format'  # format the code
 
 # yarn shortcuts
-alias y='echo "y  = yarn shortcut help\nyi = yarn init\nyb = yarn build\nyt = yarn test\nys = yarn start"'
+alias yi='yarn'
 alias yi='yarn init'
 alias yu='yarn install'
 alias yb='yarn build'
 alias yt='yarn test'
 alias ys='yarn start'
+alias yh='echo "y  = yarn shortcut help\nyi = yarn init\nyb = yarn build\nyt = yarn test\nys = yarn start"'
+
+# dotnet shortcuts
+alias d='dotnet --info'
+alias dr='dotnet restore'
+alias dc='dotnet clean'
+alias dn='dotnet new'
+alias db='dotnet build'
+alias dt='dotnet test'
+alias ds='dotnet run'
 
 # azure
 alias az='$HOME/bin/az'
