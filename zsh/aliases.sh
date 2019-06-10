@@ -15,7 +15,7 @@ alias st='sh script/test'    # test the application
 alias sb='sh script/build'   # build the application
 alias ss='sh script/server'  # run the server application
 alias sf='sh script/format'  # format the code
-alias sh='echo "s  = script shortcut help\nsc = sh script/clean\nsf = sh script/format\nsl = sh script/lint\nst = sh script/test\nsb = sh script/build\nss = sh script/server\nsi = sh script/install\nsu = sh script/update"'
+alias s!='echo "s  = script shortcut help\nsc = sh script/clean\nsf = sh script/format\nsl = sh script/lint\nst = sh script/test\nsb = sh script/build\nss = sh script/server\nsi = sh script/install\nsu = sh script/update"'
 
 # yarn shortcuts
 alias y='yarn'
@@ -24,7 +24,7 @@ alias yu='yarn install'
 alias yb='yarn build'
 alias yt='yarn test'
 alias ys='yarn start'
-alias yh='echo "y  = yarn shortcut help\nyi = yarn init\nyb = yarn build\nyt = yarn test\nys = yarn start"'
+alias y!='echo "y  = yarn shortcut help\nyi = yarn init\nyb = yarn build\nyt = yarn test\nys = yarn start"'
 
 # dotnet shortcuts
 alias d='dotnet --info'
