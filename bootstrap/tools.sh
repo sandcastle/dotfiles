@@ -77,3 +77,7 @@ brew install z
 
 # JSON parser for commandline
 brew install jq
+
+# iterm
+brew cask install iterm2
+curl -L https://iterm2.com/shell_integration/zsh -o ~/.iterm2_shell_integration.zsh
