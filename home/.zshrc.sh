@@ -31,5 +31,3 @@ eval $(/usr/libexec/path_helper -s)
 
 # fastlane
 export PATH="$HOME/.fastlane/bin:$PATH"
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

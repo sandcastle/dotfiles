@@ -43,9 +43,6 @@ alias az='$HOME/bin/az'
 alias kube='kubectl'
 alias kubeproxy='kube proxy &'
 
-# vs code
-alias code='code-insiders'
-
 # git tower
 alias tower=gittower
 
