@@ -24,6 +24,7 @@ alias yu='yarn install'
 alias yb='yarn build'
 alias yt='yarn test'
 alias ys='yarn start'
+alias yyb='yarn && yarn build'
 alias y!='echo "y  = yarn shortcut help\nyi = yarn init\nyb = yarn build\nyt = yarn test\nys = yarn start"'
 
 # dotnet shortcuts
