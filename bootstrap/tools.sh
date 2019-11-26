@@ -45,6 +45,7 @@ brew install kubernetes-cli
 brew install kubernetes-helm
 brew install kubectx
 brew install awscli
+brew install skaffold
 brew cask install google-cloud-sdk
 
 # databases
