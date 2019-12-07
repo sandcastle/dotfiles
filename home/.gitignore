@@ -8,7 +8,11 @@
 # OS or Editor folders
 .DS_Store
 .cache
-Icon?
+thumbcache_*.db
+iconcache_*.db
+[tT]humbs.db
+[tT]humbs.db:encryptable
+ehthumbs.db
 
 # Folders to ignore
 .hg
