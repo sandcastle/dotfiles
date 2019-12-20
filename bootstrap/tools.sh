@@ -20,6 +20,7 @@ brew cask install provisionql
 # general
 brew install openssl
 brew install htop-osx
+brew cask httpie
 brew cask install rescuetime
 brew cask install screenflow
 brew cask install cardhop
