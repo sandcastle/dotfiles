@@ -73,6 +73,7 @@ brew cask install docker
 brew cask install kitematic
 brew cask install colour-contrast-analyser
 brew cask install surge
+brew cask install nucleo
 
 # commandline
 brew install z
