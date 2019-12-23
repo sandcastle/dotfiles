@@ -16,6 +16,8 @@ brew cask install qlimagesize
 brew cask install webpquicklook
 brew cask install betterzipql
 brew cask install provisionql
+brew cask install quicklookapk
+brew cask install qlvideo
 
 # general
 brew install openssl
