@@ -13,9 +13,11 @@ alias su='sh script/update'  # update packages/dependencies
 alias sl='sh script/lint'    # lint the application
 alias st='sh script/test'    # test the application
 alias sb='sh script/build'   # build the application
-alias ss='sh script/server'  # run the server application
+alias ss='sh script/start'   # run the application
 alias sf='sh script/format'  # format the code
-alias s!='echo "s  = script shortcut help\nsc = sh script/clean\nsf = sh script/format\nsl = sh script/lint\nst = sh script/test\nsb = sh script/build\nss = sh script/server\nsi = sh script/install\nsu = sh script/update"'
+alias sp='sh script/package' # package the application
+alias sd='sh script/deploy' # deploy the application
+alias s!='echo "s  = script shortcut help\nsc = sh script/clean\nsf = sh script/format\nsl = sh script/lint\nst = sh script/test\nsb = sh script/build\nss = sh script/server\nsi = sh script/install\nsu = sh script/update\nsp = sh script/package\nsd = sh script/deploy"'
 
 # yarn shortcuts
 alias y='yarn'
