@@ -28,7 +28,7 @@ brew cask install screenflow
 brew cask install cardhop
 brew cask install fantastical
 brew cask install zoomus
-brew cask install setapp
+brew cask install bartender
 
 # security
 brew cask install 1password
@@ -37,6 +37,8 @@ brew cask install 1password
 brew cask install vlc
 brew cask install plex-media-server
 brew cask install sabnzbd
+brew cask install spotify
+brew cask install handbrake
 
 # browsers
 brew cask install firefox
@@ -54,6 +56,7 @@ brew cask install google-cloud-sdk
 # databases
 brew cask install postgres
 brew cask install navicat-for-postgresql
+brew cask install dbeaver-community
 
 # languages
 brew cask install dotnet-sdk
@@ -61,6 +64,7 @@ brew cask install java
 brew install python
 brew install nvm
 brew install yarn
+brew install deno
 
 # go
 brew install go
@@ -76,11 +80,13 @@ brew cask install kitematic
 brew cask install colour-contrast-analyser
 brew cask install surge
 brew cask install nucleo
+brew cask install sketch
+
+# gaming 
+brew cask install discord
 
 # commandline
 brew install z
-
-# JSON parser for commandline
 brew install jq
 
 # iterm
