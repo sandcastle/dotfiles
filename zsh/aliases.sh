@@ -22,6 +22,7 @@ alias s!='echo "s  = script shortcut help\nsc = sh script/clean\nsf = sh script/
 # yarn shortcuts
 alias y='yarn'
 alias yi='yarn init'
+alias yl='yarn lint --fix'
 alias yu='yarn install'
 alias yb='yarn build'
 alias yt='yarn test'
