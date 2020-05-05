@@ -21,6 +21,7 @@ alias s!='echo "s  = script shortcut help\nsc = sh script/clean\nsf = sh script/
 
 # yarn shortcuts
 alias y='yarn'
+alias yc='yarn clean'
 alias yi='yarn init'
 alias yl='yarn lint --fix'
 alias yu='yarn install'
@@ -28,7 +29,7 @@ alias yb='yarn build'
 alias yt='yarn test'
 alias ys='yarn start'
 alias yyb='yarn && yarn build'
-alias y!='echo "y  = yarn shortcut help\nyi = yarn init\nyb = yarn build\nyt = yarn test\nys = yarn start"'
+alias y!='echo "y  = yarn shortcut help\nyc = yarn clean\nyl = yarn lint --fix\nyi = yarn init\nyb = yarn build\nyt = yarn test\nys = yarn start"'
 
 # dotnet shortcuts
 alias d='dotnet --info'
