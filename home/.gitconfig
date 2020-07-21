@@ -53,6 +53,10 @@
 [core]
   editor = code
   excludesfile = ~/.gitignore
+  ignorecase = false
+
+[rebase]
+  autoStash = true
 
 [format]
   pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
@@ -78,7 +82,7 @@
   pushInsteadOf = "git://gist.github.com/"
 
 [mergetool]
-	keepBackup = true
+  keepBackup = true
 
 [ghi]
   token = !security find-internet-password -a sandcastle -s github.com -l 'ghi token' -w
@@ -93,6 +97,9 @@
 
 [difftool "Kaleidoscope"]
   cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+
+[difftool "tower"]
+  cmd = \"/Applications/Tower.app/Contents/Resources/filemerge.sh\" \"$LOCAL\" \"$REMOTE\"
 
 [merge]
   tool = Kaleidoscope
