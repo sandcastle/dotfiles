@@ -39,6 +39,10 @@ curl --silent https://raw.githubusercontent.com/sandcastle/dotfiles/master/boots
 * `git-changelog`, `git-setup` etc.
 
 
+## Manual changes
+
+- To apply CSS (tab = 2 spaces, font) to GitHub, you will need to copy etc/userChrome.css to firefox profile dir & create subdir "chrome".
+
 ## WIP
 
 Look at the following repo's for inspiration:

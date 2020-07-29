@@ -44,6 +44,9 @@
   ghfork      = !sh "$HOME/dev/dotfiles/git-extras/git-ghpull.sh"
   cleanup     = !ruby "$HOME/dev/dotfiles/git-extras/git-cleanup.rb"
 
+[pull]
+  rebase = true
+
 [push]
   default = current
 
@@ -54,12 +57,13 @@
   editor = code
   excludesfile = ~/.gitignore
   ignorecase = false
+  pager = diff-so-fancy | less --tabs=4 -RFX
 
 [rebase]
   autoStash = true
 
 [format]
-  pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
+  pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)%an%Creset %C(bold yellow)%GK%Creset
   graph = true
 
 [advice]
@@ -82,14 +86,12 @@
   pushInsteadOf = "git://gist.github.com/"
 
 [mergetool]
-  keepBackup = true
-
-[ghi]
-  token = !security find-internet-password -a sandcastle -s github.com -l 'ghi token' -w
+  keepBackup = false
 
 [filter "lfs"]
-  clean = git-lfs clean %f
-  smudge = git-lfs smudge %f
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
   required = true
 
 [diff]
@@ -100,6 +102,20 @@
 
 [difftool "tower"]
   cmd = \"/Applications/Tower.app/Contents/Resources/filemerge.sh\" \"$LOCAL\" \"$REMOTE\"
+
+[color "diff-highlight"]
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
+
+[color "diff"]
+  meta = 11
+  frag = magenta bold
+  commit = yellow bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
 
 [merge]
   tool = Kaleidoscope

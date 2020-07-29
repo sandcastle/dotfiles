@@ -143,16 +143,6 @@ function hist() {
   history 0 | grep $@
 }
 
-# $ aes-enc file.zip
-function aes-enc() {
-  openssl enc -aes-256-cbc -e -in $1 -out "$1.aes"
-}
-
-# $ aes-dec file.zip.aes
-function aes-dec() {
-  openssl enc -aes-256-cbc -d -in $1 -out "${1%.*}"
-}
-
 # Shortens GitHub URLs.
 function gitio() {
   local url="$1"
@@ -208,3 +198,11 @@ function psu {
   ps -U "${1:-$USER}" -o 'pid,%cpu,%mem,command' "${(@)argv[2,-1]}"
 }
 
+# Simple .tar archiving.
+function tar_() {
+  tar -cvf "$1.tar" "$1"
+}
+
+function untar() {
+  tar -xvf $1
+}

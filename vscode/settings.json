@@ -1,0 +1,79 @@
+{
+  "editor.fontFamily": "JetBrains Mono, SF Mono, Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontSize": 13,
+  "editor.fontLigatures": true,
+
+  "breadcrumbs.enabled": true,
+  "cloudcode.auto-install": true,
+  "cloudcode.autoDependencies": "on",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.renderWhitespace": "all",
+  "editor.suggestSelection": "first",
+  "editor.tabSize": 2,
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "files.autoSave": "afterDelay",
+  "files.trimTrailingWhitespace": true,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "prettier.singleQuote": true,
+  "prettier.printWidth": 80,
+  "python.jediEnabled": false,
+  "python.pythonPath": "/usr/bin/python",
+  "typescript.tsserver.log": "verbose",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "vetur.experimental.templateInterpolationService": true,
+  "vetur.format.defaultFormatter.html": "prettier",
+  "vsicons.dontShowNewVersionMessage": true,
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "window.zoomLevel": 0,
+  "workbench.iconTheme": "vscode-icons",
+  "pgsql.connections": [
+    {
+      "host": "localhost",
+      "dbname": "global",
+      "user": "postgres",
+      "password": "",
+      "emptyPasswordInput": true,
+      "port": "5432",
+      "profileName": "localhost_global"
+    }
+  ],
+  "diffEditor.ignoreTrimWhitespace": false,
+  "files.associations": {
+    "*.svg": "xml",
+    "*.mdx": "markdown"
+  },
+  "vs-kubernetes": {
+    "vs-kubernetes.minikube-path.mac": "/Users/glenn/.vs-kubernetes/tools/minikube/darwin-amd64/minikube"
+  },
+  "terminal.integrated.shell.osx": "/bin/zsh",
+  "terminal.integrated.scrollback": 10000,
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
