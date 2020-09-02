@@ -17,7 +17,8 @@ source "$DOT_FILES/zsh/go.sh"
 source "$DOT_FILES/zsh/ruby.sh"
 source "$DOT_FILES/zsh/tools.sh"
 source "$DOT_FILES/zsh/docker.sh"
-source "$DOT_FILES/zsh/mono.sh"
+source "$DOT_FILES/zsh/dotnet.sh"
+source "$DOT_FILES/zsh/kube.sh"
 
 # Colors
 autoload -U colors && colors
