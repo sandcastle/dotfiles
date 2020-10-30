@@ -43,13 +43,17 @@ brew cask install firefox
 brew cask install google-chrome
 brew cask install postman
 
-# cloud
+# cloud/kube
 brew install kubernetes-cli
 brew install kubernetes-helm
 brew install kubectx
 brew install awscli
 brew install skaffold
 brew cask install google-cloud-sdk
+brew install kind
+brew install kustomize
+gcloud components update --quiet
+gcloud components install pkg --quiet
 
 # databases
 brew cask install postgres
