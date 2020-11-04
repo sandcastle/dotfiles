@@ -59,6 +59,7 @@ gcloud components install pkg --quiet
 brew cask install postgres
 brew cask install navicat-for-postgresql
 brew cask install dbeaver-community
+brew install pgcli
 
 # languages
 brew cask install dotnet-sdk
