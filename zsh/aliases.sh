@@ -41,13 +41,6 @@ alias dt='dotnet test'
 alias ds='dotnet run'
 alias du='dotnet update'
 
-# azure
-alias az='$HOME/bin/az'
-
-# kubernetes
-alias kube='kubectl'
-alias kubeproxy='kube proxy &'
-
 # git tower
 alias tower=gittower
 

@@ -8,17 +8,15 @@ source "$DOT_FILES/terminal/highlight.sh"
 
 # ZSH
 source "$DOT_FILES/zsh/aliases.sh"
-source "$DOT_FILES/zsh/osx.sh"
-source "$DOT_FILES/zsh/aws.sh"
+source "$DOT_FILES/zsh/cloud.sh"
+source "$DOT_FILES/zsh/dotnet.sh"
 source "$DOT_FILES/zsh/functions.sh"
 source "$DOT_FILES/zsh/git.sh"
-source "$DOT_FILES/zsh/node.sh"
 source "$DOT_FILES/zsh/go.sh"
+source "$DOT_FILES/zsh/node.sh"
+source "$DOT_FILES/zsh/osx.sh"
 source "$DOT_FILES/zsh/ruby.sh"
 source "$DOT_FILES/zsh/tools.sh"
-source "$DOT_FILES/zsh/docker.sh"
-source "$DOT_FILES/zsh/dotnet.sh"
-source "$DOT_FILES/zsh/kube.sh"
 
 # Colors
 autoload -U colors && colors
