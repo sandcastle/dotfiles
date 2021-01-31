@@ -99,3 +99,10 @@ curl -L https://iterm2.com/shell_integration/zsh -o ~/.iterm2_shell_integration.
 # git
 brew install tig
 brew install diff-so-fancy
+
+# dotnet
+dotnet tool install -g dotnet-outdated-tool
+dotnet tool install -g BenchmarkDotNet.Tool 
+dotnet tool install -g xunit-cli
+dotnet tool install -g dotnet-guid
+dotnet tool install -g dotnet-format
