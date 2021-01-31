@@ -15,7 +15,7 @@ source /usr/local/share/zsh/site-functions/_aws
 # ==================================================================
 
 # CLI mapping for py version
-export CLOUDSDK_PYTHON="/usr/local/opt/python@3.8/libexec/bin/python"
+export CLOUDSDK_PYTHON=python3
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 
