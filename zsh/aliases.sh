@@ -79,6 +79,8 @@ elif (( $+commands[wget] )); then
   alias get='wget --continue --progress=bar --timestamping'
 fi
 
+alias http-time='curl -o /dev/null -s -w "Establish Connection: %{time_connect}s\nTTFB: %{time_starttransfer}s\nTotal: %{time_total}s\n"'
+
 # ----------------------------- SHELL ------------------------------
 
 # Simple clear command
