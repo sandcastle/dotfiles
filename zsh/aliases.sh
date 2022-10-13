@@ -48,12 +48,12 @@ alias tower=gittower
 alias lines='git ls-files | xargs cloc'
 
 # Pretty print json
-alias json='python -m json.tool'
+alias json='python3 -m json.tool'
 
 # --------------------------- NETWORK ------------------------------
 
 # Serves a directory via HTTP
-alias http-serve='python -m SimpleHTTPServer'
+alias http-serve='python3 -m SimpleHTTPServer'
 
 # Disable certificate check for wget.
 alias wget='wget --no-check-certificate'

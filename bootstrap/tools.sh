@@ -64,7 +64,7 @@ brew install pgcli
 # languages
 brew cask install dotnet-sdk
 brew cask install java
-brew install python
+brew install python3
 brew install nvm
 brew install yarn
 brew install deno

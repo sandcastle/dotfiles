@@ -1,6 +1,6 @@
 [user]
   name = Glenn Morton
-  email = glenn@sandcastle.io
+	email = glenn@sandcastle.io
 
 [github]
   user = sandcastle
@@ -123,3 +123,7 @@
 [mergetool "Kaleidoscope"]
   cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
   trustExitCode = true
+[commit]
+	gpgSign = false
+[tag]
+	forceSignAnnotated = false
