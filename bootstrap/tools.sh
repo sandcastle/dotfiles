@@ -4,44 +4,28 @@
 brew install trash
 brew install tree
 
-# quick lookup plugins
-# http://github.com/sindresorhus/quick-look-plugins
-brew cask install suspicious-package
-brew cask install quicklook-json
-brew cask install quicklook-csv
-brew cask install qlmarkdown
-brew cask install qlimagesize
-brew cask install webpquicklook
-brew cask install betterzipql
-brew cask install provisionql
-brew cask install qlvideo
-brew cask install syntax-highlight
-
 # general
 brew install openssl
 brew install htop-osx
-brew cask httpie
-brew cask install rescuetime
-brew cask install screenflow
-brew cask install cardhop
-brew cask install fantastical
-brew cask install zoomus
-brew cask install bartender
+brew install httpie
+brew install cardhop
+brew install fantastical
+brew install zoomus
+brew install bartender
 
 # security
-brew cask install 1password
+brew install 1password
+brew install cloudflare-warp
 
 # media
-brew cask install vlc
-brew cask install plex-media-server
-brew cask install sabnzbd
-brew cask install spotify
-brew cask install handbrake
+brew install vlc
+brew install plex-media-server
+brew install sabnzbd
+brew install spotify
+brew install handbrake
 
 # browsers
-brew cask install firefox
-brew cask install google-chrome
-brew cask install postman
+brew install google-chrome
 
 # cloud/kube
 brew install kubernetes-cli
@@ -49,25 +33,23 @@ brew install kubernetes-helm
 brew install kubectx
 brew install awscli
 brew install skaffold
-brew cask install google-cloud-sdk
-brew install kind
-brew install kustomize
+brew install google-cloud-sdk
 gcloud components update --quiet
-gcloud components install pkg --quiet
+gcloud components install gke-gcloud-auth-plugin --quiet
+gcloud components install gsutil --quiet
 
 # databases
-brew cask install postgres
-brew cask install navicat-for-postgresql
-brew cask install dbeaver-community
+brew install postgres
 brew install pgcli
 
 # languages
-brew cask install dotnet-sdk
-brew cask install java
+brew install dotnet-sdk
+brew install java
 brew install python3
 brew install nvm
 brew install yarn
-brew install deno
+brew install pnpm
+brew install powershell
 
 # go
 brew install go
@@ -75,15 +57,21 @@ mkdir "$HOME/go"
 go get -u golang.org/x/tools/cmd/...
 
 # tools
-brew cask install tower
-brew cask install visual-studio-code
-brew cask install terraform
-brew cask install docker
-brew cask install kitematic
-brew cask install colour-contrast-analyser
-brew cask install surge
-brew cask install nucleo
-brew cask install sketch
+brew install jetbrains-toolbox
+brew install tower
+brew install visual-studio-code
+brew install terraform
+brew install docker
+brew install surge
+brew install ngrok
+
+# design
+brew install cleanshot
+brew install pixelsnap
+brew install figma
+brew install drawio
+brew install colour-contrast-analyser
+brew install nucleo
 
 # gaming 
 brew cask install discord
@@ -93,14 +81,17 @@ brew install z
 brew install jq
 
 # iterm
-brew cask install iterm2
+brew install iterm2
 curl -L https://iterm2.com/shell_integration/zsh -o ~/.iterm2_shell_integration.zsh
 
 # git
+brew install github
+brew install gitkraken
 brew install tig
 brew install diff-so-fancy
 
 # dotnet
+dotnet tool install -g dotnet-ef
 dotnet tool install -g dotnet-outdated-tool
 dotnet tool install -g BenchmarkDotNet.Tool 
 dotnet tool install -g xunit-cli

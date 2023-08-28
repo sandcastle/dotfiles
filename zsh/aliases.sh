@@ -16,7 +16,7 @@ alias sb='sh script/build'   # build the application
 alias ss='sh script/start'   # run the application
 alias sf='sh script/format'  # format the code
 alias sp='sh script/package' # package the application
-alias sd='sh script/deploy' # deploy the application
+alias sd='sh script/deploy'  # deploy the application
 alias s!='echo "s  = script shortcut help\nsc = sh script/clean\nsf = sh script/format\nsl = sh script/lint\nst = sh script/test\nsb = sh script/build\nss = sh script/server\nsi = sh script/install\nsu = sh script/update\nsp = sh script/package\nsd = sh script/deploy"'
 
 # yarn shortcuts
@@ -41,9 +41,6 @@ alias dt='dotnet test'
 alias ds='dotnet run'
 alias du='dotnet update'
 
-# git tower
-alias tower=gittower
-
 # Lines of Code counter
 alias lines='git ls-files | xargs cloc'
 
@@ -53,7 +50,7 @@ alias json='python3 -m json.tool'
 # --------------------------- NETWORK ------------------------------
 
 # Serves a directory via HTTP
-alias http-serve='python3 -m SimpleHTTPServer'
+alias http-serve='python3 -m http.server'
 
 # Disable certificate check for wget.
 alias wget='wget --no-check-certificate'
@@ -137,8 +134,8 @@ else
 fi
 
 # Clipboard
-alias pbc='pbcopy'
-alias pbp='pbpaste'
+alias clipc='pbcopy'
+alias clipp='pbpaste'
 
 # Disk Usage (Human Readable)
 alias df='df -kh'
