@@ -58,7 +58,6 @@ go get -u golang.org/x/tools/cmd/...
 
 # tools
 brew install jetbrains-toolbox
-brew install tower
 brew install visual-studio-code
 brew install terraform
 brew install docker
@@ -79,6 +78,7 @@ brew cask install discord
 # commandline
 brew install z
 brew install jq
+brew install fig
 
 # iterm
 brew install iterm2
