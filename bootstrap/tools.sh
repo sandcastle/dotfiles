@@ -71,7 +71,7 @@ brew install pixelsnap
 brew install figma
 brew install drawio
 brew install colour-contrast-analyser
-brew install nucleo
+brew install losslesscut
 
 # gaming 
 brew cask install discord
