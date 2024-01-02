@@ -71,6 +71,7 @@ brew install figma
 brew install drawio
 brew install colour-contrast-analyser
 brew install losslesscut
+brew install imageoptim
 
 # gaming 
 brew cask install discord
