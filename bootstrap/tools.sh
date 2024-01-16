@@ -15,6 +15,7 @@ brew install bartender
 
 # security
 brew install 1password
+brew install 1password-cli
 brew install cloudflare-warp
 
 # media
