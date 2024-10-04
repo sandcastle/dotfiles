@@ -80,11 +80,14 @@ brew cask install discord
 # commandline
 brew install z
 brew install jq
-brew install fig
 
 # iterm
 brew install iterm2
-curl -L https://iterm2.com/shell_integration/zsh -o ~/.iterm2_shell_integration.zsh
+curl -L https://iterm2.com/shell_integration/zsh -o ~/.iterm2_shell_integration.
+brew install zsh-autocomplete
+brew install zsh-autosuggestions
+brew install zsh-fast-syntax-highlighting
+
 
 #bun
 curl -fsSL https://bun.sh/install | bash
@@ -102,3 +105,7 @@ dotnet tool install -g BenchmarkDotNet.Tool
 dotnet tool install -g xunit-cli
 dotnet tool install -g dotnet-guid
 dotnet tool install -g dotnet-format
+
+#ruby
+sh ../lang/ruby/install.sh
+sh ../lang/ruby/check.sh
