@@ -72,7 +72,6 @@
 [log]
   abbrevCommit = true
 
-# URL shorthands
 # gh:sandcastle/dotfiles
 [url "git@github.com:"]
   insteadOf = "gh:"
@@ -94,15 +93,6 @@
   process = git-lfs filter-process
   required = true
 
-[diff]
-  tool = Kaleidoscope
-
-[difftool "Kaleidoscope"]
-  cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
-
-[difftool "tower"]
-  cmd = \"/Applications/Tower.app/Contents/Resources/filemerge.sh\" \"$LOCAL\" \"$REMOTE\"
-
 [color "diff-highlight"]
   oldNormal = red bold
   oldHighlight = red bold 52
@@ -117,13 +107,11 @@
   new = green bold
   whitespace = red reverse
 
-[merge]
-  tool = Kaleidoscope
-
-[mergetool "Kaleidoscope"]
-  cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-  trustExitCode = true
 [commit]
-	gpgSign = false
+  gpgSign = false
+
 [tag]
-	forceSignAnnotated = false
+  forceSignAnnotated = false
+
+[includeIf "hasconfig:remote.origin.url:github.com/komo-tech/"]
+  path = ~/.gitconfig-komo-tech
