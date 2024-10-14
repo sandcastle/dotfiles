@@ -12,6 +12,7 @@ brew install cardhop
 brew install fantastical
 brew install zoomus
 brew install bartender
+brew install alt-tab
 
 # security
 brew install 1password
@@ -87,7 +88,6 @@ curl -L https://iterm2.com/shell_integration/zsh -o ~/.iterm2_shell_integration.
 brew install zsh-autocomplete
 brew install zsh-autosuggestions
 brew install zsh-fast-syntax-highlighting
-
 
 #bun
 curl -fsSL https://bun.sh/install | bash

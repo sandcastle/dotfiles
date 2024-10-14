@@ -12,4 +12,7 @@ fi
 # set cask link folder
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
+sh "bootstrap/mac_os.sh"
+
+# tools
 sh "bootstrap/tools.sh"
