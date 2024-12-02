@@ -12,7 +12,6 @@ brew install cardhop
 brew install fantastical
 brew install zoomus
 brew install bartender
-brew install alt-tab
 
 # security
 brew install 1password
