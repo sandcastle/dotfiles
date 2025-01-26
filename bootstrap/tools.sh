@@ -1,5 +1,25 @@
 #!/usr/bin/env zsh
 
+# iterm
+brew install iterm2
+curl -L https://iterm2.com/shell_integration/zsh -o ~/.iterm2_shell_integration.
+brew install zsh-autocomplete
+brew install zsh-autosuggestions
+brew install zsh-fast-syntax-highlighting
+
+# dotnet
+sh ../lang/js/install.sh
+
+# dotnet
+sh ../lang/dotnet/install.sh
+
+# python
+sh ../lang/python/install.sh
+
+#ruby
+sh ../lang/ruby/install.sh
+sh ../lang/ruby/check.sh
+
 # helper tools
 brew install trash
 brew install tree
@@ -32,24 +52,19 @@ brew install google-chrome
 brew install kubernetes-cli
 brew install kubernetes-helm
 brew install kubectx
-brew install awscli
 brew install skaffold
 brew install google-cloud-sdk
 gcloud components update --quiet
 gcloud components install gke-gcloud-auth-plugin --quiet
 gcloud components install gsutil --quiet
+brew install awscli
 
 # databases
 brew install postgres
 brew install pgcli
 
 # languages
-brew install dotnet-sdk
 brew install java
-brew install python3
-brew install nvm
-brew install yarn
-brew install pnpm
 brew install powershell
 
 # go
@@ -81,30 +96,8 @@ brew cask install discord
 brew install z
 brew install jq
 
-# iterm
-brew install iterm2
-curl -L https://iterm2.com/shell_integration/zsh -o ~/.iterm2_shell_integration.
-brew install zsh-autocomplete
-brew install zsh-autosuggestions
-brew install zsh-fast-syntax-highlighting
-
-#bun
-curl -fsSL https://bun.sh/install | bash
-
 # git
 brew install github
 brew install gitkraken
 brew install tig
 brew install diff-so-fancy
-
-# dotnet
-dotnet tool install -g dotnet-ef
-dotnet tool install -g dotnet-outdated-tool
-dotnet tool install -g BenchmarkDotNet.Tool 
-dotnet tool install -g xunit-cli
-dotnet tool install -g dotnet-guid
-dotnet tool install -g dotnet-format
-
-#ruby
-sh ../lang/ruby/install.sh
-sh ../lang/ruby/check.sh
