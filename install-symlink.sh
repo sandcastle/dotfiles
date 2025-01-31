@@ -3,7 +3,7 @@
 # This file is called by install.sh; it symlinks dotfiles to the $HOME path
 
 
-DOT_FILES="$HOME/dev/dotfiles"
+DOT_FILES="$HOME/Developer/dotfiles"
 
 # debug message
 echo "Symlinking dotfiles from $DOT_FILES"

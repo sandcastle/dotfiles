@@ -2,10 +2,12 @@
 
 # Bootstraps an OSX machine
 
-dev="$HOME/dev"
+dev="$HOME/Developer"
 pushd .
 mkdir -p $dev
-cd $dev
+
+
+DOT_FILES="$dev/dotfiles"
 
 echo 'Enter new hostname of the machine (e.g. macbook-glenn)'
     read hostname
@@ -21,12 +23,12 @@ echo "Setting computer name to $compname"
 
 # OSX config
 echo 'Tweaking OS X...'
-source 'etc/osx.sh'
+source "$DOT_FILES/etc/osx.sh"
 
 
 # bootstrap with brew
 echo 'Homebrew...'
-sh "bootstrap/bootstrap.sh"
+sh "$DOT_FILES/bootstrap/bootstrap.sh"
 
 
 pub=$HOME/.ssh/id_rsa.pub
@@ -39,6 +41,6 @@ echo 'Copying public key to clipboard. Paste it into your Github account...'
 
 
 echo 'Symlinking config files...'
-source 'symlink-dotfiles.sh'
+source './install-symlink.sh'
 
 popd

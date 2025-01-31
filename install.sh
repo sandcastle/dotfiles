@@ -2,7 +2,7 @@
 chsh -s /bin/zsh
 
 # set work dir
-DOT_FILES="$HOME/dev/dotfiles"
+DOT_FILES="$HOME/Developer/dotfiles"
 
 # remove old version
 rm -rf $DOT_FILES

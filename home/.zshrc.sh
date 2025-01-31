@@ -1,4 +1,4 @@
-DOT_FILES="$HOME/dev/dotfiles"
+DOT_FILES="$HOME/Developer/dotfiles"
 
 # Terminal config
 source "$DOT_FILES/terminal/startup.sh"
@@ -41,3 +41,6 @@ source /usr/local/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 . "$HOME/.local/bin/env"
+
+# bun completions
+[ -s "/Users/glenn/.bun/_bun" ] && source "/Users/glenn/.bun/_bun"

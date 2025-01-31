@@ -1,24 +1,27 @@
 #!/usr/bin/env zsh
 
+set -e
+cd "$(dirname "$0")/.."
+
 # iterm
-brew install iterm2
+brew list iterm2 && brew install iterm2
 curl -L https://iterm2.com/shell_integration/zsh -o ~/.iterm2_shell_integration.
 brew install zsh-autocomplete
 brew install zsh-autosuggestions
 brew install zsh-fast-syntax-highlighting
 
 # dotnet
-sh ../lang/js/install.sh
+sh ./lang/js/install.sh
 
 # dotnet
-sh ../lang/dotnet/install.sh
+sh ./lang/dotnet/install.sh
 
 # python
-sh ../lang/python/install.sh
+sh ./lang/python/install.sh
 
 #ruby
-sh ../lang/ruby/install.sh
-sh ../lang/ruby/check.sh
+sh ./lang/ruby/install.sh
+sh ./lang/ruby/check.sh
 
 # helper tools
 brew install trash

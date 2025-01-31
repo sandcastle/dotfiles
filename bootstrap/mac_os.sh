@@ -49,7 +49,7 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 15
 ## Safari
 
 # Enable Safari’s debug menu
-defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+sudo defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 
 
 for app in Safari Finder Dock SystemUIServer; do killall "$app" >/dev/null 2>&1; done

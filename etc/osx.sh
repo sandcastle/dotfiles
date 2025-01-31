@@ -4,6 +4,8 @@
 # https://github.com/holman/dotfiles/tree/master/osx
 
 
+dev="$HOME/Developer"
+
 # Main
 # ====
 
@@ -42,7 +44,7 @@ defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 sudo defaults write com.apple.AppleMultitouchTrackpad Clicking 1
 
 # Use scroll gesture with the Ctrl (^) modifier key to zoom
-defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
+sudo defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
 
 
 # SSD-specific tweaks
@@ -52,7 +54,7 @@ defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
 defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
 # Disable local Time Machine snapshots
-sudo tmutil disablelocal
+sudo tmutil disable
 
 # Disable hibernation (speeds up entering sleep mode)
 sudo pmset -a hibernatemode 0
@@ -134,7 +136,7 @@ defaults write com.apple.dock autohide-time-modifier -int 0
 defaults write com.apple.dock showhidden -bool TRUE
 
 # Move the dock to the left
-defaults write com.apple.dock orientation -string "left"
+defaults write com.apple.dock orientation -string "right"
 
 # Move the dock to the left
 defaults write com.apple.dock autohide -bool TRUE
@@ -167,3 +169,4 @@ defaults write com.apple.terminal StringEncodings -array 4
 
 # reset finder
 killall Finder
+killall Dock
