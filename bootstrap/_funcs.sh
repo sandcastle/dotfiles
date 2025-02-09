@@ -2,7 +2,7 @@
 # Helper functions for bootstrap scripts
 
 # Load configuration
-source "$(dirname "$0")/config.sh"
+source "$(dirname "$0")/_config.sh"
 
 # Logging functions
 log_info() {
@@ -114,5 +114,61 @@ backup_file() {
         local backup="$BACKUP_DIR/$(basename "$file")"
         log_info "Backing up $file to $backup"
         mv "$file" "$backup"
+    fi
+}
+
+# Install packages based on OS and package manager
+install_package() {
+    local package=$1
+    
+    if is_macos; then
+        install_brew "$package"
+    elif is_linux; then
+        if command -v apt-get >/dev/null; then
+            sudo apt-get install -y "$package"
+        elif command -v dnf >/dev/null; then
+            sudo dnf install -y "$package"
+        elif command -v pacman >/dev/null; then
+            sudo pacman -S --noconfirm "$package"
+        fi
+    fi
+}
+
+# Install multiple packages in parallel (macOS) or serial (Linux)
+install_packages() {
+    local packages=("$@")
+    
+    if is_macos; then
+        # Create a temp file for logging
+        TEMP_LOG=$(mktemp)
+
+        # Install packages in parallel with a maximum of 4 concurrent jobs
+        local pids=()
+        for package in "${packages[@]}"; do
+            (install_brew "$package" >> "$TEMP_LOG" 2>&1) &
+            pids+=($!)
+            
+            # Limit concurrent jobs
+            if [[ ${#pids[@]} -ge 4 ]]; then
+                wait "${pids[0]}"
+                pids=("${pids[@]:1}")
+            fi
+        done
+
+        # Wait for remaining jobs
+        for pid in "${pids[@]}"; do
+            wait "$pid"
+        done
+        
+        cat "$TEMP_LOG"
+        rm "$TEMP_LOG"
+    elif is_linux; then
+        if command -v apt-get >/dev/null; then
+            sudo apt-get install -y "${packages[@]}"
+        elif command -v dnf >/dev/null; then
+            sudo dnf install -y "${packages[@]}"
+        elif command -v pacman >/dev/null; then
+            sudo pacman -S --noconfirm "${packages[@]}"
+        fi
     fi
 }

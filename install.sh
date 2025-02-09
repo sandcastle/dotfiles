@@ -24,8 +24,14 @@ prompt_user() {
     local prompt=$1
     local variable=$2
     local default=${3:-""}
-
-    if [[ -z "${!variable}" ]]; then
+    
+    # Use indirect reference with default empty string if variable doesn't exist
+    local current_value=""
+    if [ -n "${!variable+x}" ]; then
+        current_value="${!variable}"
+    fi
+    
+    if [[ -z "$current_value" ]]; then
         read -rp "$prompt [${default}]: " value
         value=${value:-$default}
         eval "$variable=\"$value\""
@@ -78,7 +84,8 @@ fi
 # Get the directory of this script
 DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Run bootstrap script
+# Make bootstrap script executable and run it
+chmod +x "$DOTFILES_DIR/bootstrap/bootstrap.sh"
 "$DOTFILES_DIR/bootstrap/bootstrap.sh"
 
 # Run symlink setup

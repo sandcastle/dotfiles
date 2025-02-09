@@ -18,7 +18,7 @@ create_symlink() {
         echo "Backing up $dest to $BACKUP_DIR/"
         mv "$dest" "$BACKUP_DIR/"
     fi
-    
+
     # Create symlink
     echo "Creating symlink: $dest -> $src"
     ln -sf "$src" "$dest"

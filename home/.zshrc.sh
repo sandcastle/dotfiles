@@ -18,7 +18,8 @@ setopt HIST_IGNORE_SPACE  # Do not record an event starting with a space
 setopt HIST_SAVE_NO_DUPS  # Do not write a duplicate event to the history file
 
 # Environment variables
-export EDITOR='vim'
+export EDITOR='nvim'
+export KUBE_EDITOR='nvim'
 export VISUAL='code'
 export PAGER='less'
 export LANG='en_US.UTF-8'
