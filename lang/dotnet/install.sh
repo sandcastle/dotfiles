@@ -1,6 +1,13 @@
 #!/usr/bin/env zsh
 
-curl -sSL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh
+set -e
+cd "$(dirname "$0")/../.."
+
+source "./bootstrap/_funcs.sh"
+
+print_heading "⏲️ Installing .Net SDKs"
+
+curl -sL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh
 
 # Explicitly install required versions
 bash /tmp/dotnet-install.sh --channel 8.0

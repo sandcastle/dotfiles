@@ -1,8 +1,13 @@
 #!/usr/bin/env zsh
 
-echo "Updating dotnet SDKs..."
+set -e
+cd "$(dirname "$0")/../.."
 
-curl -sSL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh
+source "./bootstrap/_funcs.sh"
+
+print_heading "⏲️ Updating .Net SDKs"
+
+curl -sL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh
 
 echo "Installing latest version of 8.0..."
 bash /tmp/dotnet-install.sh --channel 8.0

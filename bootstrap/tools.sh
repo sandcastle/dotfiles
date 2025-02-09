@@ -3,12 +3,14 @@
 set -e
 cd "$(dirname "$0")/.."
 
+source "$(dirname "$0")/_funcs.sh"
+
 # iterm
-brew list iterm2 && brew install iterm2
-curl -L https://iterm2.com/shell_integration/zsh -o ~/.iterm2_shell_integration.
-brew install zsh-autocomplete
-brew install zsh-autosuggestions
-brew install zsh-fast-syntax-highlighting
+install_brew "iterm2" "iTerm"
+curl -sL https://iterm2.com/shell_integration/zsh -o ~/.iterm2_shell_integration.zsh
+install_brew "zsh-autocomplete"
+install_brew "zsh-autosuggestions"
+install_brew "zsh-fast-syntax-highlighting"
 
 # dotnet
 sh ./lang/js/install.sh
@@ -19,88 +21,83 @@ sh ./lang/dotnet/install.sh
 # python
 sh ./lang/python/install.sh
 
-#ruby
-sh ./lang/ruby/install.sh
-sh ./lang/ruby/check.sh
+# #ruby
+# sh ./lang/ruby/install.sh
+# sh ./lang/ruby/check.sh
 
 # helper tools
-brew install trash
-brew install tree
+install_brew "trash"
+install_brew "tree"
+install_brew "bash-completion"
 
 # general
-brew install openssl
-brew install htop-osx
-brew install httpie
-brew install cardhop
-brew install fantastical
-brew install zoomus
-brew install bartender
+install_brew "openssl"
+install_brew "htop-osx"
+install_brew "httpie"
+install_brew "cardhop"
+install_brew "fantastical"
+install_brew "bartender"
 
 # security
-brew install 1password
-brew install 1password-cli
-brew install cloudflare-warp
+install_brew "1password-cli"
+install_brew "cloudflare-warp"
 
 # media
-brew install vlc
-brew install plex-media-server
-brew install sabnzbd
-brew install spotify
-brew install handbrake
+install_brew "vlc"
+install_brew "plex-media-server"
+install_brew "sabnzbd"
+install_brew "spotify"
+install_brew "handbrake"
 
 # browsers
-brew install google-chrome
+install_brew "google-chrome" "Google Chrome"
 
 # cloud/kube
-brew install kubernetes-cli
-brew install kubernetes-helm
-brew install kubectx
-brew install skaffold
-brew install google-cloud-sdk
+install_brew "kubernetes-cli"
+install_brew "kubernetes-helm"
+install_brew "kubectx"
+install_brew "skaffold"
+install_brew "google-cloud-sdk"
 gcloud components update --quiet
 gcloud components install gke-gcloud-auth-plugin --quiet
 gcloud components install gsutil --quiet
-brew install awscli
-
-# databases
-brew install postgres
-brew install pgcli
+install_brew "awscli"
 
 # languages
-brew install java
-brew install powershell
+install_brew "java"
+install_brew "powershell"
 
 # go
-brew install go
+install_brew "go"
 mkdir "$HOME/go"
 go get -u golang.org/x/tools/cmd/...
 
 # tools
-brew install jetbrains-toolbox
-brew install visual-studio-code
-brew install terraform
-brew install docker
-brew install surge
-brew install ngrok
+install_brew "jetbrains-toolbox"
+install_brew "visual-studio-code"
+install_brew "terraform"
+install_brew "docker"
+install_brew "surge"
+install_brew "ngrok"
 
 # design
-brew install cleanshot
-brew install pixelsnap
-brew install figma
-brew install drawio
-brew install colour-contrast-analyser
-brew install losslesscut
-brew install imageoptim
+install_brew "cleanshot"
+install_brew "pixelsnap"
+install_brew "figma"
+install_brew "drawio"
+install_brew "colour-contrast-analyser"
+install_brew "losslesscut"
+install_brew "imageoptim"
 
 # gaming 
-brew cask install discord
+install_brew "discord"
 
 # commandline
-brew install z
-brew install jq
+install_brew "z"
+install_brew "jq"
 
 # git
-brew install github
-brew install gitkraken
-brew install tig
-brew install diff-so-fancy
+install_brew "github"
+install_brew "gitkraken"
+install_brew "tig"
+install_brew "diff-so-fancy"

@@ -5,9 +5,6 @@
 # Amazon Web Services
 # ==================================================================
 
-# CLI completion
-source /usr/local/share/zsh/site-functions/_aws
-
 
 
 # ==================================================================
@@ -16,8 +13,8 @@ source /usr/local/share/zsh/site-functions/_aws
 
 # CLI mapping for py version
 export CLOUDSDK_PYTHON=python3
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+source "$(gcloud info --format='value(installation.sdk_root)')/path.zsh.inc"
+source "$(gcloud info --format='value(installation.sdk_root)')/completion.zsh.inc"
 
 
 

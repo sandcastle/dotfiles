@@ -1,9 +1,18 @@
 #!/usr/bin/env zsh
 
+set -e
+cd "$(dirname "$0")/../.."
+
+source "./bootstrap/_funcs.sh"
+
+echo "⏲️ Installing Ruby"
+
 RUBY_VERSION="3.3.0"
 
-brew install openssl@1.1 libyaml
-brew install rbenv ruby-build
+# install_brew "openssl@1.1"
+install_brew "libyaml"
+install_brew "rbenv"
+install_brew "ruby-build"
 
 export LDFLAGS="-L$(brew --prefix openssl@3)/lib -L$(brew --prefix libyaml)/lib"
 export CPPFLAGS="-I$(brew --prefix openssl@3)/include -I$(brew --prefix libyaml)/include"

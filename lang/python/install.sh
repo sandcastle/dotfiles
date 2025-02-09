@@ -1,6 +1,13 @@
 #!/usr/bin/env zsh
 
-brew install python3
+set -e
+cd "$(dirname "$0")/../.."
+
+source "./bootstrap/_funcs.sh"
+
+print_heading "⏲️ Installing Python"
+
+install_brew "python3"
 
 # Install pip
 
