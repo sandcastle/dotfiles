@@ -8,9 +8,6 @@ source "$(dirname "$0")/_funcs.sh"
 # iterm
 install_brew "iterm2" "iTerm"
 curl -sL https://iterm2.com/shell_integration/zsh -o ~/.iterm2_shell_integration.zsh
-install_brew "zsh-autocomplete"
-install_brew "zsh-autosuggestions"
-install_brew "zsh-fast-syntax-highlighting"
 
 # dotnet
 sh ./lang/js/install.sh
@@ -101,3 +98,46 @@ install_brew "github"
 install_brew "gitkraken"
 install_brew "tig"
 install_brew "diff-so-fancy"
+
+install_ohmyzsh() {
+    echo "Installing Oh My Zsh..."
+    
+    # Backup existing zsh files
+    local timestamp=$(date +%Y%m%d_%H%M%S)
+    local backup_dir="$HOME/.zsh_backup_$timestamp"
+    mkdir -p "$backup_dir"
+    
+    # Backup existing zsh files
+    for file in ".zshrc" ".zshenv" ".zprofile" ".zlogin"; do
+        if [ -f "$HOME/$file" ]; then
+            cp "$HOME/$file" "$backup_dir/"
+        fi
+    done
+    
+    # Install Oh My Zsh
+    if [ ! -d "$HOME/.oh-my-zsh" ]; then
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    fi
+    
+    # Install custom plugins
+    local plugins_dir="$HOME/.oh-my-zsh/custom/plugins"
+    
+    # zsh-autosuggestions
+    if [ ! -d "$plugins_dir/zsh-autosuggestions" ]; then
+        git clone https://github.com/zsh-users/zsh-autosuggestions "$plugins_dir/zsh-autosuggestions"
+    fi
+    
+    # fast-syntax-highlighting (faster alternative to zsh-syntax-highlighting)
+    if [ ! -d "$plugins_dir/fast-syntax-highlighting" ]; then
+        git clone https://github.com/zdharma-continuum/fast-syntax-highlighting "$plugins_dir/fast-syntax-highlighting"
+    fi
+    
+    # powerlevel10k theme
+    if [ ! -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]; then
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME/.oh-my-zsh/custom/themes/powerlevel10k"
+    fi
+    
+    echo "Oh My Zsh installation complete!"
+}
+
+source ~/Developer/dotfiles/bootstrap/tools.sh && install_ohmyzsh

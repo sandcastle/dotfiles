@@ -1,23 +1,27 @@
-#!/usr/bin/env zsh
+#!/bin/bash
 
-# check if brew is installed
-which -s brew
-
-# install brew, if required
-if [[ $? != 0 ]]; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-    echo >> /Users/glenn/.zprofile
-    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/glenn/.zprofile
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-
-    brew update
+# Detect OS
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    OS_TYPE="macos"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    OS_TYPE="linux"
+else
+    echo "Unsupported operating system: $OSTYPE"
+    exit 1
 fi
 
-# set cask link folder
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+# Source common utilities and functions
+source "$(dirname "$0")/tools.sh"
 
-sh "bootstrap/mac_os.sh"
+# Run OS-specific setup
+if [[ "$OS_TYPE" == "macos" ]]; then
+    source "$(dirname "$0")/mac_os.sh"
+elif [[ "$OS_TYPE" == "linux" ]]; then
+    source "$(dirname "$0")/linux.sh"
+fi
 
-# tools
-sh "bootstrap/tools.sh"
+# Run common setup steps
+source "$(dirname "$0")/common.sh"
+
+# Final checks
+source "$(dirname "$0")/700_final_checks.sh

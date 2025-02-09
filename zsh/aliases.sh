@@ -153,3 +153,44 @@ else
   alias topc='top -o cpu'
   alias topm='top -o vsize'
 fi
+
+# Navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias ~='cd ~'
+
+# Modern replacements
+alias ls='exa --group-directories-first'
+alias ll='exa -l --group-directories-first'
+alias la='exa -la --group-directories-first'
+alias cat='bat'
+alias find='fd'
+alias grep='rg'
+
+# Git aliases
+alias g='git'
+alias ga='git add'
+alias gc='git commit'
+alias gco='git checkout'
+alias gd='git diff'
+alias gl='git log --oneline'
+alias gs='git status'
+alias gp='git push'
+alias gpl='git pull'
+
+# Docker aliases
+alias d='docker'
+alias dc='docker-compose'
+alias dps='docker ps'
+alias di='docker images'
+
+# Development
+alias c='code .'
+alias python='python3'
+alias pip='pip3'
+
+# System
+alias reload='source ~/.zshrc'
+alias path='echo $PATH | tr ":" "\n"'
+alias ports='lsof -i -P -n | grep LISTEN'

@@ -1,73 +1,118 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
+# Helper functions for bootstrap scripts
+
+# Load configuration
+source "$(dirname "$0")/config.sh"
+
+# Logging functions
+log_info() {
+    printf "\033[0;34m➜\033[0m %s\n" "$1"
+}
+
+log_success() {
+    printf "\033[0;32m✓\033[0m %s\n" "$1"
+}
+
+log_error() {
+    printf "\033[0;31m✗\033[0m %s\n" "$1" >&2
+}
+
+log_warning() {
+    printf "\033[0;33m!\033[0m %s\n" "$1"
+}
+
+# Progress indicator
+show_progress() {
+    local message=$1
+    local pid=$2
+    local delay=0.1
+    local spinstr='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
+
+    while kill -0 $pid 2>/dev/null; do
+        local temp=${spinstr#?}
+        printf "\r\033[0;34m%s\033[0m %s" "${spinstr}" "${message}"
+        local spinstr=$temp${spinstr%"$temp"}
+        sleep $delay
+    done
+    printf "\r\033[0;32m✓\033[0m %s\n" "${message}"
+}
 
 print_heading() {
     local heading=$1
     echo ""  # Add blank line before heading
-    echo "\033[1m${heading}\033[0m"  # Bold text using ANSI escape codes
+    echo "==> $heading"
 }
 
 program_exists() {
-    local program=$1
-    local app_name=$2  # Optional alternative app name
-    
-    # Check if command exists in PATH
-    if command -v "$program" >/dev/null 2>&1; then
-        echo "$program is already installed (found in PATH)"
-        return 0
-    fi
-    
-    # Check common application directories for macOS apps
-    local check_app_name="${program%.app}.app"  # Default to program name
-    if [ -n "$app_name" ]; then
-        check_app_name="${app_name%.app}.app"  # Use alternative app name if provided
-    fi
-    
-    if [ -d "/Applications/${check_app_name}" ] || [ -d "$HOME/Applications/${check_app_name}" ]; then
-        echo "$program is already installed (found in Applications)"
-        return 0
-    fi
-    
-    return 1
+    command -v "$1" >/dev/null 2>&1
+}
+
+# OS detection
+is_macos() {
+    [[ "$(uname)" == "Darwin" ]]
+}
+
+is_linux() {
+    [[ "$(uname)" == "Linux" ]]
 }
 
 # Function to install any brew package (auto-detects if it's a cask)
 install_brew() {
     local package=$1
-    local app_name=$2  # Optional alternative app name
+    local name=${2:-$1}
+    local is_cask=${3:-""}
     
-    # First check if it exists anywhere on the system
-    if program_exists "$package" "$app_name"; then
-        echo "Note: $package appears to be installed outside of brew"
+    log_info "Installing $name..."
+    
+    # Check if already installed
+    if program_exists "$name"; then
+        log_success "$name is already installed"
         return 0
     fi
-
-    local is_cask=false
-    local is_formula=false
-
-    # More strict check using brew info
-    if brew info --cask "$package" &>/dev/null; then
-        is_cask=true
-    elif brew info --formula "$package" &>/dev/null; then
-        is_formula=true
-    fi
-
-    # Install based on package type
-    if $is_cask; then
-        if ! brew list --cask "$package" &>/dev/null; then
-            echo "Installing cask $package..."
-            brew install --cask "$package"
-        else
-            echo "Cask $package is already installed"
-        fi
-    elif $is_formula; then
-        if ! brew list --formula "$package" &>/dev/null; then
-            echo "Installing formula $package..."
-            brew install "$package"
-        else
-            echo "Formula $package is already installed"
-        fi
+    
+    # Install with progress indicator
+    if [[ "$is_cask" == "--cask" ]]; then
+        (brew install --cask "$package" > /tmp/brew.log 2>&1) &
     else
-        echo "Error: $package not found in brew (neither cask nor formula)"
+        (brew install "$package" > /tmp/brew.log 2>&1) &
+    fi
+    
+    show_progress "Installing $name" $!
+    
+    # Verify installation
+    if ! program_exists "$name"; then
+        log_error "Failed to install $name"
+        cat /tmp/brew.log
         return 1
+    fi
+    
+    log_success "$name installed successfully"
+}
+
+# Check system requirements
+check_system() {
+    local min_memory=8 # GB
+    local min_disk=20  # GB
+    
+    # Check memory
+    local memory=$(sysctl hw.memsize | awk '{print $2 / 1024^3}')
+    if (( $(echo "$memory < $min_memory" | bc -l) )); then
+        log_warning "Low memory detected: ${memory}GB (recommended: ${min_memory}GB)"
+    fi
+    
+    # Check disk space
+    local disk=$(df -h / | awk 'NR==2 {print $4}' | sed 's/G//')
+    if (( $(echo "$disk < $min_disk" | bc -l) )); then
+        log_warning "Low disk space: ${disk}GB available (recommended: ${min_disk}GB)"
+    fi
+}
+
+# Backup function
+backup_file() {
+    local file=$1
+    if [[ -e "$file" ]]; then
+        local backup="$BACKUP_DIR/$(basename "$file")"
+        log_info "Backing up $file to $backup"
+        mv "$file" "$backup"
     fi
 }
