@@ -2,6 +2,7 @@
 # Editors
 # --------
 export EDITOR='code'
+export KUBE_EDITOR="nvim"
 export PAGER='less'
 
 # locale

@@ -4,38 +4,30 @@ source "$(dirname "${BASH_SOURCE[0]}")/../_funcs.sh"
 
 print_heading "Installing common tools"
 
-core_tools=(
-    "git"
-    "gh"
-    "fzf"
-    "ripgrep"
-    "fd"
-    "jq"
-    "yq"
-    "tree"
-    "wget"
-    "curl"
-)
+# core tools
+install_package "git"
+install_package "gh"
+install_package "fzf"
+install_package "ripgrep"
+install_package "fd"
+install_package "jq"
+install_package "yq"
+install_package "tree"
+install_package "wget"
+install_package "curl"
 
-modern_replacements=(
-    "bat"           # Better cat
-    "exa"           # Better ls
-    "delta"         # Better git diff
-    "zoxide"        # Better cd
-    "duf"           # Better df
-    "bottom"        # Better top
-)
+# modern replacements
+install_package "bat"
+install_package "eza"
+install_package "delta"
+install_package "zoxide"
+install_package "duf"
+install_package "bottom"
 
-monitoring_tools=(
-    "cloc"          # For 'lines' alias
-    "httpie"        # For HTTP client aliases
-    "trash"         # For safe rm
-    "watch"         # For monitoring commands
-    "htop"          # Process monitoring
-    "ncdu"          # Disk usage analysis
-)
-
-# Install all categories
-install_packages "${core_tools[@]}"
-install_packages "${modern_replacements[@]}"
-install_packages "${monitoring_tools[@]}" 
+# monitoring tools
+install_package "cloc"
+install_package "httpie"
+install_package "trash"
+install_package "watch"
+install_package "htop"
+install_package "ncdu"
