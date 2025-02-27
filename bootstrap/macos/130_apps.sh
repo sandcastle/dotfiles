@@ -52,6 +52,7 @@ install_brew "jetbrains-toolbox"
 install_brew "visual-studio-code" "Visual Studio Code"
 install_brew "terraform"
 install_brew "docker"
+install_brew "docker-compose"
 install_brew "ngrok"
 
 setup_vscode
@@ -72,7 +73,6 @@ install_brew "discord"
 
 # git
 log_info "Installing git tools"
-install_brew "github"
 install_brew "gitkraken"
 install_brew "tig"
 install_brew "diff-so-fancy"
