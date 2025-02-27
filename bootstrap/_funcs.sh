@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-# Helper functions for bootstrap scripts
 
 # Load configuration
-source "$(dirname "$0")/config.sh"
+source "$(dirname "${BASH_SOURCE[0]}")/_config.sh"
 
 # Logging functions
 log_info() {
@@ -40,7 +39,7 @@ show_progress() {
 print_heading() {
     local heading=$1
     echo ""  # Add blank line before heading
-    echo "==> $heading"
+    echo -e "\033[1m==> $heading\033[0m"
 }
 
 program_exists() {
@@ -70,6 +69,28 @@ install_brew() {
         return 0
     fi
     
+    # Check for macOS applications and Homebrew packages
+    if is_macos; then
+        # Check for .app bundles
+        if [ -d "/Applications/${name}.app" ] || [ -d "$HOME/Applications/${name}.app" ]; then
+            log_success "$name is already installed"
+            return 0
+        fi
+        
+        # Check if already installed via Homebrew
+        if [[ "$is_cask" == "--cask" ]]; then
+            if brew list --cask "$package" &>/dev/null; then
+                log_success "$name is already installed via Homebrew Cask"
+                return 0
+            fi
+        else
+            if brew list "$package" &>/dev/null; then
+                log_success "$name is already installed via Homebrew"
+                return 0
+            fi
+        fi
+    fi
+    
     # Install with progress indicator
     if [[ "$is_cask" == "--cask" ]]; then
         (brew install --cask "$package" > /tmp/brew.log 2>&1) &
@@ -80,10 +101,24 @@ install_brew() {
     show_progress "Installing $name" $!
     
     # Verify installation
-    if ! program_exists "$name"; then
-        log_error "Failed to install $name"
-        cat /tmp/brew.log
-        return 1
+    if [[ "$is_cask" == "--cask" ]]; then
+        # For casks, check if the application exists in /Applications or ~/Applications
+        if [ ! -d "/Applications/${name}.app" ] && [ ! -d "$HOME/Applications/${name}.app" ]; then
+            if ! brew list --cask "$package" &>/dev/null; then
+                log_error "Failed to install $name"
+                cat /tmp/brew.log
+                return 1
+            fi
+        fi
+    else
+        # For regular brew packages, check if the command exists
+        if ! program_exists "$name"; then
+            if ! brew list "$package" &>/dev/null; then
+                log_error "Failed to install $name"
+                cat /tmp/brew.log
+                return 1
+            fi
+        fi
     fi
     
     log_success "$name installed successfully"
@@ -114,5 +149,126 @@ backup_file() {
         local backup="$BACKUP_DIR/$(basename "$file")"
         log_info "Backing up $file to $backup"
         mv "$file" "$backup"
+    fi
+}
+
+# Install packages based on OS and package manager
+install_package() {
+    local package_name="$1"
+    echo "➜ Installing ${package_name}..."
+    
+    if command -v brew >/dev/null 2>&1; then
+        # For Homebrew
+        if brew list "$package_name" >/dev/null 2>&1; then
+            echo "✓ Package ${package_name} is already installed"
+            return 0
+        fi
+        brew install "$package_name" || {
+            # Only fail if it's a real error, not just "already installed"
+            if [[ $? -ne 0 && ! "$PIPESTATUS" =~ "already installed" ]]; then
+                echo "✗ Failed to install ${package_name}"
+                return 1
+            fi
+            return 0
+        }
+    elif command -v apt-get >/dev/null 2>&1; then
+        # For apt-based systems
+        sudo apt-get install -y "$package_name"
+    elif command -v dnf >/dev/null 2>&1; then
+        # For dnf-based systems
+        sudo dnf install -y "$package_name"
+    else
+        echo "✗ No supported package manager found"
+        return 1
+    fi
+}
+
+# Install multiple packages in parallel (macOS) or serial (Linux)
+install_packages() {
+    local packages=("$@")
+    
+    if is_macos; then
+        # Create a temp file for logging
+        TEMP_LOG=$(mktemp)
+
+        # Install packages in parallel with a maximum of 4 concurrent jobs
+        local pids=()
+        for package in "${packages[@]}"; do
+            (install_brew "$package" >> "$TEMP_LOG" 2>&1) &
+            pids+=($!)
+            
+            # Limit concurrent jobs
+            if [[ ${#pids[@]} -ge 4 ]]; then
+                wait "${pids[0]}"
+                pids=("${pids[@]:1}")
+            fi
+        done
+
+        # Wait for remaining jobs
+        for pid in "${pids[@]}"; do
+            wait "$pid"
+        done
+        
+        cat "$TEMP_LOG"
+        rm "$TEMP_LOG"
+    elif is_linux; then
+        if command -v apt-get >/dev/null; then
+            sudo apt-get install -y "${packages[@]}"
+        elif command -v dnf >/dev/null; then
+            sudo dnf install -y "${packages[@]}"
+        elif command -v pacman >/dev/null; then
+            sudo pacman -S --noconfirm "${packages[@]}"
+        fi
+    fi
+}
+
+setup_vscode() {
+    if [ -d "/Applications/Visual Studio Code.app" ]; then
+        log_info "Setting up VS Code CLI tools"
+        # Install command line tools via VS Code
+        "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" --install-extension ms-vscode.cpptools
+
+        # Create symbolic link if it doesn't exist
+        if [ ! -f "/usr/local/bin/code" ]; then
+            sudo ln -s "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" "/usr/local/bin/code"
+        fi
+        
+        log_success "VS Code CLI tools installed successfully"
+    else
+        log_warning "VS Code not found. Please install it first."
+    fi
+}
+
+# Error handling
+error_handler() {
+    local exit_code=$1
+    local line_no=$2
+    local bash_lineno=$3
+    local last_command=$4
+    local func_stack=$5
+
+    echo "Error occurred in:"
+    echo "  - Command: $last_command"
+    echo "  - Line: $line_no"
+    echo "  - Function: $func_stack"
+    echo "Exit code: $exit_code"
+}
+
+# User input helper
+prompt_user() {
+    local prompt=$1
+    local variable=$2
+    local default=${3:-""}
+    
+    # Use indirect reference with default empty string if variable doesn't exist
+    local current_value=""
+    if [ -n "${!variable+x}" ]; then
+        current_value="${!variable}"
+    fi
+    
+    if [[ -z "$current_value" ]]; then
+        read -rp "$prompt [${default}]: " value
+        value=${value:-$default}
+        eval "$variable=\"$value\""
     fi
 }

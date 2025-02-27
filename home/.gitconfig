@@ -15,7 +15,7 @@
   st          = status --short
   stv         = status -v
 
-  sq          = "!sh -c 'git merge --squash \"$1\" && git commit -m \"$2\"'"
+  sq          = "!sh -c 'git merge --squash \"$1\"'"
 
   save        = "!sh -c 'git add -A .; git commit -m \"$1\"' -"
   saveall     = "!sh -c 'git commit -au -m \"$1\"' -"

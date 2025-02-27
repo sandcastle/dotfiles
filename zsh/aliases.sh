@@ -104,16 +104,19 @@ alias rm="${aliases[rm]:-rm} -i"
 alias type='type -a'
 
 # list
-alias l='ls -1A'         # Lists in one column, hidden files.
-alias ll='ls -lh'        # Lists human readable sizes.
-alias lr='ll -R'         # Lists human readable sizes, recursively.
-alias la='ll -A'         # Lists human readable sizes, hidden files.
-alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager.
-alias lx='ll -XB'        # Lists sorted by extension (GNU only).
-alias lk='ll -Sr'        # Lists sorted by size, largest last.
-alias lt='ll -tr'        # Lists sorted by date, most recent last.
-alias lc='lt -c'         # Lists sorted by date, most recent last, shows change time.
-alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
+# These will only be used if the eza aliases aren't available
+if ! (( $+commands[eza] )); then
+  alias l='ls -1A'         # Lists in one column, hidden files.
+  alias ll='ls -lh'        # Lists human readable sizes.
+  alias lr='ll -R'         # Lists human readable sizes, recursively.
+  alias la='ll -A'         # Lists human readable sizes, hidden files.
+  alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager.
+  alias lx='ll -XB'        # Lists sorted by extension (GNU only).
+  alias lk='ll -Sr'        # Lists sorted by size, largest last.
+  alias lt='ll -tr'        # Lists sorted by date, most recent last.
+  alias lc='lt -c'         # Lists sorted by date, most recent last, shows change time.
+  alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
+fi
 
 # ------------------------------ OSX -------------------------------
 
@@ -141,8 +144,19 @@ alias clipc='pbcopy'
 alias clipp='pbpaste'
 
 # Disk Usage (Human Readable)
-alias df='df -kh'
-alias du='du -kh'
+if (( $+commands[duf] )); then
+  # duf: Better disk usage/free utility with colorful graphs
+  alias df='duf'
+else
+  alias df='df -kh'
+fi
+
+if (( $+commands[dust] )); then
+  # dust: More intuitive version of du with colored output
+  alias du='dust'
+else
+  alias du='du -kh'
+fi
 
 # Process Usage (Prefer htop)
 if (( $+commands[htop] )); then
@@ -160,13 +174,93 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias ~='cd ~'
 
+# Add zoxide integration if it exists
+if (( $+commands[zoxide] )); then
+  # zoxide: Smarter cd command that learns your habits
+  # These aliases are optional as zoxide automatically integrates with cd
+  alias zi='z -i'    # Interactive selection mode
+  alias za='z -a'    # Add a directory to the database without navigating to it
+  alias zq='z -q'    # Quick search mode (echo path only)
+fi
+
 # Modern replacements
-alias ls='exa --group-directories-first'
-alias ll='exa -l --group-directories-first'
-alias la='exa -la --group-directories-first'
-alias cat='bat'
-alias find='fd'
-alias grep='rg'
+# Use conditional checks to ensure commands exist before aliasing them
+if (( $+commands[eza] )); then
+  # eza: Modern, colorized ls replacement with better defaults
+  alias ls='eza --group-directories-first'
+  alias ll='eza -l --group-directories-first'
+  alias la='eza -la --group-directories-first'
+  alias lt='eza -la --group-directories-first --sort=modified'
+  alias lz='eza -la --group-directories-first --sort=size'
+  alias lg='eza -la --group-directories-first --git'
+  alias tree='eza --tree'
+fi
+
+if (( $+commands[bat] )); then
+  # bat: cat clone with syntax highlighting and Git integration
+  alias cat='bat'
+fi
+
+if (( $+commands[fd] )); then
+  # fd: Faster and friendlier alternative to the find command
+  alias find='fd'
+fi
+
+if (( $+commands[rg] )); then
+  # ripgrep: Fast line-oriented search tool (grep replacement)
+  alias grep='rg'
+fi
+
+if (( $+commands[procs] )); then
+  # procs: Modern replacement for ps with additional features
+  alias ps='procs'
+fi
+
+if (( $+commands[sd] )); then
+  # sd: Intuitive find & replace CLI (sed alternative)
+  alias sed='sd'
+fi
+
+if (( $+commands[gping] )); then
+  # gping: Ping with a graphical display
+  alias ping='gping'
+fi
+
+if (( $+commands[tealdeer] )); then
+  # tealdeer: Fast tldr client (simplified, example-based man pages)
+  alias tldr='tealdeer'
+elif (( $+commands[tldr] )); then
+  # Some systems might have the tldr package instead
+  alias tldr='tldr'
+fi
+
+if (( $+commands[xh] )); then
+  # xh: Friendly HTTP tool, alternative to curl/httpie
+  alias https='xh'
+fi
+
+if (( $+commands[hyperfine] )); then
+  # hyperfine: Command-line benchmarking tool
+  alias bench='hyperfine'
+fi
+
+if (( $+commands[delta] )); then
+  # delta: Syntax-highlighting pager for git and diff output
+  alias diff='delta'
+fi
+
+if (( $+commands[choose] )); then
+  # choose: cut/awk alternative with a more intuitive interface
+  alias cut='choose'
+fi
+
+# Bottom (better top) aliases
+if (( $+commands[bottom] )); then
+  # bottom: Graphical system/process monitor, alternative to top/htop
+  alias btm='bottom'
+  alias cpu='bottom --basic --proc-tree --process-command --tree --config_type memory'
+  alias mem='bottom --basic --proc-tree --process-command --tree --config_type cpu'
+fi
 
 # Git aliases
 alias g='git'
@@ -174,10 +268,25 @@ alias ga='git add'
 alias gc='git commit'
 alias gco='git checkout'
 alias gd='git diff'
+alias gds='git diff --staged'
 alias gl='git log --oneline'
+alias glo='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
 alias gs='git status'
 alias gp='git push'
 alias gpl='git pull'
+alias gf='git fetch'
+alias gb='git branch'
+
+# Add git config to use delta if available
+# Move the git config commands to a function to avoid execution on sourcing
+if (( $+commands[delta] )); then
+  setup_git_delta() {
+    git config --global core.pager "delta"
+    git config --global interactive.diffFilter "delta --color-only"
+  }
+  # User can explicitly call this function when needed
+  alias setup-git-delta='setup_git_delta'
+fi
 
 # Docker aliases
 alias d='docker'

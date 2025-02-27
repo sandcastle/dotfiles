@@ -18,7 +18,8 @@ setopt HIST_IGNORE_SPACE  # Do not record an event starting with a space
 setopt HIST_SAVE_NO_DUPS  # Do not write a duplicate event to the history file
 
 # Environment variables
-export EDITOR='vim'
+export EDITOR='nvim'
+export KUBE_EDITOR='nvim'
 export VISUAL='code'
 export PAGER='less'
 export LANG='en_US.UTF-8'
@@ -37,15 +38,6 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case insensitive com
 # Initialize modern tools
 eval "$(zoxide init zsh)"  # Better directory navigation
 eval "$(starship init zsh)" # Modern prompt
-
-# Source additional configurations
-source "$HOME/.zsh/aliases.sh"
-source "$HOME/.zsh/functions.sh"
-source "$HOME/.zsh/tools.sh"
-
-# Load plugins
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # FZF configuration
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -77,12 +69,12 @@ zstyle ':completion:*' cache-path "$HOME/.zcompcache"
 
 # Plugin configuration - Optimized based on your tools and usage
 plugins=(
-    git                     # Git integration and aliases
-    docker                  # Docker commands and completion
-    node                    # Node.js and npm/yarn commands
-    golang                  # Go development
-    kubectl                # Kubernetes commands
-    helm                   # Helm commands
+    git                   # Git integration and aliases
+    docker                # Docker commands and completion
+    node                  # Node.js and npm/yarn commands
+    golang                # Go development
+    kubectl               # Kubernetes commands
+    helm                  # Helm commands
     terraform             # Terraform commands
     aws                   # AWS CLI commands
     gcloud                # Google Cloud commands
@@ -92,8 +84,6 @@ plugins=(
     yarn                  # Yarn package manager
     brew                  # Homebrew commands
     httpie                # HTTP client
-    zsh-autosuggestions    # Fish-like autosuggestions
-    fast-syntax-highlighting # Faster syntax highlighting
 )
 
 # Performance optimization settings
@@ -106,31 +96,18 @@ HIST_STAMPS="yyyy-mm-dd"
 # Source Oh My Zsh
 source $ZSH/oh-my-zsh.sh
 
-# Language environments (lazy load)
-function node_env() {
-    source "$DOT_FILES/lang/js/env.sh"
-    unfunction node_env
-}
-
-function ruby_env() {
-    source "$DOT_FILES/lang/ruby/env.sh"
-    unfunction ruby_env
-}
-
-function dotnet_env() {
-    source "$DOT_FILES/lang/dotnet/env.sh"
-    unfunction dotnet_env
-}
-
-# Custom functions and aliases (only load what's unique)
-# Load custom script shortcuts (not provided by Oh My Zsh)
+# Source additional configurations
 source "$DOT_FILES/zsh/aliases.sh"
-
-# Load cloud-specific functions (not covered by plugins)
-source "$DOT_FILES/zsh/cloud.sh"
-
-# Load custom functions (after filtering out ones provided by plugins)
 source "$DOT_FILES/zsh/functions.sh"
+source "$DOT_FILES/zsh/tools.sh"
+source "$DOT_FILES/zsh/cloud.sh"
+source "$DOT_FILES/zsh/git.sh"
+source "$DOT_FILES/zsh/osx.sh"
+
+# Language environments
+source "$DOT_FILES/lang/dotnet/env.sh"
+source "$DOT_FILES/lang/js/env.sh"
+source "$DOT_FILES/lang/ruby/env.sh"
 
 # iTerm2 integration (if exists)
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
@@ -151,3 +128,10 @@ if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ${ZDOTDIR:-$HOME}/.zcompd
 else
     compinit -C
 fi
+
+# bun completions
+[ -s "/Users/glenn/.bun/_bun" ] && source "/Users/glenn/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

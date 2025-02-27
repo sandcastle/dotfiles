@@ -4,46 +4,19 @@
 set -euo pipefail
 trap 'error_handler $? $LINENO $BASH_LINENO "$BASH_COMMAND" $(printf "::%s" ${FUNCNAME[@]:-})' ERR
 
-# Error handling
-error_handler() {
-    local exit_code=$1
-    local line_no=$2
-    local bash_lineno=$3
-    local last_command=$4
-    local func_stack=$5
-
-    echo "Error occurred in:"
-    echo "  - Command: $last_command"
-    echo "  - Line: $line_no"
-    echo "  - Function: $func_stack"
-    echo "Exit code: $exit_code"
-}
-
-# Helper functions
-prompt_user() {
-    local prompt=$1
-    local variable=$2
-    local default=${3:-""}
-
-    if [[ -z "${!variable}" ]]; then
-        read -rp "$prompt [${default}]: " value
-        value=${value:-$default}
-        eval "$variable=\"$value\""
-    fi
-}
+# Source helper functions
+source "$(dirname "${BASH_SOURCE[0]}")/bootstrap/_funcs.sh"
 
 # Initial setup
 clear
-cat << "EOF"
- _____     _    __ _ _           
-|  __ \   | |  / _(_) |          
-| |  | |__| |_| |_ _| | ___  ___ 
-| |  | / _  |  _  | | |/ _ \/ __|
-| |__| | (_| | | | | | |  __/\__ \
-|_____/ \__,_|_| |_|_|_|\___||___/
+printf "\033[1;36m  _____        _    __ _ _            \033[0m\n"
+printf "\033[1;34m |  __ \      | |  / _(_) |           \033[0m\n"
+printf "\033[1;35m | |  | | ___ | |_| |_ _| | ___  ___  \033[0m\n"
+printf "\033[1;33m | |  | |/ _ \| __| _| | |/ _ \/ __| \033[0m\n"
+printf "\033[1;32m | |__| | (_) | |_| | | | |  __/\__ \ \033[0m\n"
+printf "\033[1;31m |_____/ \___/ \__|_| |_|_|\___||___/ \033[0m\n"
 
-EOF
-
+echo ""
 echo "Welcome to the dotfiles installer!"
 echo "This will set up your macOS system with a complete development environment."
 echo
@@ -78,14 +51,15 @@ fi
 # Get the directory of this script
 DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Run bootstrap script
-"$DOTFILES_DIR/bootstrap/bootstrap.sh"
-
 # Run symlink setup
 if ! ./install-symlink.sh; then
     echo "Error running symlink setup"
     exit 1
 fi
+
+# Make bootstrap script executable and run it
+chmod +x "$DOTFILES_DIR/bootstrap/bootstrap.sh"
+"$DOTFILES_DIR/bootstrap/bootstrap.sh"
 
 # Final message
 cat << "EOF"

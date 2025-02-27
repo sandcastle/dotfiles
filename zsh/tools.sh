@@ -4,9 +4,7 @@
 # Commandline Tools
 # ==================================================================
 
-
-# z commandline history
-source $(brew --prefix)/etc/profile.d/z.sh
-
-# iterm shell intergration
-source ~/.iterm2_shell_integration.zsh
+# Initialize zoxide (smarter cd command)
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init zsh)"
+fi

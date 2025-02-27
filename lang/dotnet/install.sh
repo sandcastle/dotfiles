@@ -13,6 +13,12 @@ curl -sL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh
 bash /tmp/dotnet-install.sh --channel 8.0
 bash /tmp/dotnet-install.sh --channel 9.0
 
+# Load source env to contine
+source "$(dirname "$0")/env.sh"
+
+# Dev certs
+dotnet dev-certs https --trust
+
 # Install tools
 dotnet tool install -g dotnet-ef
 dotnet tool install -g dotnet-outdated-tool

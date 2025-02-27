@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Configuration options for installation
 
 # Computer name
 COMPUTER_NAME=${COMPUTER_NAME:-""}
