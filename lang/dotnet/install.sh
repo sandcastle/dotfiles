@@ -10,8 +10,8 @@ print_heading "⏲️ Installing .Net SDKs"
 curl -sL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh
 
 # Explicitly install required versions
-bash /tmp/dotnet-install.sh --channel 8.0
-bash /tmp/dotnet-install.sh --channel 9.0
+sh /tmp/dotnet-install.sh --channel 8.0
+sh /tmp/dotnet-install.sh --channel 9.0
 
 # Load source env to contine
 source "$(dirname "$0")/env.sh"
