@@ -5,6 +5,12 @@ export EDITOR='code'
 export KUBE_EDITOR="nvim"
 export PAGER='less'
 
+# Docker
+# ---------
+# Dont consume the default OTEL endpoint with docker
+export DOCKER_CLI_OTEL_EXPORTER_OTLP_ENDPOINT="http://localhost:14317"
+
+
 # locale
 # ---------
 if [[ -z "$LANG" ]]; then
