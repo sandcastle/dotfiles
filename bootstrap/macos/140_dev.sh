@@ -13,6 +13,8 @@ else
     log_success "Xcode Command Line Tools already installed"
 fi
 
+sudo xcodebuild -license
+
 # Setup SSH key & link to Github
 pub=$HOME/.ssh/id_rsa.pub
 echo 'Checking for SSH key, generating one if it does not exist...'

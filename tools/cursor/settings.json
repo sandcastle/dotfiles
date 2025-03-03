@@ -27,7 +27,7 @@
   "security.workspace.trust.untrustedFiles": "open",
   "task.problemMatchers.neverPrompt": false,
   "task.slowProviderWarning": true,
-  "terminal.integrated.shell.osx": "/bin/zsh",
+  "terminal.integrated.shell.osx": "zsh",
   "terminal.integrated.scrollback": 10000,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "window.zoomLevel": 0,
@@ -35,10 +35,6 @@
   "terminal.integrated.shellIntegration.enabled": true,
   "terminal.integrated.inheritEnv": true,
   "terminal.integrated.profiles.osx": {
-    "zsh (via bash)": {
-      "path": "/bin/bash",
-      "args": ["-c", "zsh"]
-    },
     "bash": {
       "path": "bash",
       "args": ["-l"],
