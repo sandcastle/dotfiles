@@ -4,9 +4,16 @@
 
 DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# Source functions
+source "$DOTFILES_DIR/bootstrap/_funcs.sh"
+
 # Create backup directory
-BACKUP_DIR="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
+BACKUP_DIR="$HOME/.backup/dotfiles/$(date +%Y%m%d_%H%M%S)"
 mkdir -p "$BACKUP_DIR"
+
+# Counters for summary
+BACKUP_COUNT=0
+SYMLINK_COUNT=0
 
 # Function to safely create symlinks
 create_symlink() {
@@ -15,13 +22,14 @@ create_symlink() {
     
     # Backup existing file/directory if it exists
     if [[ -e "$dest" ]]; then
-        echo "Backing up $dest to $BACKUP_DIR/"
+        # Silently backup the file
         mv "$dest" "$BACKUP_DIR/"
+        ((BACKUP_COUNT++))
     fi
 
-    # Create symlink
-    echo "Creating symlink: $dest -> $src"
+    # Create symlink (silently)
     ln -sf "$src" "$dest"
+    ((SYMLINK_COUNT++))
 }
 
 # Dynamically symlink all files from home directory
@@ -38,3 +46,8 @@ done
 ZSH_CUSTOM="$HOME/.zsh"
 mkdir -p "$ZSH_CUSTOM"
 create_symlink "$DOTFILES_DIR/zsh" "$ZSH_CUSTOM"
+
+# Display summary using log_finished function
+log_finished "Symlinked home files" true \
+    "$BACKUP_COUNT files backed up to $BACKUP_DIR" \
+    "$SYMLINK_COUNT symlinks created"

@@ -2,7 +2,7 @@
 
 source "$(dirname "${BASH_SOURCE[0]}")/../_funcs.sh"
 
-print_heading "Installing common tools"
+log_h1 "Installing common tools"
 
 # core tools
 install_package "git"        # Version control system

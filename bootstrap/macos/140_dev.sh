@@ -1,6 +1,8 @@
 #!/bin/bash
 
-print_heading "Configuring developer settings"
+source "$(dirname "${BASH_SOURCE[0]}")/../_funcs.sh"
+
+log_h1 "Configuring developer settings"
 
 # Xcode command line tools check/install
 if ! xcode-select -p &>/dev/null; then

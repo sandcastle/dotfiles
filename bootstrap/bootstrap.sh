@@ -19,7 +19,7 @@ else
     exit 1
 fi
 
-print_heading "Bootstrap $OS_TYPE..."
+log_h1 "Bootstrap $OS_TYPE..."
 
 # Ask for sudo password upfront
 sudo -v
@@ -27,7 +27,6 @@ sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 # Installation phases
-log_info "Initializing"
 source "$SCRIPT_DIR/common/init.sh"
 if [[ "$OS_TYPE" == "macos" ]]; then
     source "$SCRIPT_DIR/macos/init.sh"
@@ -60,5 +59,5 @@ if [[ $SHELL != "/bin/zsh" ]]; then
     log_warning "ZSH is not set as default shell"
 fi
 
-print_heading "Bootstrap complete!"
+log_h1 "Bootstrap complete!"
 exit 0

@@ -5,7 +5,7 @@ cd "$(dirname "$0")/../.."
 
 source "./bootstrap/_funcs.sh"
 
-print_heading "⏲️ Installing Node, Yarn, PNPM, Bun"
+log_h1 "⏲️ Installing Node, Yarn, PNPM, Bun"
 
 install_brew "nvm"
 install_brew "yarn"

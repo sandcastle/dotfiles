@@ -3,7 +3,7 @@
 # Source common functions
 source "$(dirname "${BASH_SOURCE[0]}")/../_funcs.sh"
 
-print_heading "Installing applications"
+log_h1 "Installing applications"
 
 log_info "Installing core applications"
 

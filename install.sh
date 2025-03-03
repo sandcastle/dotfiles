@@ -25,6 +25,7 @@ echo
 prompt_user "Enter your computer name" COMPUTER_NAME "$(scutil --get ComputerName)"
 prompt_user "Enter your Git name" GIT_NAME "$(git config --global user.name 2>/dev/null)"
 prompt_user "Enter your Git email" GIT_EMAIL "$(git config --global user.email 2>/dev/null)"
+echo ""
 
 # Export for use in other scripts
 export COMPUTER_NAME GIT_NAME GIT_EMAIL
@@ -33,7 +34,7 @@ export COMPUTER_NAME GIT_NAME GIT_EMAIL
 DOT_FILES="$HOME/Developer/dotfiles"
 
 # Create backup
-BACKUP_DIR="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
+BACKUP_DIR="$HOME/.backup/dotfiles/$(date +%Y%m%d_%H%M%S)"
 mkdir -p "$BACKUP_DIR"
 
 # Repository setup
@@ -44,21 +45,23 @@ if [[ -d "$DOT_FILES" ]]; then
 else
     echo "Cloning dotfiles repository..."
     mkdir -p "$DOT_FILES"
-    git clone --recursive git://github.com/sandcastle/dotfiles.git "$DOT_FILES"
+    git clone --depth 1 git://github.com/sandcastle/dotfiles.git "$DOT_FILES"
     cd "$DOT_FILES"
 fi
 
 # Get the directory of this script
 DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Run symlink setup
+chmod +x "$DOTFILES_DIR/install-symlink.sh"
+chmod +x "$DOTFILES_DIR/bootstrap/bootstrap.sh"
+
+# Symlink files
 if ! ./install-symlink.sh; then
     echo "Error running symlink setup"
     exit 1
 fi
 
-# Make bootstrap script executable and run it
-chmod +x "$DOTFILES_DIR/bootstrap/bootstrap.sh"
+# Bootstrap the system
 "$DOTFILES_DIR/bootstrap/bootstrap.sh"
 
 # Final message

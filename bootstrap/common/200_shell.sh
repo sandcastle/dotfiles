@@ -2,7 +2,7 @@
 
 source "$(dirname "$0")/_funcs.sh"
 
-print_heading "Setting up shell environment"
+log_h1 "Setting up shell environment"
 
 # Install shell and plugins
 if is_macos; then

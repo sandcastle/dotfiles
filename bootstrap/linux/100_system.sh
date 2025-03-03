@@ -1,6 +1,6 @@
 #!/bin/bash
 
-print_heading "Configuring Linux system settings"
+log_h1 "Configuring Linux system settings"
 
 # Computer name
 if [ -n "$COMPUTER_NAME" ]; then

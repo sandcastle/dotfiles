@@ -5,7 +5,7 @@ cd "$(dirname "$0")/../.."
 
 source "./bootstrap/_funcs.sh"
 
-print_heading "⏲️ Updating .Net SDKs"
+log_h1 "⏲️ Updating .Net SDKs"
 
 curl -sL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh
 
