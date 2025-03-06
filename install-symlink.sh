@@ -11,43 +11,67 @@ source "$DOTFILES_DIR/bootstrap/_funcs.sh"
 BACKUP_DIR="$HOME/.backup/dotfiles/$(date +%Y%m%d_%H%M%S)"
 mkdir -p "$BACKUP_DIR"
 
-# Counters for summary
-BACKUP_COUNT=0
-SYMLINK_COUNT=0
-
 # Function to safely create symlinks
 create_symlink() {
     local src="$1"
     local dest="$2"
+    local use_sudo="$3"
     
-    # Backup existing file/directory if it exists
-    if [[ -e "$dest" ]]; then
-        # Silently backup the file
-        mv "$dest" "$BACKUP_DIR/"
-        ((BACKUP_COUNT++))
-    fi
-
     # Create symlink (silently)
-    ln -sf "$src" "$dest"
-    ((SYMLINK_COUNT++))
+    if [[ "$use_sudo" == "true" ]]; then
+        sudo ln -sf "$src" "$dest"
+    else
+        ln -sf "$src" "$dest"
+    fi
+}
+
+# Function to symlink all files from a directory
+symlink_directory() {
+    local src_dir="$1"
+    local dest_dir="$2"
+    local use_sudo="$3"
+    local backup_count=0
+    local symlink_count=0
+    
+    # Create destination directory if it doesn't exist
+    if [[ "$use_sudo" == "true" ]]; then
+        sudo mkdir -p "$dest_dir"
+    else
+        mkdir -p "$dest_dir"
+    fi
+    
+    # Iterate over all files in source directory
+    for file in "$src_dir"/*; do
+        if [[ -f "$file" ]]; then
+            local filename=$(basename "$file")
+            local dest="$dest_dir/$filename"
+
+            # Backup existing file if it exists
+            if [[ -e "$dest" ]]; then
+                if [[ "$use_sudo" == "true" ]]; then
+                    sudo mv "$dest" "$BACKUP_DIR/"
+                else
+                    cp "$dest" "$BACKUP_DIR/"
+                fi
+                ((backup_count++))
+            fi
+            
+            # Create symlink
+            create_symlink "$file" "$dest" "$use_sudo" symlink_count
+            ((symlink_count++))
+        fi
+    done
+    
+    # Print results for this directory
+    log_finished "Symlinked files in $dest_dir" true \
+        "$backup_count files backed up to $BACKUP_DIR" \
+        "$symlink_count symlinks created"
 }
 
 # Dynamically symlink all files from home directory
 echo "Symlinking dotfiles from home directory..."
-for file in "$DOTFILES_DIR"/home/.*; do
-    # Skip . and .. directories
-    [[ $(basename "$file") == "." || $(basename "$file") == ".." ]] && continue
-    
-    # Create symlink for each file
-    create_symlink "$file" "$HOME/$(basename "$file")"
-done
+symlink_directory "$DOTFILES_DIR/home" "$HOME" "false"
 
-# Create ZSH custom directory
-ZSH_CUSTOM="$HOME/.zsh"
-mkdir -p "$ZSH_CUSTOM"
-create_symlink "$DOTFILES_DIR/zsh" "$ZSH_CUSTOM"
-
-# Display summary using log_finished function
-log_finished "Symlinked home files" true \
-    "$BACKUP_COUNT files backed up to $BACKUP_DIR" \
-    "$SYMLINK_COUNT symlinks created"
+# Symlink /etc files
+echo "Symlinking /etc"
+symlink_directory "$DOTFILES_DIR/etc" "/etc" "true"

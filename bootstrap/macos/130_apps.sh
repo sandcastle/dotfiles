@@ -78,6 +78,5 @@ install_brew "discord"
 log_h4 "Installing git tools"
 install_brew "gitkraken"
 install_brew "tig"
-install_brew "diff-so-fancy"
 
 log_success "Application configuration complete"

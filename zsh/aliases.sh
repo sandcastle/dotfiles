@@ -30,7 +30,21 @@ alias yb='yarn build'
 alias yt='yarn test'
 alias ys='yarn start'
 alias yyb='yarn && yarn build'
-alias y!='echo "y  = yarn shortcut help\nyc = yarn clean\nyl = yarn lint --fix\nyi = yarn init\nyb = yarn build\nyt = yarn test\nys = yarn start"'
+alias y!='echo "y  = yarn\nyc = yarn clean\nyl = yarn lint --fix\nyi = yarn init\nyb = yarn build\nyt = yarn test\nys = yarn start"'
+
+# pnpm shortcuts
+alias pp='pnpm'
+alias pi='pnpm install'
+alias pr='pnpm remove'
+alias px='pnpm exec'
+alias pb='pnpm build'
+alias pt='pnpm test'
+alias ps='pnpm start'
+alias pl='pnpm lint'
+alias plf='pnpm lint --fix'
+alias ppb='pnpm install && pnpm build'
+alias pc='pnpm clean'
+alias p!='echo "pi = pnpm install\npr = pnpm remove\npx = pnpm exec\npb = pnpm build\npt = pnpm test\nps = pnpm start\npl = pnpm lint\nplf = pnpm lint --fix\npc = pnpm clean\nppb = pnpm install && pnpm build"'
 
 # dotnet shortcuts
 alias d='dotnet --info'
@@ -93,12 +107,11 @@ alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r 
 
 # Define general aliases.
 alias _='sudo'
-alias b='${(z)BROWSER}'
+
 alias cp="${aliases[cp]:-cp} -i"
 alias ln="${aliases[ln]:-ln} -i"
 alias mkdir="${aliases[mkdir]:-mkdir} -p"
 alias mv="${aliases[mv]:-mv} -i"
-alias p='${(z)PAGER}'
 alias po='popd'
 alias pu='pushd'
 alias rm="${aliases[rm]:-rm} -i"

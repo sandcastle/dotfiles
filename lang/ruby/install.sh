@@ -5,7 +5,7 @@ cd "$(dirname "$0")/../.."
 
 source "./bootstrap/_funcs.sh"
 
-echo "⏲️ Installing Ruby"
+echo "Installing Ruby"
 
 RUBY_VERSION="3.3.0"
 

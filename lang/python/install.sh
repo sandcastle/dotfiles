@@ -5,7 +5,7 @@ cd "$(dirname "$0")/../.."
 
 source "./bootstrap/_funcs.sh"
 
-log_h1 "⏲️ Installing Python"
+log_h1 "Installing Python"
 
 install_brew "python3"
 

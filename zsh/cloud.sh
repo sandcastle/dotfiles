@@ -15,7 +15,7 @@ source "$(gcloud info --format='value(installation.sdk_root)')/completion.zsh.in
 # ==================================================================
 
 # Editor for edit command
-export KUBE_EDITOR=vi
+export KUBE_EDITOR=nvim
 
 # aliases
 alias kube='kubectl'

@@ -21,7 +21,7 @@ setopt HIST_SAVE_NO_DUPS  # Do not write a duplicate event to the history file
 export EDITOR='nvim'
 export KUBE_EDITOR='nvim'
 export VISUAL='code'
-export PAGER='less'
+export PAGER='moar'
 export LANG='en_US.UTF-8'
 export LC_ALL='en_US.UTF-8'
 
@@ -115,9 +115,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 # Local environment (if exists)
 [ -f "$HOME/.local/bin/env" ] && source "$HOME/.local/bin/env"
 
-# Bun completions (if exists)
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
 # Load Powerlevel10k config
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -128,10 +125,3 @@ if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ${ZDOTDIR:-$HOME}/.zcompd
 else
     compinit -C
 fi
-
-# bun completions
-[ -s "/Users/glenn/.bun/_bun" ] && source "/Users/glenn/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"

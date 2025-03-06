@@ -31,6 +31,7 @@ install_package "xh"         # Friendly HTTP tool, alternative to curl/httpie
 install_package "tealdeer"   # Fast tldr client (simplified, example-based man pages)
 install_package "gping"      # Ping with a graphical display
 install_package "hyperfine"  # Command-line benchmarking tool
+install_package "moar"       # More intuitive pager for git and diff output
 
 # monitoring tools
 install_package "cloc"       # Count lines of code in a project

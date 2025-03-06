@@ -59,7 +59,34 @@
   editor = code
   excludesfile = ~/.gitignore
   ignorecase = false
-  pager = diff-so-fancy | less --tabs=4 -RFX
+  pager = delta | moar
+
+[delta]
+  navigate = true
+  light = false
+  side-by-side = true
+  line-numbers = true
+  syntax-theme = Dracula
+  plus-style = "syntax #003800"
+  minus-style = "syntax #3f0001"
+  plus-emph-style = "syntax #006800"
+  minus-emph-style = "syntax #8d0000"
+  whitespace-error-style = "red reverse"
+  file-style = "bold cyan"
+  hunk-header-style = "line-number bold"
+  line-numbers-left-style = "cyan"
+  line-numbers-right-style = "cyan"
+  line-numbers-minus-style = "red"
+  line-numbers-plus-style = "green"
+  merge-conflict-begin-symbol = "◈"
+  merge-conflict-end-symbol = "◈"
+  merge-conflict-ours-begin-symbol = "╰"
+  merge-conflict-ours-end-symbol = "╯"
+  merge-conflict-theirs-begin-symbol = "╭"
+  merge-conflict-theirs-end-symbol = "╮"
+  scrolloff = 5
+  keep-plus-minus-markers = true
+  file-decoration-style = "bold yellow"
 
 [rebase]
   autoStash = true

@@ -1,32 +1,28 @@
+# Homebrew.
+# ---------
+HOMEBREW_NO_ENV_HINTS=true
 
-# Editors
+# Editors.
 # --------
 export EDITOR='code'
 export KUBE_EDITOR="nvim"
-export PAGER='less'
+export PAGER='moar'
 
-# Docker
+# Moar pager.
+# ---------
+export MOAR_PAGER='less' # Use less as the pager for moar's own help pages
+export MOAR_STYLE='plain' # Set a clean, readable style with syntax highlighting
+export MOAR_KEYBINDINGS='q:quit,h:help,j:down,k:up,g:top,G:bottom,f:forward,b:backward,/:search,n:next,N:prev'
+
+# Docker.
 # ---------
 # Dont consume the default OTEL endpoint with docker
 export DOCKER_CLI_OTEL_EXPORTER_OTLP_ENDPOINT="http://localhost:14317"
 
-
-# locale
+# Locale.
 # ---------
 if [[ -z "$LANG" ]]; then
   eval "$(locale)"
-fi
-
-# Less.
-# -----
-# Set the default Less options.
-# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
-# Remove -X and -F (exit if the content fits on one screen) to enable it.
-export LESS='-F -g -i -M -R -S -w -X -z-4'
-
-# Set the Less input preprocessor.
-if (( $+commands[lesspipe.sh] )); then
-  export LESSOPEN='| /usr/bin/env lesspipe.sh %s 2>&-'
 fi
 
 # Paths.

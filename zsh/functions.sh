@@ -4,6 +4,27 @@
 # Functions
 # ==================================================================
 
+# Open a file or URL in the default browser
+b() {
+  local url="$1"
+  # If it's not a URL (doesn't start with http:// or https:// or file://)
+  if [[ ! "$url" =~ ^(https?://|file://) ]]; then
+    # If it's a local file that exists, use file:// protocol
+    if [[ -f "$url" ]]; then
+      url="file://$(realpath "$url")"
+    # If it's a local directory that exists, use file:// protocol
+    elif [[ -d "$url" ]]; then
+      url="file://$(realpath "$url")"
+    # Otherwise, assume it's a website and add https://
+    else
+      url="https://$url"
+    fi
+  fi
+  ${BROWSER:-open} "$url"
+}
+
+# Open a file in the default pager
+page() { ${PAGER:-moar} "$@" }
 
 # Copy file(s) from remote ssh path to desktop
 mecp () {
@@ -62,12 +83,20 @@ function each() {
 # $ find-exec .coffee cat | wc -l
 # # => 9762
 function find-exec() {
-  find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
+  if (( $+commands[fd] )); then
+    fd --type f --hidden --follow --exclude .git --glob "*${1:-}*" --exec "${2:-file}" '{}'
+  else
+    find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
+  fi
 }
 
 # Better find(1)
 function ff() {
-  find . -iname "*${1:-}*"
+  if (( $+commands[fd] )); then
+    fd --type f --hidden --follow --exclude .git --glob "*${1:-}*"
+  else
+    find . -iname "*${1:-}*"
+  fi
 }
 
 # Count code lines in some directory.
@@ -87,7 +116,11 @@ function loc() {
     if [[ firstletter != "." ]]; then
       ext=".$ext"
     fi
-    lines=`find-exec "*$ext" cat | wc -l`
+    if (( $+commands[bat] )); then
+      lines=`find-exec "*$ext" bat --style=plain --color=never | wc -l`
+    else
+      lines=`find-exec "*$ext" cat | wc -l`
+    fi
     lines=${lines// /}
     total=$(($total + $lines))
     echo "Lines of code for ${fg[blue]}$ext${reset_color}: ${fg[green]}$lines${reset_color}"
@@ -99,19 +132,21 @@ function loc() {
 # $ ram safari
 # # => safari uses 154.69 MBs of RAM.
 function ram() {
-  local sum
-  local items
   local app="$1"
   if [ -z "$app" ]; then
     echo "First argument - pattern to grep from processes"
   else
-    sum=0
-    for i in `ps aux | grep -i "$app" | grep -v "grep" | awk '{print $6}'`; do
-      sum=$(($i + $sum))
-    done
-    sum=$(echo "scale=2; $sum / 1024.0" | bc)
-    if [[ $sum != "0" ]]; then
-      echo "${fg[blue]}${app}${reset_color} uses ${fg[green]}${sum}${reset_color} MBs of RAM."
+    if (( $+commands[procs] )); then
+      local mem=$(procs --search "$app" --sort mem --no-header | awk '{sum+=$4} END {printf "%.2f", sum}')
+    else
+      local sum=0
+      for i in `ps aux | grep -i "$app" | grep -v "grep" | awk '{print $6}'`; do
+        sum=$(($i + $sum))
+      done
+      local mem=$(echo "scale=2; $sum / 1024.0" | bc)
+    fi
+    if [[ $mem != "0" ]]; then
+      echo "${fg[blue]}${app}${reset_color} uses ${fg[green]}${mem}${reset_color} MBs of RAM."
     else
       echo "There are no processes with pattern '${fg[blue]}${app}${reset_color}' are running."
     fi
@@ -140,18 +175,17 @@ function stats() {
 # Shortcut for searching commands history.
 # hist git
 function hist() {
-  history 0 | grep $@
-}
-
-# Shortens GitHub URLs.
-function gitio() {
-  local url="$1"
-  local code="$2"
-
-  [[ -z "$url" ]] && print "usage: $0 url code" >&2 && exit
-  [[ -z "$code" ]] && print "usage: $0 url code" >&2 && exit
-
-  curl -s -i 'http://git.io' -F "url=$url" -F "code=$code"
+  if [ -z "$1" ]; then
+    echo "Usage: hist <pattern>"
+    echo "Example: hist git"
+    return 1
+  fi
+  
+  if (( $+commands[rg] )); then
+    history 0 | command rg "$@"
+  else
+    history 0 | grep "$@"
+  fi
 }
 
 # Monitor IO in real-time (open files etc).
