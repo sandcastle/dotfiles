@@ -4,6 +4,12 @@
 # Aliases
 # ==================================================================
 
+# Remove all items safely, to Trash (`brew install trash`).
+alias rm='trash'
+
+# Case-insensitive pgrep that outputs full path.
+alias pgrep='pgrep -fli'
+
 # ------------------------------ DEV -------------------------------
 
 # Common project scripts - used on all project irrespective of lang
