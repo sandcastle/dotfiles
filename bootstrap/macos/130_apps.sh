@@ -40,6 +40,7 @@ install_brew "kubernetes-helm"
 install_brew "kubectx"
 install_brew "skaffold"
 install_brew "google-cloud-sdk"
+install_brew "cloudflared"
 
 log_h4 "Updating gcloud components"
 run_with_progress "Updating gcloud components" true gcloud components update --quiet
