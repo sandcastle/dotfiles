@@ -1,4 +1,4 @@
-#compdef new_password b page mecp manp finder get-pass edit each find-exec ff loc ram size stats hist openfiles compute maxcpu retry preview mkdcd psu tar_ untar mkcd extract fzf-git-log fzf-find aliases
+#compdef password b page mecp manp finder get-pass edit each find-exec ff loc ram size stats hist openfiles compute maxcpu retry preview mkdcd psu tar_ untar mkcd extract fzf-git-log fzf-find aliases
 
 # Completion for new_password
 _password() {
