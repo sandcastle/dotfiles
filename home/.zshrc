@@ -128,10 +128,13 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 if type brew &>/dev/null; then
     BREW_PREFIX=$(brew --prefix)
     # Mark as safe paths
-    FPATH="$BREW_PREFIX/share/zsh-autosuggestions:$FPATH"
-    FPATH="$BREW_PREFIX/share/zsh-completions:$FPATH"
-    FPATH="$BREW_PREFIX/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting:$FPATH"
-    FPATH="$BREW_PREFIX/share/zsh-syntax-highlighting:$FPATH"
+    fpath=(
+        "$BREW_PREFIX/share/zsh-autosuggestions"
+        "$BREW_PREFIX/share/zsh-completions"
+        "$BREW_PREFIX/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting"
+        "$BREW_PREFIX/share/zsh-syntax-highlighting"
+        $fpath
+    )
     # Load plugins
     source "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
     source "$BREW_PREFIX/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
@@ -139,7 +142,7 @@ if type brew &>/dev/null; then
 fi
 
 # Load dotfile completions
-FPATH="$DOTFILES/zsh/completions:$FPATH"
+fpath=("$DOTFILES/zsh/completions" $fpath)
 
 # Optimize command completion system
 autoload -Uz compinit
