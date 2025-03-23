@@ -1,0 +1,175 @@
+#compdef new_password b page mecp manp finder get-pass edit each find-exec ff loc ram size stats hist openfiles compute maxcpu retry preview mkdcd psu tar_ untar mkcd extract fzf-git-log fzf-find aliases
+
+# Completion for new_password
+_password() {
+  _arguments \
+    '1: :->length' \
+    '2: :->special'
+  
+  case $state in
+    length)
+      _message "Password length (default: 40)"
+      ;;
+    special)
+      _values "Use special characters" "true" "false"
+      ;;
+  esac
+}
+
+# Completion for b (browser)
+_b() {
+  _arguments '1: :_files -g "*(#q-.)"'
+}
+
+# Completion for page
+_page() {
+  _arguments '1: :_files -g "*(#q-.)"'
+}
+
+# Completion for mecp
+_mecp() {
+  _arguments '1: :_files -g "*(#q-.)"'
+}
+
+# Completion for manp
+_manp() {
+  _arguments '1: :_manuals'
+}
+
+# Completion for finder
+_finder() {
+  _message "No arguments needed"
+}
+
+# Completion for get-pass
+_get-pass() {
+  _arguments '1: :_services'
+}
+
+# Completion for edit
+_edit() {
+  _arguments '1: :_directories'
+}
+
+# Completion for each
+_each() {
+  _arguments '1: :_command_names'
+}
+
+# Completion for find-exec
+_find-exec() {
+  _arguments \
+    '1: :->pattern' \
+    '2: :->command'
+  
+  case $state in
+    pattern)
+      _message "Search pattern"
+      ;;
+    command)
+      _command_names
+      ;;
+  esac
+}
+
+# Completion for ff
+_ff() {
+  _arguments '1: :->pattern'
+}
+
+# Completion for loc
+_loc() {
+  _arguments '*: :_file_extensions'
+}
+
+# Completion for ram
+_ram() {
+  _arguments '1: :_process_names'
+}
+
+# Completion for size
+_size() {
+  _arguments '*: :_files -g "*(#q-.)"'
+}
+
+# Completion for stats
+_stats() {
+  _message "No arguments needed"
+}
+
+# Completion for hist
+_hist() {
+  _arguments '1: :->pattern'
+}
+
+# Completion for openfiles
+_openfiles() {
+  _message "No arguments needed"
+}
+
+# Completion for compute
+_compute() {
+  _message "No arguments needed"
+}
+
+# Completion for maxcpu
+_maxcpu() {
+  _message "No arguments needed"
+}
+
+# Completion for retry
+_retry() {
+  _arguments '*: :_command_names'
+}
+
+# Completion for preview
+_preview() {
+  _arguments '1: :_files -g "*(#q-.)"'
+}
+
+# Completion for mkdcd
+_mkdcd() {
+  _arguments '1: :_directories'
+}
+
+# Completion for psu
+_psu() {
+  _arguments \
+    '1: :_users' \
+    '*: :_process_names'
+}
+
+# Completion for tar_
+_tar_() {
+  _arguments '1: :_files -g "*(#q-.)"'
+}
+
+# Completion for untar
+_untar() {
+  _arguments '1: :_files -g "*.tar"'
+}
+
+# Completion for mkcd
+_mkcd() {
+  _arguments '*: :_directories'
+}
+
+# Completion for extract
+_extract() {
+  _arguments '1: :_files -g "*(#q-.)"'
+}
+
+# Completion for fzf-git-log
+_fzf-git-log() {
+  _arguments '*: :_git_log'
+}
+
+# Completion for fzf-find
+_fzf-find() {
+  _message "No arguments needed"
+}
+
+# Completion for aliases
+_aliases() {
+  _message "No arguments needed"
+} 

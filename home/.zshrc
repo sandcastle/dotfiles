@@ -3,6 +3,9 @@
 # Performance profiling (uncomment to debug slow startup)
 # zmodload zsh/zprof
 
+# Get the actual dotfiles directory path, handling both direct and symlinked cases
+export DOTFILES="$(dirname "$(dirname "$(readlink -f "${(%):-%x}")")")"
+
 # ZSH Options
 setopt AUTO_CD              # cd by typing directory name
 setopt INTERACTIVE_COMMENTS # Allow comments in interactive mode
@@ -30,8 +33,7 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000
 SAVEHIST=10000
 
-# Load completions
-autoload -Uz compinit && compinit
+# Completion settings
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case insensitive completion
 
@@ -52,7 +54,6 @@ fi
 skip_global_compinit=1
 
 # Load essential environment variables first
-export DOT_FILES="$HOME/Developer/dotfiles"
 export PATH="$HOME/.fastlane/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 eval $(/usr/libexec/path_helper -s)
 
@@ -69,21 +70,26 @@ zstyle ':completion:*' cache-path "$HOME/.zcompcache"
 
 # Plugin configuration - Optimized based on your tools and usage
 plugins=(
-    git                   # Git integration and aliases
-    docker                # Docker commands and completion
-    node                  # Node.js and npm/yarn commands
-    golang                # Go development
-    kubectl               # Kubernetes commands
-    helm                  # Helm commands
-    terraform             # Terraform commands
-    aws                   # AWS CLI commands
-    gcloud                # Google Cloud commands
-    z                     # Quick directory navigation
-    macos                 # Replaces most of your osx.sh aliases
-    dotnet                # .NET Core commands
-    yarn                  # Yarn package manager
-    brew                  # Homebrew commands
-    httpie                # HTTP client
+    aws                          # AWS CLI commands
+    brew                         # Homebrew commands
+    docker                       # Docker commands and completion
+    doctl                        # Digital Ocean CLI
+    dotnet                       # .NET Core commands
+    emoji                        # Emoji completion
+    gcloud                       # Google Cloud commands
+    git                          # Git integration and aliases
+    gh                           # GitHub CLI
+    golang                       # Go development
+    helm                         # Helm commands
+    httpie                       # HTTP client
+    kubectl                      # Kubernetes commands
+    macos                        # Replaces most of your osx.sh aliases
+    node                         # Node.js and npm/yarn commands
+    terraform                    # Terraform commands
+    vscode                       # VSCode commands
+    yarn                         # Yarn package manager
+    z                            # Quick directory navigation
+    zoxide                       # Better directory navigation
 )
 
 # Performance optimization settings
@@ -117,6 +123,23 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 # Load Powerlevel10k config
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Load brew completions and plugins
+if type brew &>/dev/null; then
+    BREW_PREFIX=$(brew --prefix)
+    # Mark as safe paths
+    FPATH="$BREW_PREFIX/share/zsh-autosuggestions:$FPATH"
+    FPATH="$BREW_PREFIX/share/zsh-completions:$FPATH"
+    FPATH="$BREW_PREFIX/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting:$FPATH"
+    FPATH="$BREW_PREFIX/share/zsh-syntax-highlighting:$FPATH"
+    # Load plugins
+    source "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+    source "$BREW_PREFIX/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+    source "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
+
+# Load dotfile completions
+FPATH="$DOTFILES/zsh/completions:$FPATH"
 
 # Optimize command completion system
 autoload -Uz compinit

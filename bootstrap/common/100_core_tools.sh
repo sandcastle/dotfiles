@@ -32,6 +32,7 @@ install_package "tealdeer"   # Fast tldr client (simplified, example-based man p
 install_package "gping"      # Ping with a graphical display
 install_package "hyperfine"  # Command-line benchmarking tool
 install_package "moar"       # More intuitive pager for git and diff output
+install_package "pwgen"      # Password generator
 
 # monitoring tools
 install_package "cloc"       # Count lines of code in a project

@@ -4,6 +4,30 @@
 # Functions
 # ==================================================================
 
+# Generate a random password
+password() {
+  local length=${1:-40}  # Default to 40 if no length specified
+  local use_special=${2:-true}  # Default to false if not specified
+  
+  # Validate length is a positive number
+  if ! [[ "$length" =~ ^[0-9]+$ ]] || [ "$length" -lt 1 ]; then
+    echo "Error: Length must be a positive number" >&2
+    return 1
+  fi
+  
+  if (( $+commands[pwgen] )); then
+    # Use pwgen if available (better password generation)
+    if [[ "$use_special" == "true" ]]; then
+      pwgen -s -c -n -y "$length" 1
+    else
+      pwgen -s -c -n "$length" 1
+    fi
+  else
+    echo "Error: pwgen not found" >&2
+    exit 1
+  fi
+}
+
 # Open a file or URL in the default browser
 b() {
   local url="$1"

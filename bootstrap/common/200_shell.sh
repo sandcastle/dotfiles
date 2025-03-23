@@ -4,38 +4,8 @@ source "$(dirname "$0")/_funcs.sh"
 
 log_h1 "Setting up shell environment"
 
-# Install shell and plugins
-if is_macos; then
-    # On macOS, use Homebrew
-    install_package "zsh"
-    install_package "starship"
-    install_package "zsh-completions"
-    install_package "zsh-syntax-highlighting"
-    install_package "zsh-autosuggestions"
-else
-    # On Linux, use native package manager
-    if command -v apt-get >/dev/null; then
-        # Debian/Ubuntu
-        install_package "zsh"
-        install_package "starship"
-        install_package "zsh-syntax-highlighting"
-        install_package "zsh-autosuggestions"
-        install_package "zsh-autocomplete"
-    elif command -v dnf >/dev/null; then
-        # Fedora
-        install_package "zsh"
-        install_package "starship"
-        install_package "zsh-syntax-highlighting"
-        install_package "zsh-autosuggestions"
-    elif command -v pacman >/dev/null; then
-        # Arch Linux
-        install_package "zsh"
-        install_package "starship"
-        install_package "zsh-syntax-highlighting"
-        install_package "zsh-autosuggestions"
-        install_package "zsh-completions"
-    fi
-fi
+# Install shell
+install_package "zsh"
 
 # Install Oh My Zsh if not already installed
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
@@ -78,4 +48,31 @@ if [[ "$SHELL" != *"zsh"* ]]; then
         exit 1
     }
     log_success "ZSH set as default shell"
+fi
+
+# Install plugins
+if is_macos; then
+    # On macOS, use Homebrew
+    install_package "starship"
+    install_package "zsh-autosuggestions"
+    install_package "zsh-completions"
+    install_package "zsh-fast-syntax-highlighting"
+    install_package "zsh-syntax-highlighting"
+else
+    # On Linux, use native package manager
+    if command -v apt-get >/dev/null; then
+        # Debian/Ubuntu
+        install_package "starship"
+        install_package "zsh-autosuggestions"
+        install_package "zsh-autocomplete"
+        install_package "zsh-fast-syntax-highlighting"
+        install_package "zsh-syntax-highlighting"
+    elif command -v pacman >/dev/null; then
+        # Arch Linux
+        install_package "starship"
+        install_package "zsh-autosuggestions"
+        install_package "zsh-completions"
+        install_package "zsh-fast-syntax-highlighting"
+        install_package "zsh-syntax-highlighting"
+    fi
 fi

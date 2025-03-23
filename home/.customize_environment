@@ -4,8 +4,10 @@
 
 sudo apt-get update
 sudo apt-get install -y zsh
+sudo apt-get install -y starship
 sudo apt-get install -y neovim 
 sudo apt-get install -y zsh-syntax-highlighting 
+sudo apt-get install -y zsh-fast-syntax-highlighting
 sudo apt-get install -y zsh-autosuggestions 
 sudo apt-get install -y zsh-autocomplete
 
