@@ -5,7 +5,7 @@ source "$(dirname "${BASH_SOURCE[0]}")/../_funcs.sh"
 log_h1 "Configuring Tools"
 
 # Define directories
-DOTFILES_DIR="$HOME/Developer/dotfiles"
+DOTFILES="$HOME/Developer/dotfiles"
 CURSOR_SETTINGS_DIR="$HOME/Library/Application Support/Cursor/User"
 VSCODE_SETTINGS_DIR="$HOME/Library/Application Support/Code/User/"
 
@@ -39,10 +39,10 @@ link_tools() {
     log_info "Linking tool settings files"
 
     # Cursor settings
-    create_symlink "$DOTFILES_DIR/tools/cursor/settings.json" "$CURSOR_SETTINGS_DIR/settings.json"
+    create_symlink "$DOTFILES/tools/cursor/settings.json" "$CURSOR_SETTINGS_DIR/settings.json"
 
     # VSCode settings
-    create_symlink "$DOTFILES_DIR/tools/vscode/settings.json" "$VSCODE_SETTINGS_DIR/settings.json"
+    create_symlink "$DOTFILES/tools/vscode/settings.json" "$VSCODE_SETTINGS_DIR/settings.json"
 
     log_success "Tools linked successfully"
 }

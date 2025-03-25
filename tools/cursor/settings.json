@@ -78,5 +78,7 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "extensions.ignoreRecommendations": true
+  "extensions.ignoreRecommendations": true,
+  "explorer.confirmPasteNative": false,
+  "workbench.editor.enablePreview": false
 }

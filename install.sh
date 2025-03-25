@@ -31,29 +31,29 @@ echo ""
 export COMPUTER_NAME GIT_NAME GIT_EMAIL
 
 # Set work directory
-DOT_FILES="$HOME/Developer/dotfiles"
+DOTFILES="$HOME/Developer/dotfiles"
 
 # Create backup
 BACKUP_DIR="$HOME/.backup/dotfiles/$(date +%Y%m%d_%H%M%S)"
 mkdir -p "$BACKUP_DIR"
 
 # Repository setup
-if [[ -d "$DOT_FILES" ]]; then
+if [[ -d "$DOTFILES" ]]; then
     echo "Updating existing dotfiles repository..."
-    cd "$DOT_FILES"
+    cd "$DOTFILES"
     git pull
 else
     echo "Cloning dotfiles repository..."
-    mkdir -p "$DOT_FILES"
-    git clone --depth 1 git://github.com/sandcastle/dotfiles.git "$DOT_FILES"
-    cd "$DOT_FILES"
+    mkdir -p "$DOTFILES"
+    git clone --depth 1 git://github.com/sandcastle/dotfiles.git "$DOTFILES"
+    cd "$DOTFILES"
 fi
 
 # Get the directory of this script
-DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-chmod +x "$DOTFILES_DIR/install-symlink.sh"
-chmod +x "$DOTFILES_DIR/bootstrap/bootstrap.sh"
+chmod +x "$DOTFILES/install-symlink.sh"
+chmod +x "$DOTFILES/bootstrap/bootstrap.sh"
 
 # Symlink files
 if ! ./install-symlink.sh; then
@@ -62,7 +62,7 @@ if ! ./install-symlink.sh; then
 fi
 
 # Bootstrap the system
-"$DOTFILES_DIR/bootstrap/bootstrap.sh"
+"$DOTFILES/bootstrap/bootstrap.sh"
 
 # Final message
 cat << "EOF"

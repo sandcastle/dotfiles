@@ -2,10 +2,10 @@
 
 # This file is called by install.sh; it symlinks dotfiles to the $HOME path
 
-DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Source functions
-source "$DOTFILES_DIR/bootstrap/_funcs.sh"
+source "$DOTFILES/bootstrap/_funcs.sh"
 
 # Create backup directory
 BACKUP_DIR="$HOME/.backup/dotfiles/$(date +%Y%m%d_%H%M%S)"
@@ -70,8 +70,11 @@ symlink_directory() {
 
 # Dynamically symlink all files from home directory
 echo "Symlinking dotfiles from home directory..."
-symlink_directory "$DOTFILES_DIR/home" "$HOME" "false"
+
+# Symlink remaining files from home directory
+symlink_directory "$DOTFILES/home" "$HOME" "false"
+symlink_directory "$DOTFILES/home/.config" "$HOME/.config" "false"
 
 # Symlink /etc files
 echo "Symlinking /etc"
-symlink_directory "$DOTFILES_DIR/etc" "/etc" "true"
+symlink_directory "$DOTFILES/etc" "/etc" "true"

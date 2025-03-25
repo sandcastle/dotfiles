@@ -10,6 +10,12 @@ alias rm='trash'
 # Case-insensitive pgrep that outputs full path.
 alias pgrep='pgrep -fli'
 
+# Shortcut for nvim
+alias n='nvim'
+
+# Get my public IP address
+alias ip='curl -s ifconfig.me'
+
 # ------------------------------ DEV -------------------------------
 
 # Common project scripts - used on all project irrespective of lang

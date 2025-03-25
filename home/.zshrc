@@ -44,11 +44,6 @@ eval "$(starship init zsh)" # Modern prompt
 # FZF configuration
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # Performance improvements
 # Skip compinit on every shell load
 skip_global_compinit=1
@@ -59,7 +54,6 @@ eval $(/usr/libexec/path_helper -s)
 
 # Oh My Zsh configuration
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Completion settings
 zstyle ':completion:*' menu select
@@ -99,21 +93,77 @@ DISABLE_MAGIC_FUNCTIONS=true
 DISABLE_UNTRACKED_FILES_DIRTY=true
 HIST_STAMPS="yyyy-mm-dd"
 
+# Autosuggestions configuration
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+
+# Syntax Highlighting Colors
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
+
+# Customize colors
+typeset -A ZSH_HIGHLIGHT_STYLES
+
+# Paste warning (optional)
+ZSH_HIGHLIGHT_STYLES[paste]='fg=black,bold,bg=yellow'
+
+# Highlight dangerous commands with red background and white text
+ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
+
+# Base styles
+ZSH_HIGHLIGHT_STYLES[default]=none                   # Default text style
+ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold      # Unknown commands or tokens
+ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=yellow        # Shell reserved words (if, for, while, etc.)
+
+# Command styles
+ZSH_HIGHLIGHT_STYLES[alias]=fg=cyan,bold            # Command aliases
+ZSH_HIGHLIGHT_STYLES[suffix-alias]=fg=cyan,bold     # Suffix aliases
+ZSH_HIGHLIGHT_STYLES[builtin]=fg=cyan,bold          # Shell builtin commands
+ZSH_HIGHLIGHT_STYLES[function]=fg=cyan,bold         # Shell functions
+ZSH_HIGHLIGHT_STYLES[command]=fg=cyan,bold          # Regular commands
+ZSH_HIGHLIGHT_STYLES[precommand]=fg=cyan,bold,underline  # Commands with precommand modifiers
+ZSH_HIGHLIGHT_STYLES[commandseparator]=fg=blue,bold # Command separators (;, &&, ||)
+ZSH_HIGHLIGHT_STYLES[hashed-command]=fg=cyan,bold   # Commands that are hashed (cached)
+
+# Path and globbing styles
+ZSH_HIGHLIGHT_STYLES[path]=fg=green,underline       # File paths
+ZSH_HIGHLIGHT_STYLES[path_prefix]=fg=green,underline # Path prefixes
+ZSH_HIGHLIGHT_STYLES[globbing]=fg=magenta,bold      # Globbing patterns (*, ?, etc.)
+
+# Option styles
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=fg=yellow    # Single-hyphen options (-l)
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=fg=yellow    # Double-hyphen options (--long)
+
+# Argument styles
+ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=fg=magenta,bold          # Back-quoted arguments (`command`)
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]=fg=green,bold          # Single-quoted arguments ('text')
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=green,bold          # Double-quoted arguments ("text")
+ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]=fg=green,bold          # Dollar-quoted arguments ($'text')
+ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=magenta,bold # Dollar-double-quoted arguments ($"text")
+ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=magenta,bold   # Back-double-quoted arguments (`"text"`)
+ZSH_HIGHLIGHT_STYLES[comment]='fg=grey'      # Comments
+ZSH_HIGHLIGHT_STYLES[quoted]='fg=yellow'     # Quoted text
+
+# Assignment style
+ZSH_HIGHLIGHT_STYLES[assign]=fg=blue,bold           # Variable assignments (VAR=value)
+
 # Source Oh My Zsh
 source $ZSH/oh-my-zsh.sh
 
 # Source additional configurations
-source "$DOT_FILES/zsh/aliases.sh"
-source "$DOT_FILES/zsh/functions.sh"
-source "$DOT_FILES/zsh/tools.sh"
-source "$DOT_FILES/zsh/cloud.sh"
-source "$DOT_FILES/zsh/git.sh"
-source "$DOT_FILES/zsh/osx.sh"
+source "$DOTFILES/zsh/aliases.sh"
+source "$DOTFILES/zsh/functions.sh"
+source "$DOTFILES/zsh/tools.sh"
+source "$DOTFILES/zsh/cloud.sh"
+source "$DOTFILES/zsh/git.sh"
+source "$DOTFILES/zsh/osx.sh"
 
 # Language environments
-source "$DOT_FILES/lang/dotnet/env.sh"
-source "$DOT_FILES/lang/js/env.sh"
-source "$DOT_FILES/lang/ruby/env.sh"
+source "$DOTFILES/lang/dotnet/env.sh"
+source "$DOTFILES/lang/js/env.sh"
+source "$DOTFILES/lang/ruby/env.sh"
 
 # iTerm2 integration (if exists)
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
@@ -121,24 +171,22 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 # Local environment (if exists)
 [ -f "$HOME/.local/bin/env" ] && source "$HOME/.local/bin/env"
 
-# Load Powerlevel10k config
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 # Load brew completions and plugins
 if type brew &>/dev/null; then
     BREW_PREFIX=$(brew --prefix)
     # Mark as safe paths
+    ZSH_DISABLE_COMPFIX=true
     fpath=(
         "$BREW_PREFIX/share/zsh-autosuggestions"
         "$BREW_PREFIX/share/zsh-completions"
         "$BREW_PREFIX/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting"
-        "$BREW_PREFIX/share/zsh-syntax-highlighting"
+        # "$BREW_PREFIX/share/zsh-syntax-highlighting"
         $fpath
     )
     # Load plugins
     source "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
     source "$BREW_PREFIX/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-    source "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    # source "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 fi
 
 # Load dotfile completions
@@ -147,7 +195,7 @@ fpath=("$DOTFILES/zsh/completions" $fpath)
 # Optimize command completion system
 autoload -Uz compinit
 if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ${ZDOTDIR:-$HOME}/.zcompdump) ]; then
-    compinit
+    compinit -u
 else
-    compinit -C
+    compinit -u -C
 fi
