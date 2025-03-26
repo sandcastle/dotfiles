@@ -41,6 +41,7 @@ install_brew "kubectx"
 install_brew "skaffold"
 install_brew "google-cloud-sdk"
 install_brew "cloudflared"
+install_brew "terraformer"
 
 log_h4 "Updating gcloud components"
 run_with_progress "Updating gcloud components" true gcloud components update --quiet

@@ -80,5 +80,6 @@
   },
   "extensions.ignoreRecommendations": true,
   "explorer.confirmPasteNative": false,
-  "workbench.editor.enablePreview": false
+  "workbench.editor.enablePreview": false,
+  "cursor.composer.collapsePaneInputBoxPills": true
 }
