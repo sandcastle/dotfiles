@@ -4,6 +4,9 @@
 # Functions
 # ==================================================================
 
+# Autoload functions
+autoload -Uz tfswitch
+
 # Generate a random password
 password() {
   local length=${1:-40}  # Default to 40 if no length specified
