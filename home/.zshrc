@@ -189,8 +189,8 @@ if type brew &>/dev/null; then
     # source "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 fi
 
-# Load dotfile completions and functions
-fpath=("$DOTFILES/zsh/completions" "$DOTFILES/zsh/functions" $fpath)
+# Load dotfile completions
+fpath=("$DOTFILES/zsh/completions" $fpath)
 
 # Optimize command completion system
 autoload -Uz compinit

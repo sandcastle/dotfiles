@@ -9,13 +9,19 @@ function tfswitch() {
     # Create profiles directory if it doesn't exist
     mkdir -p "$TF_PROFILES_DIR"
 
-    # Show usage if no arguments provided
-    if [[ $# -eq 0 ]]; then
+    # Function to show usage
+    function _show_usage() {
         echo "Usage:"
         echo "  tfswitch <profile_name>           # Switch to specified profile"
         echo "  tfswitch import <profile_name>    # Import current config as new profile"
         echo "  tfswitch list                     # List available profiles"
         echo "  tfswitch clean                    # Remove current profile files"
+        echo "  tfswitch --help                   # Show this help message"
+    }
+
+    # Show usage if no arguments provided or --help is used
+    if [[ $# -eq 0 ]] || [[ "$1" == "--help" ]]; then
+        _show_usage
         return 1
     fi
 

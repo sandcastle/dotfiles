@@ -1,4 +1,4 @@
-#compdef password b page mecp manp finder get-pass edit each find-exec ff loc ram size stats hist openfiles compute maxcpu retry preview mkdcd psu tar_ untar mkcd extract fzf-git-log fzf-find aliases
+#compdef password b page mecp manp finder get-pass edit each find-exec ff loc ram size stats hist openfiles compute maxcpu retry preview mkdcd psu tar_ untar mkcd extract fzf-git-log fzf-find aliases tfswitch
 
 # Completion for new_password
 _password() {
@@ -172,4 +172,45 @@ _fzf-find() {
 # Completion for aliases
 _aliases() {
   _message "No arguments needed"
+}
+
+# Completion for tfswitch
+_tfswitch() {
+  local TF_PROFILES_DIR="$HOME/.terraform.d/.tfswitch"
+  local -a commands profiles
+
+  commands=(
+    'import:Import current config as new profile'
+    'list:List available profiles'
+    'clean:Remove current profile files'
+    '--help:Show help message'
+  )
+
+  # Get list of profiles
+  if [[ -d "$TF_PROFILES_DIR" ]]; then
+    profiles=($(ls -1 "$TF_PROFILES_DIR"))
+  fi
+
+  _arguments -C \
+    '1: :->cmds' \
+    '*:: :->args'
+
+  case $state in
+    cmds)
+      _describe -t commands 'tfswitch commands' commands
+      ;;
+    args)
+      case $words[1] in
+        import)
+          _message "Profile name"
+          ;;
+        list|clean|--help)
+          _message "No arguments needed"
+          ;;
+        *)
+          _describe -t profiles 'available profiles' profiles
+          ;;
+      esac
+      ;;
+  esac
 } 

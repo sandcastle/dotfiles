@@ -4,7 +4,10 @@
 # Functions
 # ==================================================================
 
-# Autoload functions
+# Load dotfile functions
+fpath=("$DOTFILES/zsh/functions" $fpath)
+
+# Autoload functions (from zsh/functions)
 autoload -Uz tfswitch
 
 # Generate a random password
