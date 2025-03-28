@@ -14,6 +14,9 @@ install_brew "cardhop"
 install_brew "fantastical"
 install_brew "bartender"
 
+# ai
+install_brew "claude"
+
 # security
 log_h4 "Installing security applications"
 install_brew "1password-cli"
