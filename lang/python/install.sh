@@ -9,7 +9,8 @@ log_h1 "Installing Python"
 
 install_brew "python3"
 
-# Install pip
-
+# Install uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
+# Install numpy for gcloud tunnel performance
+$(gcloud info --format="value(basic.python_location)") -m pip install numpy

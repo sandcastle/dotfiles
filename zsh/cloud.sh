@@ -22,5 +22,6 @@ source "$(gcloud info --format='value(installation.sdk_root)')/completion.zsh.in
 export KUBE_EDITOR=nvim
 
 # aliases
+alias k='kubectl'
 alias kube='kubectl'
 alias kubeproxy='kube proxy &'
