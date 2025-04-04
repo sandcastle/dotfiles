@@ -81,5 +81,7 @@
   "extensions.ignoreRecommendations": true,
   "explorer.confirmPasteNative": false,
   "workbench.editor.enablePreview": false,
-  "cursor.composer.collapsePaneInputBoxPills": true
+  "cursor.composer.collapsePaneInputBoxPills": true,
+  "cursor.composer.shouldAllowCustomModes": true,
+  "cursor.composer.shouldChimeAfterChatFinishes": true
 }

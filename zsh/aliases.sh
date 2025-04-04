@@ -225,9 +225,32 @@ if (( $+commands[eza] )); then
   alias tree='eza --tree'
 fi
 
+# Helper function to detect if running in VSCode or Cursor
+is_agent_context() {
+  # Multiple detection methods for Cursor context
+  # 1. Check if its vscode or cursor (both have the same TERM_PROGRAM)
+  # 2. Check if this is being executed from a non-interactive shell (common in agents)
+  if [[ "$TERM_PROGRAM" == "vscode" ]] &&
+     [[ ! -o interactive ]]; then
+    return 0  # true in shell logic
+  else
+    return 1  # false in shell logic
+  fi
+}
+
 if (( $+commands[bat] )); then
   # bat: cat clone with syntax highlighting and Git integration
-  alias cat='bat'
+  # Smart wrapper that disables paging when called from VSCode/Cursor
+  bat_wrapper() {
+    if is_agent_context; then
+      # Dont use paging or style this can break AI agents
+      bat --paging=never --style=plain "$@"
+    else
+      bat "$@"  # Default behavior with auto paging, which is interactive
+    fi
+  }
+  alias cat='bat_wrapper'
+  alias cats='bat'
 fi
 
 if (( $+commands[fd] )); then
