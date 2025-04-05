@@ -13,4 +13,5 @@ install_brew "python3"
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Install numpy for gcloud tunnel performance
+CLOUDSDK_PYTHON_SITEPACKAGES=1
 $(gcloud info --format="value(basic.python_location)") -m pip install numpy

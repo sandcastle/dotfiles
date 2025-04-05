@@ -10,6 +10,7 @@
 
 # CLI mapping for py version
 export CLOUDSDK_PYTHON=python3
+export CLOUDSDK_PYTHON_SITEPACKAGES=1
 source "$(gcloud info --format='value(installation.sdk_root)')/path.zsh.inc"
 source "$(gcloud info --format='value(installation.sdk_root)')/completion.zsh.inc"
 
