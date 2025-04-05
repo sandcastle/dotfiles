@@ -250,7 +250,6 @@ if (( $+commands[bat] )); then
     fi
   }
   alias cat='bat_wrapper'
-  alias cats='bat'
 fi
 
 if (( $+commands[fd] )); then
