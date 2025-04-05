@@ -15,6 +15,7 @@ install_package "yq"         # YAML processor (like jq but for YAML)
 install_package "tree"       # Display directory structure as a tree
 install_package "wget"       # Network file downloader
 install_package "curl"       # Command-line tool for transferring data with URL syntax
+install_package "bats"       # Bash Automated Testing System
 
 # modern replacements
 install_package "bat"        # Modern cat alternative with syntax highlighting
