@@ -83,5 +83,8 @@
   "workbench.editor.enablePreview": false,
   "cursor.composer.collapsePaneInputBoxPills": true,
   "cursor.composer.shouldAllowCustomModes": true,
-  "cursor.composer.shouldChimeAfterChatFinishes": true
+  "cursor.composer.shouldChimeAfterChatFinishes": true,
+  "workbench.editorAssociations": {
+    "*.mdc": "default"
+  }
 }
