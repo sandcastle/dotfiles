@@ -33,10 +33,6 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000
 SAVEHIST=10000
 
-# Completion settings
-zstyle ':completion:*' menu select
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case insensitive completion
-
 # Initialize modern tools
 eval "$(zoxide init zsh)"  # Better directory navigation
 eval "$(starship init zsh)" # Modern prompt
@@ -57,7 +53,7 @@ export ZSH="$HOME/.oh-my-zsh"
 
 # Completion settings
 zstyle ':completion:*' menu select
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case insensitive completion
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$HOME/.zcompcache"
