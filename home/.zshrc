@@ -34,7 +34,6 @@ HISTSIZE=50000
 SAVEHIST=10000
 
 # Initialize modern tools
-eval "$(zoxide init zsh)"  # Better directory navigation
 eval "$(starship init zsh)" # Modern prompt
 
 # FZF configuration

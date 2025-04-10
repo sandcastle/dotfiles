@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
-# Main installation script
-
 set -euo pipefail
+
 trap 'error_handler $? $LINENO $BASH_LINENO "$BASH_COMMAND" $(printf "::%s" ${FUNCNAME[@]:-})' ERR
 
 # Source helper functions
@@ -71,7 +70,6 @@ cat << "EOF"
 
 A few things to do:
 1. Restart your terminal to apply all changes
-2. Run 'p10k configure' if you want to customize your prompt
 3. Check the README for additional customization options
 
 Enjoy your new setup! 🚀
