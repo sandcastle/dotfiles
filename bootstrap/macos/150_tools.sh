@@ -9,7 +9,6 @@ DOTFILES="$HOME/Developer/dotfiles"
 CURSOR_SETTINGS_DIR="$HOME/Library/Application Support/Cursor/User"
 VSCODE_SETTINGS_DIR="$HOME/Library/Application Support/Code/User/"
 
-
 # Create backup directory with timestamp
 BACKUP_DIR="$HOME/.backup/editor_settings/$(date +%Y%m%d_%H%M%S)"
 mkdir -p "$BACKUP_DIR"

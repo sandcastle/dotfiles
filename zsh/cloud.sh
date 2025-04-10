@@ -25,4 +25,11 @@ export KUBE_EDITOR=nvim
 # aliases
 alias k='kubectl'
 alias kube='kubectl'
+alias kx='kubectx'
+alias kn='kubens'
 alias kubeproxy='kube proxy &'
+
+
+# ==================================================================
+# Digital Ocean
+# ==================================================================

@@ -46,6 +46,8 @@ if [[ "$OS_TYPE" == "macos" ]]; then
     source "$SCRIPT_DIR/macos/120_ui.sh"
     source "$SCRIPT_DIR/macos/130_apps.sh"
     source "$SCRIPT_DIR/macos/140_dev.sh"
+    source "$SCRIPT_DIR/macos/150_tools.sh"
+    source "$SCRIPT_DIR/macos/160_mcp.sh"
 else
     source "$SCRIPT_DIR/linux/100_system.sh"
     source "$SCRIPT_DIR/linux/120_ui.sh"

@@ -155,6 +155,7 @@ source "$DOTFILES/zsh/tools.sh"
 source "$DOTFILES/zsh/cloud.sh"
 source "$DOTFILES/zsh/git.sh"
 source "$DOTFILES/zsh/osx.sh"
+source "$DOTFILES/zsh/mcp.sh"
 
 # Language environments
 source "$DOTFILES/lang/dotnet/env.sh"
