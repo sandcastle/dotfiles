@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env sh
 
 # Performance profiling (uncomment to debug slow startup)
 # zmodload zsh/zprof

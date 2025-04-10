@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
 # This file is called by install.sh; it symlinks dotfiles to the $HOME path
 

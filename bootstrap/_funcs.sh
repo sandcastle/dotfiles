@@ -1,7 +1,17 @@
 #!/usr/bin/env bash
 
-# Load configuration
-source "$(dirname "${BASH_SOURCE[0]}")/_config.sh"
+# Get the absolute path of the script directory, works in both source and execution contexts
+if [[ -n "${BASH_SOURCE[0]}" ]]; then
+    SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+elif [[ -n "$0" ]]; then
+    SCRIPT_DIR="$( cd "$( dirname "$0" )" && pwd )"
+else
+    echo "Error: Cannot determine script location" >&2
+    exit 1
+fi
+
+# Source the config file using absolute path
+source "${SCRIPT_DIR}/_config.sh"
 
 # Logging functions
 # Usage: log_info "Information message" [true/false]

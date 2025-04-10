@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
 # Source common functions
 source "$(dirname "${BASH_SOURCE[0]}")/../_funcs.sh"

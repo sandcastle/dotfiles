@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh
 # Main installation script
 
 set -euo pipefail

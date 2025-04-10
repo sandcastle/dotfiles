@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env sh
 
 # Install Bundler if not installed
 if ! gem list bundler -i >/dev/null 2>&1; then

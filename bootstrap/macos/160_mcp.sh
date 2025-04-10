@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
 source "$(dirname "$0")/_funcs.sh"
 

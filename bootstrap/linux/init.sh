@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
 log_info "Running Linux initialization..."
 
