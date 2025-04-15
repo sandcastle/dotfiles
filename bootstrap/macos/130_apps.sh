@@ -20,7 +20,6 @@ install_brew "claude"
 # security
 log_h4 "Installing security applications"
 install_brew "1password-cli"
-install_brew "cloudflare-warp"
 
 # media
 log_h4 "Installing media applications"
@@ -41,26 +40,33 @@ log_h4 "Installing cloud and kubernetes tools"
 install_brew "kubernetes-cli"
 install_brew "kubernetes-helm"
 install_brew "kubectx"
-install_brew "skaffold"
 install_brew "google-cloud-sdk"
-install_brew "cloudflared"
+install_brew "awscli"
+install_brew "terraform"
 install_brew "terraformer"
+install_brew "terragrunt"
 
 log_h4 "Updating gcloud components"
 run_with_progress "Updating gcloud components" true gcloud components update --quiet
 run_with_progress "Installing gke-gcloud-auth-plugin" true gcloud components install gke-gcloud-auth-plugin --quiet
 run_with_progress "Installing gsutil" true gcloud components install gsutil --quiet
-install_brew "awscli"
+
+# Cloudflare
+log_h4 "Installing Cloudflare tools"
+install_brew "cloudflare-warp"
+install_brew "cloudflared"
 run_with_progress "Installing wrangler" true npm install -g wrangler
 
 # tools
-log_h4 "Installing development tools"
-install_brew "jetbrains-toolbox"
-install_brew "visual-studio-code" "Visual Studio Code"
-install_brew "terraform"
+log_h4 "Installing Docker tools"
 install_brew "docker"
 install_brew "docker-compose"
 install_brew "ngrok"
+
+# IDE
+log_h4 "Installing IDEs"
+install_brew "jetbrains-toolbox"
+install_brew "visual-studio-code" "Visual Studio Code"
 install_brew "cursor"
 
 run_with_progress "Setting up VS Code CLI tools" true setup_vscode
