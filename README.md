@@ -46,20 +46,21 @@ My opinionated dotfiles and macOS setup for a productive development environment
 ### Quick Install
 
 ```bash
-curl --silent https://raw.githubusercontent.com/sandcastle/dotfiles/master/install.sh | bash
+cd ~/Developer && curl --silent https://raw.githubusercontent.com/sandcastle/dotfiles/master/install.sh | bash
 ```
 
 ### Manual Install
 
 1. Clone the repository:
+
 ```bash
-git clone --recursive https://github.com/sandcastle/dotfiles.git ~/Developer/dotfiles
+git clone --depth=1 https://github.com/sandcastle/dotfiles.git ~/Developer/dotfiles
 ```
 
 2. Run the installer:
+
 ```bash
-cd ~/Developer/dotfiles
-./install.sh
+cd ~/Developer/dotfiles && sh ./install.sh
 ```
 
 ## What's Included
@@ -115,18 +116,16 @@ cd ~/Developer/dotfiles
 To update your dotfiles:
 
 ```bash
-cd ~/Developer/dotfiles
-git pull
-./install.sh
+cd ~/Developer/dotfiles && git pull && sh ./install.sh
 ```
 
 ## Credits
 
 Inspired by various dotfiles repositories, including:
+
 - [Paul Miller's dotfiles](https://github.com/paulmillr/dotfiles)
 - [Mathias Bynens' dotfiles](https://github.com/mathiasbynens/dotfiles)
 
 ## License
 
 MIT License. See [LICENSE](LICENSE) for details.
-

@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-
-
 # Add browser-tools configuration
 browser_tools_config='{
   "command": "npx -y @agentdeskai/browser-tools-mcp",

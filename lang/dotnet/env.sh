@@ -12,4 +12,4 @@ export PATH="$PATH:$HOME/.dotnet:$HOME/.dotnet/tools"
 # Tools
 # ==================================================================
 
-alias dotnet-update="sh '$HOME/Developer/dotfiles/lang/dotnet/update.sh'"
+alias dotnet-update="sh '$DOTFILES/lang/dotnet/update.sh'"

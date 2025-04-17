@@ -4,6 +4,13 @@
 # Aliases
 # ==================================================================
 
+# Commonly used directories.
+alias dot='cd $DOTFILES_HOME'
+alias dev='cd $DEV_HOME'
+alias me='cd $DEV_ME'
+alias tmp='cd $DEV_TMP'
+alias work='cd $DEV_WORK'
+
 # Remove all items safely, to Trash (`brew install trash`).
 alias rm='trash'
 

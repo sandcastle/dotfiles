@@ -322,5 +322,5 @@ fzf-find() {
 
 # Add a new function that summaires all aliases in aliases.sh
 function aliases() {
-  cat "${DOTFILES:-$HOME/Developer/dotfiles}/zsh/aliases.sh" | grep "^alias" | sort | bat --color=always --paging=always
+  cat "${DOTFILES}/zsh/aliases.sh" | grep "^alias" | sort | bat --color=always --paging=always
 }

@@ -31,7 +31,10 @@ typeset -gU cdpath fpath mailpath manpath path
 typeset -gUT INFOPATH infopath
 
 # Commonly used directories.
-dev="$HOME/Developer"
+export DEV_HOME="$HOME/Developer"
+export DEV_TMP="$DEV_HOME/tmp"
+export DEV_WORK="$DEV_HOME/work"
+export DEV_ME="$DEV_HOME/me"
 
 # Set the the list of directories that cd searches.
 cdpath=(

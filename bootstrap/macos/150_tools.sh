@@ -5,7 +5,6 @@ source "$(dirname "${BASH_SOURCE[0]}")/../_funcs.sh"
 log_h1 "Configuring Tools"
 
 # Define directories
-DOTFILES="$HOME/Developer/dotfiles"
 CURSOR_SETTINGS_DIR="$HOME/Library/Application Support/Cursor/User"
 VSCODE_SETTINGS_DIR="$HOME/Library/Application Support/Code/User/"
 

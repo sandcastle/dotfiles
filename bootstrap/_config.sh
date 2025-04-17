@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+
 # Computer name
 COMPUTER_NAME=${COMPUTER_NAME:-""}
 
@@ -7,10 +9,11 @@ COMPUTER_NAME=${COMPUTER_NAME:-""}
 GIT_NAME=${GIT_NAME:-""}
 GIT_EMAIL=${GIT_EMAIL:-""}
 
-# Development paths
-DEV_PATH="$HOME/Developer"
-WORK_PATH="$DEV_PATH/work"
-PERSONAL_PATH="$DEV_PATH/personal"
+# Commonly used directories.
+export DEV_HOME="$HOME/Developer"
+export DEV_TMP="$DEV_HOME/tmp"
+export DEV_WORK="$DEV_HOME/work"
+export DEV_ME="$DEV_HOME/me"
 
 # Feature flags
 INSTALL_WORK_TOOLS=${INSTALL_WORK_TOOLS:-true}
