@@ -101,9 +101,9 @@ log_finished() {
     fi
 
     if [ "$newline" = true ]; then
-        printf "\033[0;36m✨\033[0m \033[1m%s\033[0m\n" "$message"
+        printf "\033[0;36m✨\033[0m\033[1m%s\033[0m\n" "$message"
     else
-        printf "\033[0;36m✨\033[0m \033[1m%s\033[0m" "$message"
+        printf "\033[0;36m✨\033[0m\033[1m%s\033[0m" "$message"
         return  # Early return if no newline desired (skipping next steps)
     fi
 
@@ -113,7 +113,7 @@ log_finished() {
 
         # Iterate through each of the remaining arguments
         for item in "${args[@]}"; do
-            printf "   \033[0;36m→\033[0m %s\n" "$item"
+            printf "  \033[0;36m→\033[0m %s\n" "$item"
         done
     fi
 
@@ -306,29 +306,12 @@ log_h1() {
 }
 
 # Usage: log_h2 "Secondary Heading" [true/false]
-# Prints a medium-sized secondary heading with underlined text
+# Prints a medium-sized secondary heading
 # Optional second parameter controls whether to add a newline (defaults to true)
 # Output example:
 #
-#   Secondary Heading (with underline)
+# ❯❯ Secondary Heading
 log_h2() {
-    local heading="${1:-}"
-    local newline=${2:-true}
-
-    printf "  \033[0;36m\033[4m%s\033[0m\n" "$heading"  # Cyan color with underline for heading
-
-    if [ "$newline" = true ]; then
-        echo ""  # Add blank line after heading
-    fi
-}
-
-# Usage: log_h3 "Tertiary Heading" [true/false]
-# Prints a smaller tertiary heading with a symbol prefix
-# Optional second parameter controls whether to add a newline (defaults to true)
-# Output example:
-#
-# ❯❯ Tertiary Heading
-log_h3() {
     local heading="${1:-}"
     local newline=${2:-true}
 
@@ -337,6 +320,24 @@ log_h3() {
         printf "\033[1;33m❯❯\033[0m \033[1m%s\033[0m\n" "$heading"
     else
         printf "\033[1;33m❯❯\033[0m \033[1m%s\033[0m" "$heading"
+    fi
+}
+
+# Usage: log_h3 "Tertiary Heading" [true/false]
+# Prints a smaller tertiary heading
+# Optional second parameter controls whether to add a newline (defaults to true)
+# Output example:
+#
+# ❯ Tertiary Heading
+log_h3() {
+    local heading="${1:-}"
+    local newline=${2:-true}
+
+    echo ""  # Add blank line before heading
+    if [ "$newline" = true ]; then
+        printf "\033[1;33m❯\033[0m \033[1m%s\033[0m\n" "$heading"
+    else
+        printf "\033[1;33m❯\033[0m \033[1m%s\033[0m" "$heading"
     fi
 }
 

@@ -11,28 +11,65 @@ source "$DOTFILES/bootstrap/_funcs.sh"
 BACKUP_DIR="$HOME/.backup/dotfiles/$(date +%Y%m%d_%H%M%S)"
 mkdir -p "$BACKUP_DIR"
 
-# Function to safely create symlinks
 create_symlink() {
     local src="$1"
     local dest="$2"
     local use_sudo="$3"
+    local filename=$(basename "$src")
+
+    # Handle existing destination
+    if [[ -e "$dest" || -L "$dest" ]]; then
+        # Check if it's already a symlink to our target
+        if [[ -L "$dest" ]]; then
+            local current_target=$(readlink "$dest")
+            
+            if [[ "$current_target" == "$src" ]]; then
+                log_success "Already linked: $dest"
+                return 0
+            else
+                log_warning "Replacing symlink $dest, old link: $current_target"
+            fi
+        else
+            log_warning "Backing up existing file: $dest"
+        fi
+        
+        # Backup existing file or symlink
+        if [[ "$use_sudo" == "true" ]]; then
+            sudo cp -P "$dest" "$BACKUP_DIR/" 2>/dev/null || true
+            sudo rm -f "$dest"
+        else
+            cp -P "$dest" "$BACKUP_DIR/" 2>/dev/null || true
+            rm -f "$dest"
+        fi
+    fi
     
-    # Create symlink (silently)
+    # Create new symlink
     if [[ "$use_sudo" == "true" ]]; then
         sudo ln -sf "$src" "$dest"
     else
         ln -sf "$src" "$dest"
     fi
+    
+    # Verify symlink was created correctly
+    if [[ -L "$dest" ]]; then
+        local actual_target=$(readlink "$dest")
+        if [[ "$actual_target" == "$src" ]]; then
+            log_success "Linked: $dest → $src"
+        else
+            log_error "Symlink points to $actual_target instead of $src"
+        fi
+    else
+        log_error "Failed to create symlink"
+    fi
 }
 
-# Function to symlink all files from a directory
 symlink_directory() {
     local src_dir="$1"
     local dest_dir="$2"
     local use_sudo="$3"
-    local backup_count=0
-    local symlink_count=0
-    
+
+    log_h3 "Symlinking directory $src_dir"
+
     # Create destination directory if it doesn't exist
     if [[ "$use_sudo" == "true" ]]; then
         sudo mkdir -p "$dest_dir"
@@ -41,40 +78,64 @@ symlink_directory() {
     fi
     
     # Iterate over all files in source directory
-    for file in "$src_dir"/*; do
-        if [[ -f "$file" ]]; then
-            local filename=$(basename "$file")
-            local dest="$dest_dir/$filename"
-
-            # Backup existing file if it exists
-            if [[ -e "$dest" ]]; then
-                if [[ "$use_sudo" == "true" ]]; then
-                    sudo mv "$dest" "$BACKUP_DIR/"
-                else
-                    cp "$dest" "$BACKUP_DIR/"
-                fi
-                ((backup_count++))
+    if [[ -d "$src_dir" ]]; then
+        local file_count=0
+        
+        # Enable dotglob to match hidden files
+        shopt -s dotglob
+        
+        for file in "$src_dir"/*; do
+            # Skip . and .. directories
+            if [[ "$(basename "$file")" == "." || "$(basename "$file")" == ".." ]]; then
+                continue
             fi
             
-            # Create symlink
-            create_symlink "$file" "$dest" "$use_sudo" symlink_count
-            ((symlink_count++))
-        fi
-    done
-    
-    # Print results for this directory
-    log_finished "Symlinked files in $dest_dir" true \
-        "$backup_count files backed up to $BACKUP_DIR" \
-        "$symlink_count symlinks created"
+            if [[ -f "$file" ]]; then
+                local filename=$(basename "$file")
+                local dest="$dest_dir/$filename"
+                file_count=$((file_count + 1))
+                create_symlink "$file" "$dest" "$use_sudo"
+            fi
+        done
+        
+        # Reset dotglob
+        shopt -u dotglob
+    else
+        log_warning "Source directory does not exist: $src_dir"
+        return 1
+    fi
+
+    log_finished "Processed $file_count files"
 }
 
-# Dynamically symlink all files from home directory
-echo "Symlinking dotfiles from home directory..."
+symlink_file() {
+    local src="$1"
+    local dest="$2"
+    local use_sudo="$3"
 
-# Symlink remaining files from home directory
+    # Check if source file exists
+    if [[ ! -f "$src" ]]; then
+        echo "Source file does not exist: $src"
+        return 1
+    fi
+
+    # Create the parent directory if it doesn't exist
+    local parent_dir=$(dirname "$dest")
+    if [[ "$use_sudo" == "true" ]]; then
+        sudo mkdir -p "$parent_dir"
+    else
+        mkdir -p "$parent_dir"
+    fi
+
+    create_symlink "$src" "$dest" "$use_sudo"
+}
+
+log_h1 "Symlinking dotfiles"
+
+log_info "Dotfiles: $DOTFILES"
+
 symlink_directory "$DOTFILES/home" "$HOME" "false"
 symlink_directory "$DOTFILES/home/.config" "$HOME/.config" "false"
-
-# Symlink /etc files
-echo "Symlinking /etc"
 symlink_directory "$DOTFILES/etc" "/etc" "true"
+
+echo "Symlink operation completed successfully!"
