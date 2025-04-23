@@ -1,7 +1,6 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Cloud shell init script
-
 sudo apt-get update
 sudo apt-get install -y zsh
 sudo apt-get install -y starship
@@ -11,14 +10,7 @@ sudo apt-get install -y zsh-fast-syntax-highlighting
 sudo apt-get install -y zsh-autosuggestions 
 sudo apt-get install -y zsh-autocomplete
 
-
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || {
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || {
   echo "Failed to install oh my zsh"
-  exit  1
-}
-
-mkdir -p ~/.oh-my-zsh/custom/themes
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" || {
-  echo "Failed to install Powerlevel10k theme"
   exit  1
 }

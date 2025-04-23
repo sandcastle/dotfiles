@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 branch=$1
 if [[ -z $branch ]]; then

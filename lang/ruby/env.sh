@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Environment
 export LDFLAGS="-L$(brew --prefix openssl@3)/lib -L$(brew --prefix libyaml)/lib"

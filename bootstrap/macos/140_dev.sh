@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 source "$(dirname "${BASH_SOURCE[0]}")/../_funcs.sh"
 
@@ -24,9 +24,9 @@ echo 'Copying public key to clipboard. Paste it into your Github account...'
   open 'https://github.com/account/ssh'
 
 # languages
-sh ./lang/js/install.sh
-sh ./lang/dotnet/install.sh
-sh ./lang/python/install.sh
+source ./lang/js/install.sh
+source ./lang/dotnet/install.sh
+source ./lang/python/install.sh
 
 # languages
 log_info "Installing programming languages"
