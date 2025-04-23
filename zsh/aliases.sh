@@ -10,6 +10,7 @@ alias dev='cd $DEV_HOME'
 alias me='cd $DEV_ME'
 alias tmp='cd $DEV_TMP'
 alias work='cd $DEV_WORK'
+alias dotfiles-update='curl -s "https://raw.githubusercontent.com/sandcastle/dotfiles/master/install.sh?t=$(date +%s%N)" | bash'
 
 # Remove all items safely, to Trash (`brew install trash`).
 alias rm='trash'

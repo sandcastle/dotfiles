@@ -2,31 +2,26 @@
 
 My opinionated dotfiles and macOS setup for a productive development environment.
 
-
-## Installation
-
-### Quick Install
+## Quick Install
 
 ```bash
-cd ~/Developer # it will install in $(pwd)/dotfiles
 curl -s "https://raw.githubusercontent.com/sandcastle/dotfiles/master/install.sh?t=$(date +%s%N)" | bash
 ```
 
-### Manual Install
+## Updating
+
+Run the `dotfiles-update` alias to trigger an update.
 
 ```bash
-INSTALL_DIR=~/Developer/dotfiles
-git clone --depth=1 https://github.com/sandcastle/dotfiles.git $INSTALL_DIR
-bash $INSTALL_DIR/install.sh
+dotfiles-update
 ```
-
 
 ## Features
 
 - 🚀 One-command installation
 - ⚡️ Performance-optimized ZSH configuration
 - 🛠 Modern CLI tools and replacements
-- 🔧 Sensible macOS defaults
+- 🔧 Sensible macOS & linux defaults
 - 🔄 Git workflow enhancements
 - 🖥 Development environment setup
 
@@ -47,18 +42,16 @@ bash $INSTALL_DIR/install.sh
 - Python with pyenv
 - Ruby with rbenv
 - Go
-- .NET Core
+- dotnet
 - Docker and Kubernetes tools
 
 ### Shell Configuration
 
 - ZSH with Oh My Zsh
-- Powerlevel10k theme
 - Syntax highlighting
 - Auto-suggestions
 - Smart completions
 - Git integrations
-- Cloud CLI tools (AWS, GCP, Azure)
 
 ## What's Included
 
@@ -67,21 +60,21 @@ bash $INSTALL_DIR/install.sh
 - Development tools (git, gh, jq, etc.)
 - Modern CLI replacements
 - Terminal emulator (iTerm2)
-- Shell enhancements (ZSH + plugins)
-- Code editor (VS Code)
+- Shell enhancements (ZSH + plugins, Starship)
+- Code editors (Neovim, VS Code, Cursor)
 
 ### Development Tools
 
-- Language environments (Node.js, Python, Ruby, Go)
+- Language environments (Node.js, Python, Ruby, Go, .NET)
 - Container tools (Docker, kubectl, helm)
-- Cloud CLIs (AWS, GCP)
+- Cloud CLIs (AWS, GCP, Azure)
 - Infrastructure as Code (Terraform)
 
 ### Configuration
 
 - Git configuration and aliases
 - ZSH configuration and functions
-- VS Code settings
+- VS Code & Cursor settings
 - iTerm2 profile
 - macOS system preferences
 
@@ -90,30 +83,33 @@ bash $INSTALL_DIR/install.sh
 ```
 .
 ├── bootstrap/          # Installation scripts
-├── home/              # Home directory dotfiles
-├── zsh/               # ZSH configuration
-│   ├── aliases.sh     # Shell aliases
-│   ├── functions.sh   # Shell functions
-│   └── tools.sh       # Tool-specific config
-├── lang/              # Language-specific setup
-├── git-extras/        # Git helper scripts
-└── vscode/           # VS Code settings
-```
-
-## Customization
-
-1. Fork this repository
-2. Modify the configurations in `home/` directory
-3. Add/remove packages in `install.sh`
-4. Adjust macOS settings in `bootstrap-osx.sh`
-5. Update shell configurations in `zsh/`
-
-## Updating
-
-To update your dotfiles:
-
-```bash
-cd ~/Developer/dotfiles && git pull && sh ./install.sh
+│   ├── common/         # Cross-platform scripts
+│   ├── linux/          # Linux-specific scripts
+│   └── macos/          # macOS-specific scripts
+├── etc/                # System configuration files
+├── git-extras/         # Git helper scripts
+├── home/               # Home directory dotfiles
+│   └── .config/        # XDG config files
+├── lang/               # Language-specific setup
+│   ├── dotnet/         # .NET configuration
+│   ├── go/             # Go configuration
+│   ├── js/             # JavaScript/Node.js configuration
+│   ├── python/         # Python configuration
+│   └── ruby/           # Ruby configuration
+├── tools/              # Tool-specific configuration
+│   ├── cursor/         # Cursor editor settings
+│   ├── mcp/            # MCP tool configuration
+│   └── vscode/         # VS Code settings
+└── zsh/                # ZSH configuration
+    ├── aliases.sh      # Shell aliases
+    ├── cloud.sh        # Cloud provider configurations
+    ├── functions.sh    # Shell functions
+    ├── git.sh          # Git-specific settings
+    ├── mcp.sh          # MCP-specific settings
+    ├── osx.sh          # macOS-specific settings
+    ├── tools.sh        # Tool-specific config
+    ├── completions/    # ZSH completions
+    └── functions/      # Custom ZSH functions
 ```
 
 ## Credits
@@ -125,4 +121,4 @@ Inspired by various dotfiles repositories, including:
 
 ## License
 
-MIT License. See [LICENSE](LICENSE) for details.
+MIT License.
