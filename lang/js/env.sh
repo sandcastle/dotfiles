@@ -13,7 +13,7 @@ export PATH="$NVM_BIN:$PATH"
 # PNPM
 # ==================================================================
 
-export PNPM_HOME="/Users/glenn/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 
 # ==================================================================

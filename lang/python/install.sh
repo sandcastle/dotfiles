@@ -2,8 +2,6 @@
 
 set -e
 
-cd "$(dirname "$0")/../.."
-
 log_h1 "Installing Python"
 
 install_brew "python3"

@@ -41,7 +41,6 @@ SAVEHIST=10000
 skip_global_compinit=1
 
 # Load essential environment variables first
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 eval $(/usr/libexec/path_helper -s)
 
 # Completion settings
@@ -131,10 +130,21 @@ fpath=("$DOTFILES/zsh/completions" $fpath)
 
 # Optimize command completion system
 autoload -Uz compinit
-if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ${ZDOTDIR:-$HOME}/.zcompdump) ]; then
-    compinit -u
+# Cross-platform check for zcompdump modification time
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS version
+    if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ${ZDOTDIR:-$HOME}/.zcompdump) ]; then
+        compinit -u
+    else
+        compinit -u -C
+    fi
 else
-    compinit -u -C
+    # Linux version - simpler approach that checks if dump file is older than 24 hours
+    if [[ -f ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
+        compinit -u
+    else
+        compinit -u -C
+    fi
 fi
 
 # Install zi if not already installed
