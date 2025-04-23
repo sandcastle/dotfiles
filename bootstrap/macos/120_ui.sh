@@ -4,11 +4,11 @@ log_h1 "Configuring UI preferences"
 
 # Dock settings
 log_success "Configuring Dock settings"
-defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock tilesize -int 36
 
 ## Dock animation
 log_success "Configuring Dock animations"
+defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock autohide-time-modifier -float 0.5
 defaults write com.apple.dock autohide-delay -int 0
 

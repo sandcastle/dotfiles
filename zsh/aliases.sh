@@ -211,15 +211,6 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias ~='cd ~'
 
-# Add zoxide integration if it exists
-if (( $+commands[zoxide] )); then
-  # zoxide: Smarter cd command that learns your habits
-  # These aliases are optional as zoxide automatically integrates with cd
-  alias zi='z -i'    # Interactive selection mode
-  alias za='z -a'    # Add a directory to the database without navigating to it
-  alias zq='z -q'    # Quick search mode (echo path only)
-fi
-
 # Modern replacements
 # Use conditional checks to ensure commands exist before aliasing them
 if (( $+commands[eza] )); then

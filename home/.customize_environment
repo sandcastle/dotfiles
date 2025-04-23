@@ -1,16 +1,6 @@
 #!/usr/bin/env bash
 
-# Cloud shell init script
 sudo apt-get update
-sudo apt-get install -y zsh
-sudo apt-get install -y starship
-sudo apt-get install -y neovim 
-sudo apt-get install -y zsh-syntax-highlighting 
-sudo apt-get install -y zsh-fast-syntax-highlighting
-sudo apt-get install -y zsh-autosuggestions 
-sudo apt-get install -y zsh-autocomplete
+sudo apt-get install -y curl
 
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || {
-  echo "Failed to install oh my zsh"
-  exit  1
-}
+curl -sS "https://raw.githubusercontent.com/sandcastle/dotfiles/master/install.sh?t=$(date +%s%N)" | bash

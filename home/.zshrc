@@ -33,9 +33,6 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000
 SAVEHIST=10000
 
-# Initialize modern tools
-eval "$(starship init zsh)" # Modern prompt
-
 # FZF configuration
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -44,11 +41,8 @@ eval "$(starship init zsh)" # Modern prompt
 skip_global_compinit=1
 
 # Load essential environment variables first
-export PATH="$HOME/.fastlane/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 eval $(/usr/libexec/path_helper -s)
-
-# Oh My Zsh configuration
-export ZSH="$HOME/.oh-my-zsh"
 
 # Completion settings
 zstyle ':completion:*' menu select
@@ -57,35 +51,7 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$HOME/.zcompcache"
 
-# Plugin configuration - Optimized based on your tools and usage
-plugins=(
-    aws                          # AWS CLI commands
-    brew                         # Homebrew commands
-    docker                       # Docker commands and completion
-    doctl                        # Digital Ocean CLI
-    dotnet                       # .NET Core commands
-    emoji                        # Emoji completion
-    gcloud                       # Google Cloud commands
-    git                          # Git integration and aliases
-    gh                           # GitHub CLI
-    golang                       # Go development
-    helm                         # Helm commands
-    httpie                       # HTTP client
-    kubectl                      # Kubernetes commands
-    macos                        # Replaces most of your osx.sh aliases
-    node                         # Node.js and npm/yarn commands
-    terraform                    # Terraform commands
-    vscode                       # VSCode commands
-    yarn                         # Yarn package manager
-    z                            # Quick directory navigation
-    zoxide                       # Better directory navigation
-)
-
 # Performance optimization settings
-ZSH_DISABLE_COMPFIX=true
-DISABLE_AUTO_UPDATE=true
-DISABLE_MAGIC_FUNCTIONS=true
-DISABLE_UNTRACKED_FILES_DIRTY=true
 HIST_STAMPS="yyyy-mm-dd"
 
 # Autosuggestions configuration
@@ -106,12 +72,10 @@ ZSH_HIGHLIGHT_STYLES[paste]='fg=black,bold,bg=yellow'
 
 # Highlight dangerous commands with red background and white text
 ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
-
 # Base styles
 ZSH_HIGHLIGHT_STYLES[default]=none                   # Default text style
 ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold      # Unknown commands or tokens
 ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=yellow        # Shell reserved words (if, for, while, etc.)
-
 # Command styles
 ZSH_HIGHLIGHT_STYLES[alias]=fg=cyan,bold            # Command aliases
 ZSH_HIGHLIGHT_STYLES[suffix-alias]=fg=cyan,bold     # Suffix aliases
@@ -121,16 +85,13 @@ ZSH_HIGHLIGHT_STYLES[command]=fg=cyan,bold          # Regular commands
 ZSH_HIGHLIGHT_STYLES[precommand]=fg=cyan,bold,underline  # Commands with precommand modifiers
 ZSH_HIGHLIGHT_STYLES[commandseparator]=fg=blue,bold # Command separators (;, &&, ||)
 ZSH_HIGHLIGHT_STYLES[hashed-command]=fg=cyan,bold   # Commands that are hashed (cached)
-
 # Path and globbing styles
 ZSH_HIGHLIGHT_STYLES[path]=fg=green,underline       # File paths
 ZSH_HIGHLIGHT_STYLES[path_prefix]=fg=green,underline # Path prefixes
 ZSH_HIGHLIGHT_STYLES[globbing]=fg=magenta,bold      # Globbing patterns (*, ?, etc.)
-
 # Option styles
 ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=fg=yellow    # Single-hyphen options (-l)
 ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=fg=yellow    # Double-hyphen options (--long)
-
 # Argument styles
 ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=fg=magenta,bold          # Back-quoted arguments (`command`)
 ZSH_HIGHLIGHT_STYLES[single-quoted-argument]=fg=green,bold          # Single-quoted arguments ('text')
@@ -143,9 +104,6 @@ ZSH_HIGHLIGHT_STYLES[quoted]='fg=yellow'     # Quoted text
 
 # Assignment style
 ZSH_HIGHLIGHT_STYLES[assign]=fg=blue,bold           # Variable assignments (VAR=value)
-
-# Source Oh My Zsh
-. $ZSH/oh-my-zsh.sh
 
 # Source additional configurations
 . "$DOTFILES/zsh/aliases.sh"
@@ -168,24 +126,6 @@ ZSH_HIGHLIGHT_STYLES[assign]=fg=blue,bold           # Variable assignments (VAR=
 # Local environment (if exists)
 [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
-# Load brew completions and plugins
-if type brew &>/dev/null; then
-    BREW_PREFIX=$(brew --prefix)
-    # Mark as safe paths
-    ZSH_DISABLE_COMPFIX=true
-    fpath=(
-        "$BREW_PREFIX/share/zsh-autosuggestions"
-        "$BREW_PREFIX/share/zsh-completions"
-        "$BREW_PREFIX/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting"
-        # "$BREW_PREFIX/share/zsh-syntax-highlighting"
-        $fpath
-    )
-    # Load plugins
-    source "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-    source "$BREW_PREFIX/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-    # source "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-fi
-
 # Load dotfile completions
 fpath=("$DOTFILES/zsh/completions" $fpath)
 
@@ -196,3 +136,84 @@ if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ${ZDOTDIR:-$HOME}/.zcompd
 else
     compinit -u -C
 fi
+
+# Install zi if not already installed
+if [[ ! -f $HOME/.zi/bin/zi.zsh ]]; then
+  print -P "%F{33}▓▒░ %F{160}Installing (%F{33}z-shell/zi%F{160})…%f"
+  command mkdir -p "$HOME/.zi" && command chmod go-rwX "$HOME/.zi"
+  command git clone -q --depth=1 --branch "main" https://github.com/z-shell/zi "$HOME/.zi/bin" && \
+    print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+    print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
+
+# Load zi
+. "$HOME/.zi/bin/zi.zsh"
+autoload -Uz _zi
+(( ${+_comps} )) && _comps[zi]=_zi
+
+# Load zi annexes and meta-plugins
+zi light-mode for \
+  z-shell/z-a-meta-plugins \
+  @annexes
+
+# Configure OMZP and OMZL shorthands
+zi light z-shell/z-a-patch-dl
+
+# Core zsh plugins with optimized loading
+zi wait lucid atload"zicompinit; zicdreplay" blockf for \
+  zsh-users/zsh-completions \
+  zsh-users/zsh-autosuggestions \
+  zsh-users/zsh-syntax-highlighting \
+  zsh-users/zsh-history-substring-search
+  # zsh-fast-syntax-highlighting
+
+# Load git plugin and setup aliases
+# zi snippet OMZL::git.zsh
+# zi snippet OMZP::git
+
+# Theme appearance settings
+# zi snippet OMZL::theme-and-appearance.zsh
+
+# # Prompt setup
+# zi snippet OMZL::prompt_info_functions.zsh
+# setopt prompt_subst
+
+# # Load the robbyrussell theme directly
+# zi snippet OMZT::robbyrussell
+
+# Load cloud/container plugins
+# zi wait lucid as"completion" for \
+#   https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker \
+#   https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose
+
+# Tool-specific plugins with conditional loading
+zi wait lucid for \
+  has"aws" \
+    OMZP::aws \
+  has"brew" \
+    OMZP::brew \
+  has"kubectl" \
+    OMZP::kubectl \
+  has"terraform" \
+    OMZP::terraform \
+  has"go" \
+    OMZP::golang \
+  has"node" \
+    OMZP::node \
+  has"yarn" \
+    OMZP::yarn \
+  has"z" \
+    OMZP::z \
+  has'pip' \
+    OMZP::pip \
+  has"python" \
+    OMZP::python \
+  has"zoxide" \
+    OMZP::zoxide
+
+# Configure keybindings for history-substring-search
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# Initialize modern tools
+eval "$(starship init zsh)" # Modern prompt

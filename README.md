@@ -47,7 +47,7 @@ dotfiles-update
 
 ### Shell Configuration
 
-- ZSH with Oh My Zsh
+- ZSH
 - Syntax highlighting
 - Auto-suggestions
 - Smart completions
