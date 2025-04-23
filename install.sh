@@ -66,31 +66,29 @@ prompt_user() {
   local current_value=""
   eval "current_value=\"\${$variable:-}\""
   
-  if [ -z "$current_value" ]; then
-      # Print the prompt
-      printf "%s [%s]: " "$prompt" "$default"
-      
-      # Check if stdin is a terminal
-      if [ -t 0 ]; then
-          # Interactive mode
-          read -r value
-      else
-          # Non-interactive mode (being piped)
-          value=""
-          echo ""  # Add a newline for better formatting
-      fi
-      
-      value=${value:-$default}
-      eval "$variable=\"\$value\""
-      
-      # If in non-interactive mode, show what was selected
-      if [ ! -t 0 ]; then
-          echo "Using default: $value"
-      fi
+  # Print the prompt
+  printf "%s [%s]: " "$prompt" "$default"
+  
+  # Check if stdin is a terminal
+  if [ -t 0 ]; then
+      # Interactive mode
+      read -r value
+  else
+      # Non-interactive mode (being piped)
+      value=""
+      echo ""  # Add a newline for better formatting
+  fi
+  
+  value=${value:-$default}
+  eval "$variable=\"\$value\""
+  
+  # If in non-interactive mode, show what was selected
+  if [ ! -t 0 ]; then
+      echo "Using default: $value"
   fi
 }
 
-prompt_user "Enter dotfiles directory" DOTFILES "${DOTFILES:-$HOME/.dotfiles}"
+prompt_user "Enter dotfiles directory" DOTFILES "$HOME/.dotfiles"
 prompt_user "Enter your computer name" COMPUTER_NAME "$COMPUTER_NAME_DEFAULT"
 prompt_user "Enter your Git name" GIT_NAME "$(git config --global user.name 2>/dev/null || echo "Your Name")"
 prompt_user "Enter your Git email" GIT_EMAIL "$(git config --global user.email 2>/dev/null || echo "your.email@example.com")"
