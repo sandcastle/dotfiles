@@ -23,7 +23,7 @@ if [[ "$SHELL" != *"zsh"* ]]; then
 fi
 
 # Starship
-curl -sS https://starship.rs/install.sh | sh
+curl -sS https://starship.rs/install.sh | sudo sh
 
 # Zi
 sh -c "$(curl -fsSL get.zshell.dev)" -- -a annex
