@@ -2,6 +2,25 @@
 
 My opinionated dotfiles and macOS setup for a productive development environment.
 
+
+## Installation
+
+### Quick Install
+
+```bash
+cd ~/Developer # it will install in $(pwd)/dotfiles
+curl --silent https://raw.githubusercontent.com/sandcastle/dotfiles/master/install.sh | bash
+```
+
+### Manual Install
+
+```bash
+INSTALL_DIR=~/Developer/dotfiles
+git clone --depth=1 https://github.com/sandcastle/dotfiles.git $INSTALL_DIR
+. $INSTALL_DIR/install.sh
+```
+
+
 ## Features
 
 - 🚀 One-command installation
@@ -40,28 +59,6 @@ My opinionated dotfiles and macOS setup for a productive development environment
 - Smart completions
 - Git integrations
 - Cloud CLI tools (AWS, GCP, Azure)
-
-## Installation
-
-### Quick Install
-
-```bash
-cd ~/Developer && curl --silent https://raw.githubusercontent.com/sandcastle/dotfiles/master/install.sh | bash
-```
-
-### Manual Install
-
-1. Clone the repository:
-
-```bash
-git clone --depth=1 https://github.com/sandcastle/dotfiles.git ~/Developer/dotfiles
-```
-
-2. Run the installer:
-
-```bash
-cd ~/Developer/dotfiles && sh ./install.sh
-```
 
 ## What's Included
 

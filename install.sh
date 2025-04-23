@@ -57,9 +57,6 @@ get_script_directory() {
 
 export DOTFILES="$(get_script_directory)"
 
-# Load helper functions using a more compatible approach
-source "$DOTFILES/bootstrap/_funcs.sh"
-
 
 # Initial setup
 clear
@@ -83,6 +80,24 @@ else
   # Linux/other OS
   COMPUTER_NAME_DEFAULT="$(hostname)"
 fi
+
+prompt_user() {
+  local prompt=$1
+  local variable=$2
+  local default=${3:-""}
+  
+  # Use indirect reference with default empty string if variable doesn't exist
+  local current_value=""
+  if [ -n "${!variable+x}" ]; then
+      current_value="${!variable}"
+  fi
+  
+  if [[ -z "$current_value" ]]; then
+      read -rp "$prompt [${default}]: " value
+      value=${value:-$default}
+      eval "$variable=\"$value\""
+  fi
+}
 
 prompt_user "Enter your computer name" COMPUTER_NAME "$COMPUTER_NAME_DEFAULT"
 prompt_user "Enter your Git name" GIT_NAME "$(git config --global user.name 2>/dev/null || echo "")"
