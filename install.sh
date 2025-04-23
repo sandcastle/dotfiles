@@ -106,7 +106,7 @@ mkdir -p "$DOTFILES"
 if [ -d "$DOTFILES/.git" ]; then
     echo "Updating existing dotfiles repository..."
     cd "$DOTFILES"
-    git pull --depth 1
+    git pull --rebase=true
 else
     echo "Cloning dotfiles repository..."
     # If we're in the repo already, move to a temp dir to prevent conflicts
@@ -115,7 +115,7 @@ else
         mv "$DOTFILES"/* "$TMP_DIR/" 2>/dev/null || true
         mv "$DOTFILES"/.[!.]* "$TMP_DIR/" 2>/dev/null || true
     fi
-    git clone --depth 1 https://github.com/sandcastle/dotfiles.git "$DOTFILES"
+    git clone https://github.com/sandcastle/dotfiles.git "$DOTFILES"
     rm -rf "$TMP_DIR"
 fi
 

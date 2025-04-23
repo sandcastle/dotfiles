@@ -14,7 +14,7 @@ if [ ! -d "$DEV_MCP/browser-tools-mcp" ]; then
     git clone --depth 1 https://github.com/AgentDeskAI/browser-tools-mcp.git
 else
     cd "$DEV_MCP/browser-tools-mcp"
-    git pull --depth 1
+    git pull --rebase=true
 fi
 
 # Memory Tools
@@ -22,6 +22,5 @@ if [ ! -d "$DEV_MCP/memory-tools-mcp" ]; then
     git clone --depth 1 https://github.com/AgentDeskAI/memory-tools-mcp.git
 else
     cd "$DEV_MCP/memory-tools-mcp"
-    git pull --depth 1
+    git pull --rebase=true
 fi
-
