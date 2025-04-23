@@ -138,4 +138,4 @@ symlink_directory "$DOTFILES/home" "$HOME" "false"
 symlink_directory "$DOTFILES/home/.config" "$HOME/.config" "false"
 symlink_directory "$DOTFILES/etc" "/etc" "true"
 
-echo "Symlink operation completed successfully!"
+log_finished "All files symlinked"

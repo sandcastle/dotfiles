@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 
 set -e
-cd "$(dirname "$0")/../.."
-
-source "./bootstrap/_funcs.sh"
 
 log_h1 "Installing .Net SDKs"
 
 curl -sL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh
 
 # Explicitly install required versions
+log_h3 "Installing dotnet 8"
 bash /tmp/dotnet-install.sh --channel 8.0
+
+log_h3 "Installing dotnet 9"
 bash /tmp/dotnet-install.sh --channel 9.0
 
 # Load source env to contine
-source "$(dirname "$0")/env.sh"
+. $DOTFILES/lang/dotnet/env.sh
 
 # Dev certs
 dotnet dev-certs https --trust

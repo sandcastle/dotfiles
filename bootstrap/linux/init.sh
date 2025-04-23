@@ -2,9 +2,6 @@
 
 log_info "Running Linux initialization..."
 
-# Source common functions
-source "$(dirname "${BASH_SOURCE[0]}")/../_funcs.sh"
-
 if ! is_linux; then
     log_info "Skipping Linux initialization on non-Linux system"
     exit 0

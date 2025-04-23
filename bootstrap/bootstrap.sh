@@ -10,6 +10,8 @@ else
     SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 fi
 
+. "$SCRIPT_DIR/_funcs.sh"
+
 # Enhanced error handler
 error_handler() {
     local line="$1"
@@ -54,7 +56,7 @@ case "$OSTYPE" in
         ;;
 esac
 
-log_h1 "Bootstrap $OS_TYPE..."
+log_h1 "Bootstrap $OS_TYPE"
 
 # Check if sudo requires a password or can run without it
 if ! sudo -n true 2>/dev/null; then
@@ -75,24 +77,22 @@ else
     . "$SCRIPT_DIR/linux/init.sh"
 fi
 
-log_info "Installing core tools"
-. "$SCRIPT_DIR/common/100_core_tools.sh"
+. "$SCRIPT_DIR/common/100_shell.sh"
+. "$SCRIPT_DIR/common/101_apps.sh"
 
-log_info "Setting up shell"
-. "$SCRIPT_DIR/common/200_shell.sh"
-
-log_info "Setting up system configuration"
 if [ "$OS_TYPE" = "macos" ]; then
+    log_info "Setting up Mac OS"
     . "$SCRIPT_DIR/macos/100_system.sh"
+    . "$SCRIPT_DIR/macos/101_apps.sh"
     . "$SCRIPT_DIR/macos/120_ui.sh"
-    . "$SCRIPT_DIR/macos/130_apps.sh"
     . "$SCRIPT_DIR/macos/140_dev.sh"
     . "$SCRIPT_DIR/macos/150_tools.sh"
     . "$SCRIPT_DIR/macos/160_mcp.sh"
 else
+    log_info "Setting up Linux"
     . "$SCRIPT_DIR/linux/100_system.sh"
+    . "$SCRIPT_DIR/linux/101_apps.sh"
     . "$SCRIPT_DIR/linux/120_ui.sh"
-    . "$SCRIPT_DIR/linux/130_apps.sh"
 fi
 
 log_info "Running final checks"

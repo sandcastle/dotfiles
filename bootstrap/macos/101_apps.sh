@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-source "$(dirname "${BASH_SOURCE[0]}")/../_funcs.sh"
-
-log_h1 "Installing macOS applications"
+log_h1 "Installing macOS apps"
 
 # general
 log_h4 "Installing general utilities"
@@ -62,6 +60,9 @@ log_h4 "Installing Docker tools"
 install_brew "docker"
 install_brew "docker-compose"
 install_brew "ngrok"
+
+# terminal tools
+install_brew "bottom" # Graphical system/process monitor, alternative to top/htop
 
 # IDE
 log_h4 "Installing IDEs"

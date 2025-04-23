@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source "$(dirname "$0")/_funcs.sh"
-
 log_h1 "Setting up MCP servers"
 
 export DEV_MCP="$DEV_HOME/mcp"

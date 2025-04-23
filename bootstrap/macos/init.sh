@@ -2,9 +2,6 @@
 
 log_info "Initializing MacOS"
 
-# Source common functions
-source "$(dirname "${BASH_SOURCE[0]}")/../_funcs.sh"
-
 # Install Homebrew if not installed
 if ! command -v brew >/dev/null; then
     log_info "Installing Homebrew..."
@@ -22,4 +19,5 @@ fi
 # Update Homebrew
 log_info "Updating Homebrew"
 brew update
+
 log_success "Homebrew updated successfully"

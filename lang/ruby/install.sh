@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 
 set -e
-cd "$(dirname "$0")/../.."
 
-source "./bootstrap/_funcs.sh"
-
-echo "Installing Ruby"
+log_h1 "Installing Ruby"
 
 RUBY_VERSION="3.3.0"
 

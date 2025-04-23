@@ -1,15 +1,12 @@
 #!/usr/bin/env bash
 
-source "$(dirname "${BASH_SOURCE[0]}")/../_funcs.sh"
-
-log_h1 "Installing common tools"
+log_h1 "Installing common apps"
 
 # core tools
 install_package "git"        # Version control system
 install_package "gh"         # GitHub CLI tool
 install_package "fzf"        # Command-line fuzzy finder
 install_package "ripgrep"    # Fast text search tool (grep alternative)
-install_package "fd"         # Simple, fast alternative to find
 install_package "jq"         # Command-line JSON processor
 install_package "yq"         # YAML processor (like jq but for YAML)
 install_package "tree"       # Display directory structure as a tree
@@ -23,7 +20,6 @@ install_package "eza"        # Modern ls replacement with better defaults and co
 install_package "delta"      # Syntax-highlighting pager for git and diff output
 install_package "zoxide"     # Smarter cd command that learns your most used directories
 install_package "duf"        # Better disk usage/free utility with colorful graphs
-install_package "bottom"     # Graphical system/process monitor, alternative to top/htop
 install_package "dust"       # More intuitive version of du with colored output
 install_package "procs"      # Modern replacement for ps with additional features
 install_package "sd"         # Intuitive find & replace CLI (sed alternative)

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source "$(dirname "${BASH_SOURCE[0]}")/../_funcs.sh"
-
 log_h1 "Configuring MacOS system"
 
 # Ask for computer name if not set

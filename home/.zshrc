@@ -145,27 +145,28 @@ ZSH_HIGHLIGHT_STYLES[quoted]='fg=yellow'     # Quoted text
 ZSH_HIGHLIGHT_STYLES[assign]=fg=blue,bold           # Variable assignments (VAR=value)
 
 # Source Oh My Zsh
-source $ZSH/oh-my-zsh.sh
+. $ZSH/oh-my-zsh.sh
 
 # Source additional configurations
-source "$DOTFILES/zsh/aliases.sh"
-source "$DOTFILES/zsh/functions.sh"
-source "$DOTFILES/zsh/tools.sh"
-source "$DOTFILES/zsh/cloud.sh"
-source "$DOTFILES/zsh/git.sh"
-source "$DOTFILES/zsh/osx.sh"
-source "$DOTFILES/zsh/mcp.sh"
+. "$DOTFILES/zsh/aliases.sh"
+. "$DOTFILES/zsh/functions.sh"
+. "$DOTFILES/zsh/tools.sh"
+. "$DOTFILES/zsh/cloud.sh"
+. "$DOTFILES/zsh/git.sh"
+. "$DOTFILES/zsh/osx.sh"
+. "$DOTFILES/zsh/mcp.sh"
 
 # Language environments
-source "$DOTFILES/lang/dotnet/env.sh"
-source "$DOTFILES/lang/js/env.sh"
-source "$DOTFILES/lang/ruby/env.sh"
+. "$DOTFILES/lang/dotnet/env.sh"
+. "$DOTFILES/lang/js/env.sh"
+. "$DOTFILES/lang/ruby/env.sh"
+. "$DOTFILES/lang/go/env.sh"
 
 # iTerm2 integration (if exists)
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+[ -f "${HOME}/.iterm2_shell_integration.zsh" ] && . "${HOME}/.iterm2_shell_integration.zsh"
 
 # Local environment (if exists)
-[ -f "$HOME/.local/bin/env" ] && source "$HOME/.local/bin/env"
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
 # Load brew completions and plugins
 if type brew &>/dev/null; then

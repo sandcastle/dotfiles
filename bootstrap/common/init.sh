@@ -1,16 +1,12 @@
 #!/usr/bin/env bash
 
-log_info "Initializing"
-
-# Source common functions
-source "$(dirname "${BASH_SOURCE[0]}")/../_funcs.sh"
+log_info "Initializing common settings"
 
 # Set up initial environment variables
 export DOTFILES_REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 # Create necessary directories
 log_info "Creating required directories"
-mkdir -p "$HOME/.config"
 mkdir -p "$HOME/Developer"
 
 # Basic git configuration if not already set

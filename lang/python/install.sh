@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
 set -e
-cd "$(dirname "$0")/../.."
 
-source "./bootstrap/_funcs.sh"
+cd "$(dirname "$0")/../.."
 
 log_h1 "Installing Python"
 

@@ -10,8 +10,8 @@ else
     exit 1
 fi
 
-# Source the config file using absolute path
-source "${SCRIPT_DIR}/_config.sh"
+# Load the config file using absolute path
+. "${SCRIPT_DIR}/_config.sh"
 
 # Logging functions
 # Usage: log_info "Information message" [true/false]
@@ -295,13 +295,13 @@ log_h1() {
     # Cross-platform uppercase conversion
     uppercase_heading=$(echo "$heading" | awk '{print toupper($0)}')
 
-    echo ""  # Add blank line before heading
+    echo
     printf "\033[1;34m%s\033[0m\n" "$line"
-    printf "\033[1;34m  %s\033[0m\n" "$uppercase_heading"
+    printf "\033[1;34m%s\033[0m\n" "$uppercase_heading"
     printf "\033[1;34m%s\033[0m\n" "$line"
 
     if [ "$newline" = true ]; then
-        echo ""  # Add blank line after heading
+        echo
     fi
 }
 
@@ -522,25 +522,41 @@ _install_package() {
     if command -v brew >/dev/null 2>&1; then
         # For Homebrew
         if brew list "$package_name" >/dev/null 2>&1; then
-            echo "✓ Package ${package_name} is already installed"
+            log_success "Package ${package_name} is already installed"
             return 0
         fi
         brew install "$package_name" || {
             # Only fail if it's a real error, not just "already installed"
             if [[ $? -ne 0 && ! "$PIPESTATUS" =~ "already installed" ]]; then
-                echo "✗ Failed to install ${package_name}"
+                log_error "Failed to install ${package_name}"
                 return 1
             fi
             return 0
         }
     elif command -v apt-get >/dev/null 2>&1; then
         # For apt-based systems
-        sudo apt-get install -y "$package_name"
+        local apt_output=$(mktemp)
+        sudo apt-get install -y "$package_name" > "$apt_output" 2>&1
+        local exit_code=$?
+        if [[ $exit_code -eq 100 ]]; then
+            log_error "Package ${package_name} not found"
+            log_info "Last 20 lines of output:"
+            tail -n 20 "$apt_output" | sed 's/^/    /'
+            rm -f "$apt_output"
+            return 1
+        elif [[ $exit_code -ne 0 ]]; then
+            log_error "Failed to install ${package_name} (exit code: $exit_code)"
+            log_info "Last 20 lines of output:"
+            tail -n 20 "$apt_output" | sed 's/^/    /'
+            rm -f "$apt_output"
+            return 1
+        fi
+        rm -f "$apt_output"
     elif command -v dnf >/dev/null 2>&1; then
         # For dnf-based systems
         sudo dnf install -y "$package_name"
     else
-        echo "✗ No supported package manager found"
+        log_error "No supported package manager found"
         return 1
     fi
 }
@@ -579,7 +595,23 @@ install_packages() {
         rm "$TEMP_LOG"
     elif is_linux; then
         if command -v apt-get >/dev/null; then
-            sudo apt-get install -y "${packages[@]}"
+            local apt_output=$(mktemp)
+            sudo apt-get install -y "${packages[@]}" > "$apt_output" 2>&1
+            local exit_code=$?
+            if [[ $exit_code -eq 100 ]]; then
+                log_error "One or more packages not found"
+                log_info "Last 20 lines of output:"
+                tail -n 20 "$apt_output" | sed 's/^/    /'
+                rm -f "$apt_output"
+                return 1
+            elif [[ $exit_code -ne 0 ]]; then
+                log_error "Failed to install packages (exit code: $exit_code)"
+                log_info "Last 20 lines of output:"
+                tail -n 20 "$apt_output" | sed 's/^/    /'
+                rm -f "$apt_output"
+                return 1
+            fi
+            rm -f "$apt_output"
         elif command -v dnf >/dev/null; then
             sudo dnf install -y "${packages[@]}"
         elif command -v pacman >/dev/null; then

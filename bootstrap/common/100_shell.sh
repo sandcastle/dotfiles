@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 
-source "$(dirname "$0")/_funcs.sh"
+log_h1 "Setting up shell"
 
-log_h1 "Setting up shell environment"
-
-# Install shell
+# ZSH shell
 install_package "zsh"
+
+# Check if zsh is installed and get its path
+ZSH_PATH=$(command -v zsh || echo "/bin/zsh")
+if [ ! -f "$ZSH_PATH" ]; then
+    log_error "ZSH not found after installation"
+    exit 1
+fi
 
 # Install Oh My Zsh if not already installed
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
@@ -15,13 +20,6 @@ if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
         exit 1
     }
     log_success "Oh My Zsh installed successfully"
-fi
-
-# Check if zsh is installed and get its path
-ZSH_PATH=$(command -v zsh || echo "/bin/zsh")
-if [ ! -f "$ZSH_PATH" ]; then
-    log_error "ZSH not found after installation"
-    exit 1
 fi
 
 # Set ZSH as default shell if not already
@@ -48,21 +46,18 @@ if is_macos; then
     install_package "zsh-completions"
     install_package "zsh-fast-syntax-highlighting"
     install_package "zsh-syntax-highlighting"
-else
-    # On Linux, use native package manager
-    if command -v apt-get >/dev/null; then
-        # Debian/Ubuntu
-        install_package "starship"
-        install_package "zsh-autosuggestions"
-        install_package "zsh-autocomplete"
-        install_package "zsh-fast-syntax-highlighting"
-        install_package "zsh-syntax-highlighting"
-    elif command -v pacman >/dev/null; then
-        # Arch Linux
-        install_package "starship"
-        install_package "zsh-autosuggestions"
-        install_package "zsh-completions"
-        install_package "zsh-fast-syntax-highlighting"
-        install_package "zsh-syntax-highlighting"
-    fi
+elif command -v apt-get >/dev/null; then
+    # Debian/Ubuntu
+    install_package "starship"
+    install_package "zsh-autosuggestions"
+    install_package "zsh-autocomplete"
+    install_package "zsh-fast-syntax-highlighting"
+    install_package "zsh-syntax-highlighting"
+elif command -v pacman >/dev/null; then
+    # Arch Linux
+    install_package "starship"
+    install_package "zsh-autosuggestions"
+    install_package "zsh-completions"
+    install_package "zsh-fast-syntax-highlighting"
+    install_package "zsh-syntax-highlighting"
 fi

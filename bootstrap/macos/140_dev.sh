@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source "$(dirname "${BASH_SOURCE[0]}")/../_funcs.sh"
-
 log_h1 "Configuring developer settings"
 
 # Xcode command line tools check/install
@@ -24,12 +22,12 @@ echo 'Copying public key to clipboard. Paste it into your Github account...'
   open 'https://github.com/account/ssh'
 
 # languages
-source ./lang/js/install.sh
-source ./lang/dotnet/install.sh
-source ./lang/python/install.sh
+. $DOTFILES/lang/js/install.sh
+. $DOTFILES/lang/dotnet/install.sh
+. $DOTFILES/lang/python/install.sh
+. $DOTFILES/lang/go/install.sh
 
 # languages
 log_info "Installing programming languages"
 install_brew "java"
 install_brew "powershell"
-install_brew "go"

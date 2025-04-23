@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
 set -e
-cd "$(dirname "$0")/../.."
-
-source "./bootstrap/_funcs.sh"
 
 log_h1 "Installing Node, Yarn, PNPM"
 
