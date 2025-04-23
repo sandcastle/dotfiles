@@ -21,10 +21,13 @@ fi
 
 log_h1 "Bootstrap $OS_TYPE..."
 
-# Ask for sudo password upfront
-sudo -v
-# Keep sudo alive
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+# Check if sudo requires a password or can run without it
+if ! sudo -n true 2>/dev/null; then
+    log_info "Requesting sudo access"
+    sudo -v
+    # Keep sudo alive
+    while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+fi
 
 # Installation phases
 source "$SCRIPT_DIR/common/init.sh"
