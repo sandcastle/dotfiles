@@ -25,11 +25,8 @@ text() {
     format=$reset
   fi
 
-  # Use printf with %s to preserve whitespace exactly as given
-  # The trick here is to avoid any trailing newline that would trim spaces
   printf "%b%s%b" "${format}" "$*" "${reset}"
 }
-
 
 # Basic error handler without complex Bash-specific variables
 error_handler() {
@@ -39,30 +36,6 @@ error_handler() {
 
 trap 'error_handler $LINENO' ERR
 
-
-get_script_directory() {
-
-  if [ -n "$BASH_SOURCE" ]; then
-    SOURCE="$BASH_SOURCE"
-  elif [ -n "$ZSH_VERSION" ]; then
-    SOURCE="${(%):-%x}"
-  else
-    # Fallback for dash/sh
-    SOURCE="$0"
-  fi
-
-  while [ -L "$SOURCE" ]; do
-    DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
-    SOURCE="$(readlink "$SOURCE")"
-    [ "$SOURCE" != /* ] && SOURCE="$DIR/$SOURCE"
-  done
-
-  cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd
-}
-
-export DOTFILES="$(get_script_directory)"
-
-
 # Initial setup
 echo "$(text cyan    " _____        _    __ _ _            ")"
 echo "$(text magenta "|  __ \      | |  / _(_) |           ")"
@@ -70,12 +43,11 @@ echo "$(text blue    "| |  | | ___ | |_| |_ _| | ___  ___  ")"
 echo "$(text yellow  "| |  | |/ _ \| __| _| | |/ _ \/ __|  ")"
 echo "$(text green   "| |__| | (_) | |_| | | | |  __/\__ \ ")"
 echo "$(text red     "|_____/ \___/ \__|_| |_|_|\___||___/ ")"
-
 echo ""
 echo "$(text bold "$(text yellow "Welcome to the dotfiles installer!")")"
-echo "This will set up your system with a complete development environment."
+echo "→ This will set up your system with a complete development environment."
+echo "→ You can cancel at any time by pressing CTRL+C"
 echo
-
 
 # Detect OS
 OS="$(uname -s)"
@@ -95,36 +67,58 @@ prompt_user() {
   eval "current_value=\"\${$variable:-}\""
   
   if [ -z "$current_value" ]; then
-      # Use printf to print the prompt instead of read -p which doesn't work in zsh
+      # Print the prompt
       printf "%s [%s]: " "$prompt" "$default"
-      read -r value
+      
+      # Check if stdin is a terminal
+      if [ -t 0 ]; then
+          # Interactive mode
+          read -r value
+      else
+          # Non-interactive mode (being piped)
+          value=""
+          echo ""  # Add a newline for better formatting
+      fi
+      
       value=${value:-$default}
       eval "$variable=\"\$value\""
+      
+      # If in non-interactive mode, show what was selected
+      if [ ! -t 0 ]; then
+          echo "Using default: $value"
+      fi
   fi
 }
 
+prompt_user "Enter dotfiles directory" DOTFILES "${DOTFILES:-$HOME/.dotfiles}"
 prompt_user "Enter your computer name" COMPUTER_NAME "$COMPUTER_NAME_DEFAULT"
-prompt_user "Enter your Git name" GIT_NAME "$(git config --global user.name 2>/dev/null || echo "")"
-prompt_user "Enter your Git email" GIT_EMAIL "$(git config --global user.email 2>/dev/null || echo "")"
+prompt_user "Enter your Git name" GIT_NAME "$(git config --global user.name 2>/dev/null || echo "Your Name")"
+prompt_user "Enter your Git email" GIT_EMAIL "$(git config --global user.email 2>/dev/null || echo "your.email@example.com")"
 echo
 
 # Export for use in other scripts
-export COMPUTER_NAME GIT_NAME GIT_EMAIL OS
+export DOTFILES COMPUTER_NAME GIT_NAME GIT_EMAIL OS
 
 # Create backup
 export BACKUP_DIR="$HOME/.backup/dotfiles/$(date +%Y%m%d_%H%M%S)"
 mkdir -p "$BACKUP_DIR"
 
 # Repository setup
-if [ -d "$DOTFILES" ]; then
+mkdir -p "$DOTFILES"
+if [ -d "$DOTFILES/.git" ]; then
     echo "Updating existing dotfiles repository..."
     cd "$DOTFILES"
     git pull --depth 1
 else
     echo "Cloning dotfiles repository..."
-    mkdir -p "$DOTFILES"
-    git clone --depth 1 git://github.com/sandcastle/dotfiles.git "$DOTFILES"
-    cd "$DOTFILES"
+    # If we're in the repo already, move to a temp dir to prevent conflicts
+    if [ -f "$DOTFILES/install.sh" ] && [ ! -d "$DOTFILES/.git" ]; then
+        TMP_DIR=$(mktemp -d)
+        mv "$DOTFILES"/* "$TMP_DIR/" 2>/dev/null || true
+        mv "$DOTFILES"/.[!.]* "$TMP_DIR/" 2>/dev/null || true
+    fi
+    git clone --depth 1 https://github.com/sandcastle/dotfiles.git "$DOTFILES"
+    rm -rf "$TMP_DIR"
 fi
 
 # Symlink files
