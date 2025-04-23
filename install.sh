@@ -1,6 +1,34 @@
 #!/usr/bin/env bash
 
-( set -o pipefail; ) 2>/dev/null || set -e;
+( set -o pipefail; ) 2>/dev/null || true
+set -e
+
+# Enhanced error handler
+error_handler() {
+    local line="$1"
+    local command="$2"
+    local code="${3:-1}"
+    local script="$(basename "$0")"
+    
+    echo
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "Error in $script at line $line"
+    echo "Command: $command"
+    echo "Exit code: $code"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+    exit "$code"
+}
+
+# Set up traps for different signals
+if [ -n "$BASH_VERSION" ]; then
+    trap 'error_handler $LINENO "$BASH_COMMAND" $?' ERR
+else
+    trap 'error_handler $LINENO "command" $?' ERR
+fi
+
+# Handle interrupts and termination
+trap 'echo; echo "Goodbye, script interrupted."; exit 130' INT
 
 text() {
   local format=""

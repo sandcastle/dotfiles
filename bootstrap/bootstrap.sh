@@ -1,23 +1,58 @@
 #!/usr/bin/env bash
 
-# Exit on error
+( set -o pipefail; ) 2>/dev/null || true
 set -e
 
-# Get script directory
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Get script directory in a POSIX-compatible way
+if [ -n "$BASH_VERSION" ]; then
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+else
+    SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+fi
+
+# Enhanced error handler
+error_handler() {
+    local line="$1"
+    local command="$2"
+    local code="${3:-1}"
+    local script="$(basename "$0")"
+    
+    echo
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "Error in $script at line $line"
+    echo "Command: $command"
+    echo "Exit code: $code"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+    exit "$code"
+}
+
+# Set up traps for different signals
+if [ -n "$BASH_VERSION" ]; then
+    trap 'error_handler $LINENO "$BASH_COMMAND" $?' ERR
+else
+    trap 'error_handler $LINENO "command" $?' ERR
+fi
+
+# Handle interrupts and termination
+trap 'echo; echo "Goodbye, script interrupted."; exit 130' INT
 
 # Source common functions and utilities
-source "$SCRIPT_DIR/_funcs.sh"
+. "$SCRIPT_DIR/_funcs.sh"
 
 # Detect OS
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    OS_TYPE="macos"
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    OS_TYPE="linux"
-else
-    log_error "Unsupported operating system: $OSTYPE"
-    exit 1
-fi
+case "$OSTYPE" in
+    darwin*)
+        OS_TYPE="macos"
+        ;;
+    linux-gnu*)
+        OS_TYPE="linux"
+        ;;
+    *)
+        log_error "Unsupported operating system: $OSTYPE"
+        exit 1
+        ;;
+esac
 
 log_h1 "Bootstrap $OS_TYPE..."
 
@@ -26,41 +61,44 @@ if ! sudo -n true 2>/dev/null; then
     log_info "Requesting sudo access"
     sudo -v
     # Keep sudo alive
-    while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+    (while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null) &
+    SUDO_PID=$!
+    # Make sure to kill the sudo refresh process on exit
+    trap 'kill $SUDO_PID 2>/dev/null || true' EXIT
 fi
 
 # Installation phases
-source "$SCRIPT_DIR/common/init.sh"
-if [[ "$OS_TYPE" == "macos" ]]; then
-    source "$SCRIPT_DIR/macos/init.sh"
+. "$SCRIPT_DIR/common/init.sh"
+if [ "$OS_TYPE" = "macos" ]; then
+    . "$SCRIPT_DIR/macos/init.sh"
 else
-    source "$SCRIPT_DIR/linux/init.sh"
+    . "$SCRIPT_DIR/linux/init.sh"
 fi
 
 log_info "Installing core tools"
-source "$SCRIPT_DIR/common/100_core_tools.sh"
+. "$SCRIPT_DIR/common/100_core_tools.sh"
 
 log_info "Setting up shell"
-source "$SCRIPT_DIR/common/200_shell.sh"
+. "$SCRIPT_DIR/common/200_shell.sh"
 
 log_info "Setting up system configuration"
-if [[ "$OS_TYPE" == "macos" ]]; then
-    source "$SCRIPT_DIR/macos/100_system.sh"
-    source "$SCRIPT_DIR/macos/120_ui.sh"
-    source "$SCRIPT_DIR/macos/130_apps.sh"
-    source "$SCRIPT_DIR/macos/140_dev.sh"
-    source "$SCRIPT_DIR/macos/150_tools.sh"
-    source "$SCRIPT_DIR/macos/160_mcp.sh"
+if [ "$OS_TYPE" = "macos" ]; then
+    . "$SCRIPT_DIR/macos/100_system.sh"
+    . "$SCRIPT_DIR/macos/120_ui.sh"
+    . "$SCRIPT_DIR/macos/130_apps.sh"
+    . "$SCRIPT_DIR/macos/140_dev.sh"
+    . "$SCRIPT_DIR/macos/150_tools.sh"
+    . "$SCRIPT_DIR/macos/160_mcp.sh"
 else
-    source "$SCRIPT_DIR/linux/100_system.sh"
-    source "$SCRIPT_DIR/linux/120_ui.sh"
-    source "$SCRIPT_DIR/linux/130_apps.sh"
+    . "$SCRIPT_DIR/linux/100_system.sh"
+    . "$SCRIPT_DIR/linux/120_ui.sh"
+    . "$SCRIPT_DIR/linux/130_apps.sh"
 fi
 
 log_info "Running final checks"
 
 # Verify shell setup
-if [[ $SHELL != "/bin/zsh" ]]; then
+if [ "$SHELL" != "/bin/zsh" ]; then
     log_warning "ZSH is not set as default shell"
 fi
 
