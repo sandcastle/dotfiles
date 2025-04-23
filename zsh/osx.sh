@@ -11,12 +11,12 @@ alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resourc
 alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 
 # Hide / show files
-alias showfiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
-alias hidefiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
+alias showfiles='defaults write -g AppleShowAllFiles -bool true && killall Finder'
+alias hidefiles='defaults write -g AppleShowAllFiles -bool false && killall Finder'
 
 # Hide/show all desktop icons (useful when presenting)
-alias showdeskicons="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
-alias hidedeskicons="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias showdeskicons="defaults write com.apple.Finder CreateDesktop -bool true && killall Finder"
+alias hidedeskicons="defaults write com.apple.Finder CreateDesktop -bool false && killall Finder"
 
 # Flush the DNS (Yosemite 10.10.4+)
 alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say cache flushed"

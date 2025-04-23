@@ -21,19 +21,19 @@ defaults write com.apple.dock springboard-rows -int 8
 
 ## Keyboard
 log_success "Configuring keyboard settings"
-defaults write NSGlobalDomain KeyRepeat -int 1
-defaults write NSGlobalDomain InitialKeyRepeat -int 15
+defaults write -g KeyRepeat -int 1
+defaults write -g InitialKeyRepeat -int 15
 
 ## Finder
 log_success "Configuring Finder preferences"
-defaults write com.apple.finder AppleShowAllFiles YES
-defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
-defaults write com.apple.finder ShowPathbar -bool true
-defaults write com.apple.finder ShowStatusBar -bool true
-defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
-defaults write com.apple.finder _FXSortFoldersFirst -bool true
-defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
-defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+defaults write -g NSNavPanelExpandedStateForSaveMode -bool true
+defaults write -g AppleShowAllFiles -bool true && killall Finder
+defaults write com.apple.Finder ShowPathbar -bool true
+defaults write com.apple.Finder ShowStatusBar -bool true
+defaults write com.apple.Finder _FXShowPosixPathInTitle -bool true
+defaults write com.apple.Finder _FXSortFoldersFirst -bool true
+defaults write com.apple.Finder FXDefaultSearchScope -string "SCcf"
+defaults write com.apple.Finder FXEnableExtensionChangeWarning -bool false
 
 ## Safari
 log_success "Configuring Safari preferences"
