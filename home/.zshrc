@@ -34,14 +34,16 @@ HISTSIZE=50000
 SAVEHIST=10000
 
 # FZF configuration
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
 
 # Performance improvements
 # Skip compinit on every shell load
 skip_global_compinit=1
 
-# Load essential environment variables first
-eval $(/usr/libexec/path_helper -s)
+  # macOS specific path helper
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  eval $(/usr/libexec/path_helper -s)
+fi
 
 # Completion settings
 zstyle ':completion:*' menu select
@@ -217,9 +219,9 @@ zi wait lucid for \
   has'pip' \
     OMZP::pip \
   has"python" \
-    OMZP::python \
-  has"zoxide" \
-    OMZP::zoxide
+    OMZP::python
+#   has"zoxide" \
+#     OMZP::zoxide
 
 # Configure keybindings for history-substring-search
 bindkey '^[[A' history-substring-search-up
