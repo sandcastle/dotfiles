@@ -62,7 +62,8 @@ install_brew "docker-compose"
 install_brew "ngrok"
 
 # terminal tools
-install_brew "bottom" # Graphical system/process monitor, alternative to top/htop
+install_package "dust" # More intuitive version of du with colored output
+install_brew "bottom"  # Graphical system/process monitor, alternative to top/htop
 
 # IDE
 log_h4 "Installing IDEs"

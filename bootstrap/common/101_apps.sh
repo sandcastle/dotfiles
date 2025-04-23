@@ -20,7 +20,6 @@ install_package "eza"        # Modern ls replacement with better defaults and co
 install_package "delta"      # Syntax-highlighting pager for git and diff output
 install_package "zoxide"     # Smarter cd command that learns your most used directories
 install_package "duf"        # Better disk usage/free utility with colorful graphs
-install_package "dust"       # More intuitive version of du with colored output
 install_package "procs"      # Modern replacement for ps with additional features
 install_package "sd"         # Intuitive find & replace CLI (sed alternative)
 install_package "choose"     # cut/awk alternative with a more intuitive interface
