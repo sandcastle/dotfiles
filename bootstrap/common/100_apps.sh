@@ -21,7 +21,6 @@ install_package "delta"      # Syntax-highlighting pager for git and diff output
 install_package "zoxide"     # Smarter cd command that learns your most used directories
 install_package "duf"        # Better disk usage/free utility with colorful graphs
 install_package "sd"         # Intuitive find & replace CLI (sed alternative)
-install_package "choose"     # cut/awk alternative with a more intuitive interface
 install_package "gping"      # Ping with a graphical display
 install_package "hyperfine"  # Command-line benchmarking tool
 install_package "pwgen"      # Password generator

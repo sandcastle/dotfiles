@@ -68,6 +68,7 @@ install_brew "procs"      # Modern replacement for ps with additional features
 install_brew "tealdeer"   # Fast tldr client (simplified, example-based man pages)
 install_brew "moar"       # More intuitive pager for git and diff output
 install_brew "trash"      # Move files to trash instead of permanent deletion
+install_brew "choose"     # cut/awk alternative with a more intuitive interface
 
 # IDE
 log_h4 "Installing IDEs"

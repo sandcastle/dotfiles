@@ -77,8 +77,8 @@ else
     . "$SCRIPT_DIR/linux/init.sh"
 fi
 
-. "$SCRIPT_DIR/common/100_shell.sh"
-. "$SCRIPT_DIR/common/101_apps.sh"
+. "$SCRIPT_DIR/common/100_apps.sh"
+. "$SCRIPT_DIR/common/101_shell.sh"
 
 if [ "$OS_TYPE" = "macos" ]; then
     log_info "Setting up Mac OS"
