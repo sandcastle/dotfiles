@@ -1,5 +1,36 @@
 #!/usr/bin/env bash
 
+( set -o pipefail; ) 2>/dev/null || set -e;
+
+text() {
+  local format=""
+  local reset="\033[0m"
+  
+  # Process all style arguments
+  while [[ $# -gt 0 && "$1" =~ ^[a-z]+$ ]]; do
+    case "$1" in
+      bold) format="${format}\033[1m" ;;
+      red) format="${format}\033[31m" ;;
+      green) format="${format}\033[32m" ;;
+      yellow) format="${format}\033[33m" ;;
+      blue) format="${format}\033[34m" ;;
+      magenta) format="${format}\033[35m" ;;
+      cyan) format="${format}\033[36m" ;;
+      *) break ;;
+    esac
+    shift
+  done
+  
+  if [ -z "$format" ]; then
+    format=$reset
+  fi
+
+  # Use printf with %s to preserve whitespace exactly as given
+  # The trick here is to avoid any trailing newline that would trim spaces
+  printf "%b%s%b" "${format}" "$*" "${reset}"
+}
+
+
 # Basic error handler without complex Bash-specific variables
 error_handler() {
   echo "Error occurred at line $1"
@@ -8,48 +39,22 @@ error_handler() {
 
 trap 'error_handler $LINENO' ERR
 
-# Check Bash version and compatibility
-if [ -z "${BASH_VERSION:-}" ]; then
-  echo "Error: This script requires Bash to run."
-  exit 1
-fi
-
-# Extract bash major and minor version
-BASH_MAJOR_VERSION=$(echo "$BASH_VERSION" | cut -d. -f1)
-BASH_MINOR_VERSION=$(echo "$BASH_VERSION" | cut -d. -f2)
-
-echo "Detected Bash version: $BASH_VERSION"
-
-# Check for minimum version (Bash 3.2)
-if [ "$BASH_MAJOR_VERSION" -lt 3 ] || ([ "$BASH_MAJOR_VERSION" -eq 3 ] && [ "$BASH_MINOR_VERSION" -lt 2 ]); then
-  echo "Warning: This script works best with Bash 3.2 or higher."
-  echo "Some features may not work as expected with your version: $BASH_VERSION"
-  echo "Continuing in 5 seconds..."
-  sleep 5
-fi
-
-# Detect OS
-OS="$(uname -s)"
-echo "Detected OS: $OS"
-
-# Adjust settings based on Bash version
-if [ "$BASH_MAJOR_VERSION" -ge 4 ]; then
-  # Modern Bash - use full error handling
-  set -euo pipefail
-else
-  # Legacy Bash - use simpler error handling
-  set -e
-fi 
-
 
 get_script_directory() {
-  # Works in both Bash and Zsh
-  SOURCE="${BASH_SOURCE[0]:-${(%):-%x}}"
+
+  if [ -n "$BASH_SOURCE" ]; then
+    SOURCE="$BASH_SOURCE"
+  elif [ -n "$ZSH_VERSION" ]; then
+    SOURCE="${(%):-%x}"
+  else
+    # Fallback for dash/sh
+    SOURCE="$0"
+  fi
 
   while [ -L "$SOURCE" ]; do
     DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
     SOURCE="$(readlink "$SOURCE")"
-    [[ "$SOURCE" != /* ]] && SOURCE="$DIR/$SOURCE"
+    [ "$SOURCE" != /* ] && SOURCE="$DIR/$SOURCE"
   done
 
   cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd
@@ -59,20 +64,21 @@ export DOTFILES="$(get_script_directory)"
 
 
 # Initial setup
-clear
-printf "\033[1;36m  _____        _    __ _ _            \033[0m\n"
-printf "\033[1;34m |  __ \      | |  / _(_) |           \033[0m\n"
-printf "\033[1;35m | |  | | ___ | |_| |_ _| | ___  ___  \033[0m\n"
-printf "\033[1;33m | |  | |/ _ \| __| _| | |/ _ \/ __|  \033[0m\n"
-printf "\033[1;32m | |__| | (_) | |_| | | | |  __/\__ \ \033[0m\n"
-printf "\033[1;31m |_____/ \___/ \__|_| |_|_|\___||___/ \033[0m\n"
+echo "$(text cyan    " _____        _    __ _ _            ")"
+echo "$(text magenta "|  __ \      | |  / _(_) |           ")"
+echo "$(text blue    "| |  | | ___ | |_| |_ _| | ___  ___  ")"
+echo "$(text yellow  "| |  | |/ _ \| __| _| | |/ _ \/ __|  ")"
+echo "$(text green   "| |__| | (_) | |_| | | | |  __/\__ \ ")"
+echo "$(text red     "|_____/ \___/ \__|_| |_|_|\___||___/ ")"
 
 echo ""
-echo "Welcome to the dotfiles installer!"
+echo "$(text bold "$(text yellow "Welcome to the dotfiles installer!")")"
 echo "This will set up your system with a complete development environment."
 echo
 
-# Get user preferences with OS-specific defaults
+
+# Detect OS
+OS="$(uname -s)"
 if [ "$OS" = "Darwin" ]; then
   # macOS specific
   COMPUTER_NAME_DEFAULT="$(scutil --get ComputerName 2>/dev/null || hostname)"
@@ -85,24 +91,22 @@ prompt_user() {
   local prompt=$1
   local variable=$2
   local default=${3:-""}
-  
-  # Use indirect reference with default empty string if variable doesn't exist
   local current_value=""
-  if [ -n "${!variable+x}" ]; then
-      current_value="${!variable}"
-  fi
+  eval "current_value=\"\${$variable:-}\""
   
-  if [[ -z "$current_value" ]]; then
-      read -rp "$prompt [${default}]: " value
+  if [ -z "$current_value" ]; then
+      # Use printf to print the prompt instead of read -p which doesn't work in zsh
+      printf "%s [%s]: " "$prompt" "$default"
+      read -r value
       value=${value:-$default}
-      printf -v "$variable" "%s" "$value"
+      eval "$variable=\"\$value\""
   fi
 }
 
 prompt_user "Enter your computer name" COMPUTER_NAME "$COMPUTER_NAME_DEFAULT"
 prompt_user "Enter your Git name" GIT_NAME "$(git config --global user.name 2>/dev/null || echo "")"
 prompt_user "Enter your Git email" GIT_EMAIL "$(git config --global user.email 2>/dev/null || echo "")"
-echo ""
+echo
 
 # Export for use in other scripts
 export COMPUTER_NAME GIT_NAME GIT_EMAIL OS
@@ -115,7 +119,7 @@ mkdir -p "$BACKUP_DIR"
 if [ -d "$DOTFILES" ]; then
     echo "Updating existing dotfiles repository..."
     cd "$DOTFILES"
-    git pull
+    git pull --depth 1
 else
     echo "Cloning dotfiles repository..."
     mkdir -p "$DOTFILES"
@@ -138,13 +142,11 @@ if ! "$DOTFILES/bootstrap/bootstrap.sh"; then
 fi
 
 # Final message
-cat << "EOF"
+echo "✨ $(text cyan "Installation complete!") ✨"
+echo "A few things to do:"
+echo " 1. Check the $(text yellow "README.md") for additional customization options"
+echo " 2. Run: $(text yellow "aliases") to review available aliases to save time"
+echo " 3. Have fun!"
+echo "Enjoy your new setup! "
 
-✨ Installation complete! ✨
-
-A few things to do:
-1. Restart your terminal to apply all changes
-2. Check the README for additional customization options
-
-Enjoy your new setup! 🚀
-EOF
+exec zsh -l
