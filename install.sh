@@ -95,7 +95,7 @@ prompt_user() {
   if [[ -z "$current_value" ]]; then
       read -rp "$prompt [${default}]: " value
       value=${value:-$default}
-      eval "$variable=\"$value\""
+      printf -v "$variable" "%s" "$value"
   fi
 }
 

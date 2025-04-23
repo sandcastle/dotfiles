@@ -9,7 +9,7 @@ My opinionated dotfiles and macOS setup for a productive development environment
 
 ```bash
 cd ~/Developer # it will install in $(pwd)/dotfiles
-curl --silent https://raw.githubusercontent.com/sandcastle/dotfiles/master/install.sh | bash
+curl -s "https://raw.githubusercontent.com/sandcastle/dotfiles/master/install.sh?t=$(date +%s%N)" | bash
 ```
 
 ### Manual Install
