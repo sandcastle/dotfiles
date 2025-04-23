@@ -17,7 +17,7 @@ curl -s "https://raw.githubusercontent.com/sandcastle/dotfiles/master/install.sh
 ```bash
 INSTALL_DIR=~/Developer/dotfiles
 git clone --depth=1 https://github.com/sandcastle/dotfiles.git $INSTALL_DIR
-. $INSTALL_DIR/install.sh
+bash $INSTALL_DIR/install.sh
 ```
 
 
