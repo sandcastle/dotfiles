@@ -17,16 +17,6 @@ if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
     log_success "Oh My Zsh installed successfully"
 fi
 
-# Install Powerlevel10k theme
-if [[ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]]; then
-    log_info "Installing Powerlevel10k theme..."
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" || {
-        log_error "Failed to install Powerlevel10k theme"
-        exit 1
-    }
-    log_success "Powerlevel10k theme installed successfully"
-fi
-
 # Check if zsh is installed and get its path
 ZSH_PATH=$(command -v zsh || echo "/bin/zsh")
 if [ ! -f "$ZSH_PATH" ]; then
