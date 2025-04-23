@@ -10,7 +10,6 @@ log_h1 "Installing .Net SDKs"
 curl -sL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh
 
 # Explicitly install required versions
-sh /tmp/dotnet-install.sh --channel 6.0
 sh /tmp/dotnet-install.sh --channel 8.0
 sh /tmp/dotnet-install.sh --channel 9.0
 
