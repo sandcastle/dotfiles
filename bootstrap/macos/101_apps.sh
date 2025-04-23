@@ -62,8 +62,12 @@ install_brew "docker-compose"
 install_brew "ngrok"
 
 # terminal tools
-install_package "dust" # More intuitive version of du with colored output
-install_brew "bottom"  # Graphical system/process monitor, alternative to top/htop
+install_brew "dust"       # More intuitive version of du with colored output
+install_brew "bottom"     # Graphical system/process monitor, alternative to top/htop
+install_brew "procs"      # Modern replacement for ps with additional features
+install_brew "tealdeer"   # Fast tldr client (simplified, example-based man pages)
+install_brew "moar"       # More intuitive pager for git and diff output
+install_brew "trash"      # Move files to trash instead of permanent deletion
 
 # IDE
 log_h4 "Installing IDEs"

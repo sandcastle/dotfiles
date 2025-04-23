@@ -20,20 +20,15 @@ install_package "eza"        # Modern ls replacement with better defaults and co
 install_package "delta"      # Syntax-highlighting pager for git and diff output
 install_package "zoxide"     # Smarter cd command that learns your most used directories
 install_package "duf"        # Better disk usage/free utility with colorful graphs
-install_package "procs"      # Modern replacement for ps with additional features
 install_package "sd"         # Intuitive find & replace CLI (sed alternative)
 install_package "choose"     # cut/awk alternative with a more intuitive interface
-install_package "xh"         # Friendly HTTP tool, alternative to curl/httpie
-install_package "tealdeer"   # Fast tldr client (simplified, example-based man pages)
 install_package "gping"      # Ping with a graphical display
 install_package "hyperfine"  # Command-line benchmarking tool
-install_package "moar"       # More intuitive pager for git and diff output
 install_package "pwgen"      # Password generator
 
 # monitoring tools
 install_package "cloc"       # Count lines of code in a project
 install_package "httpie"     # User-friendly HTTP client
-install_package "trash"      # Move files to trash instead of permanent deletion
 install_package "watch"      # Execute commands periodically and show output
 install_package "htop"       # Interactive process viewer
 install_package "ncdu"       # Disk usage analyzer with ncurses interface
