@@ -1,6 +1,9 @@
 {
   "breadcrumbs.enabled": true,
   "cursor.cpp.enablePartialAccepts": true,
+  "cursor.composer.collapsePaneInputBoxPills": true,
+  "cursor.composer.shouldAllowCustomModes": true,
+  "cursor.composer.shouldChimeAfterChatFinishes": true,
   "diffEditor.ignoreTrimWhitespace": true,
   "editor.fontSize": 13,
   "editor.fontLigatures": true,
@@ -8,10 +11,13 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.renderWhitespace": "all",
+  "editor.semanticHighlighting.enabled": true,
   "editor.suggestSelection": "first",
   "editor.tabSize": 2,
+  "explorer.confirmPasteNative": false,
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
+  "extensions.ignoreRecommendations": true,
   "files.autoSave": "afterDelay",
   "files.associations": {
     "*.svg": "xml",
@@ -78,14 +84,14 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "extensions.ignoreRecommendations": true,
-  "explorer.confirmPasteNative": false,
+  "workbench.colorTheme": "Default Dark Modern",
   "workbench.editor.enablePreview": false,
-  "cursor.composer.collapsePaneInputBoxPills": true,
-  "cursor.composer.shouldAllowCustomModes": true,
-  "cursor.composer.shouldChimeAfterChatFinishes": true,
   "workbench.editorAssociations": {
     "*.mdc": "default"
   },
+  "workbench.preferredDarkColorTheme": "Default Dark Modern",
+  "workbench.preferredLightColorTheme": "Default Light Modern",
+  "window.autoDetectColorScheme": true,
+  "window.systemColorTheme": "auto",
   "update.releaseTrack": "prerelease"
 }
