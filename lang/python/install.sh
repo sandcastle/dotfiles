@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
+set -e && ( set -o pipefail; ) 2>/dev/null || true
 
-set -e
+log_h1 "Python & Tools"
 
-log_h1 "Installing Python"
-
-install_brew "python3"
-
-# Install uv
-curl -LsSf https://astral.sh/uv/install.sh | sh
+run_with_progress "Installing Python" true mise use -g python@latest
+run_with_progress "Installing UV" true mise use -g uv@latest
 
 # Install numpy for gcloud tunnel performance
 CLOUDSDK_PYTHON_SITEPACKAGES=1
-$(gcloud info --format="value(basic.python_location)") -m pip install numpy
+run_with_progress "Installing numpy" $(gcloud info --format="value(basic.python_location)") -m pip install numpy

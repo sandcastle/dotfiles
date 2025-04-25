@@ -1,11 +1,15 @@
-#!/usr/bin/env bash
+# Avoid sourcing more than once for a session
+if [[ -n "${FUNCS_SOURCED}" ]]; then
+  return
+fi
+FUNCS_SOURCED=1
 
-# Get the absolute path of the script directory, works in both source and execution contexts
+# Get current directory, works in both source and execution contexts
 if [[ -n "${BASH_SOURCE[0]}" ]]; then
     SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 elif [[ -n "$0" ]]; then
     SCRIPT_DIR="$( cd "$( dirname "$0" )" && pwd )"
-else
+else 
     echo "Error: Cannot determine script location" >&2
     exit 1
 fi
@@ -505,6 +509,28 @@ backup_file() {
     fi
 }
 
+ensure_package_managers_updated() {
+    run_with_progress "Updating package managers" false _ensure_package_managers_updated
+}
+
+_ensure_package_managers_updated() {
+  if command -v brew >/dev/null 2>&1; then
+    brew update
+  fi
+  if command -v snap >/dev/null 2>&1; then
+    sudo snap refresh
+  fi
+  if command -v apt-get >/dev/null 2>&1; then
+    sudo apt-get update -y
+  fi
+  if command -v dnf >/dev/null 2>&1; then
+    sudo dnf update -y
+  fi
+  if command -v pacman >/dev/null 2>&1; then
+    sudo pacman -Syu --noconfirm
+  fi
+}
+
 # Usage: install_package "package_name"
 # Installs a package using the system's available package manager
 # Supports Homebrew, apt-get, and dnf
@@ -517,107 +543,50 @@ install_package() {
 }
 
 _install_package() {
-    local package_name="$1"
-    
-    if command -v brew >/dev/null 2>&1; then
-        # For Homebrew
-        if brew list "$package_name" >/dev/null 2>&1; then
-            log_success "Package ${package_name} is already installed"
-            return 0
-        fi
-        brew install "$package_name" || {
-            # Only fail if it's a real error, not just "already installed"
-            if [[ $? -ne 0 && ! "$PIPESTATUS" =~ "already installed" ]]; then
-                log_error "Failed to install ${package_name}"
-                return 1
-            fi
-            return 0
-        }
-    elif command -v apt-get >/dev/null 2>&1; then
-        # For apt-based systems
-        local apt_output=$(mktemp)
-        sudo apt-get install -y "$package_name" > "$apt_output" 2>&1
-        local exit_code=$?
-        if [[ $exit_code -eq 100 ]]; then
-            log_error "Package ${package_name} not found"
-            log_info "Last 20 lines of output:"
-            tail -n 20 "$apt_output" | sed 's/^/    /'
-            rm -f "$apt_output"
-            return 1
-        elif [[ $exit_code -ne 0 ]]; then
-            log_error "Failed to install ${package_name} (exit code: $exit_code)"
-            log_info "Last 20 lines of output:"
-            tail -n 20 "$apt_output" | sed 's/^/    /'
-            rm -f "$apt_output"
-            return 1
-        fi
-        rm -f "$apt_output"
-    elif command -v dnf >/dev/null 2>&1; then
-        # For dnf-based systems
-        sudo dnf install -y "$package_name"
+  local package_name="$1"
+
+  # Homebrew handles updates gracefully during install.
+  if command -v brew >/dev/null 2>&1; then
+    if brew install "$package_name"; then
+      return 0
+    fi
+  fi
+
+  # Snap: try refresh first (updates if installed), then install.
+  if command -v snap >/dev/null 2>&1; then
+    if sudo snap refresh "$package_name"; then
+      return 0 # Already installed and up-to-date
     else
-        log_error "No supported package manager found"
-        return 1
+      # If refresh failed (maybe not installed), try installing
+      if sudo snap install "$package_name"; then
+        return 0 # Installed successfully
+      fi
     fi
-}
+  fi
 
-# Usage: install_packages "pkg1" "pkg2" "pkg3" ...
-# Installs multiple packages in parallel (on macOS) or serially (on Linux)
-# Automatically detects and uses the appropriate package manager
-# On macOS, limits concurrent installations to 4 jobs for performance
-# Output example: Varies based on package manager output
-install_packages() {
-    local packages=("$@")
-    
-    if is_macos; then
-        # Create a temp file for logging
-        TEMP_LOG=$(mktemp)
-
-        # Install packages in parallel with a maximum of 4 concurrent jobs
-        local pids=()
-        for package in "${packages[@]}"; do
-            (install_brew "$package" >> "$TEMP_LOG" 2>&1) &
-            pids+=($!)
-            
-            # Limit concurrent jobs
-            if [[ ${#pids[@]} -ge 4 ]]; then
-                wait "${pids[0]}"
-                pids=("${pids[@]:1}")
-            fi
-        done
-
-        # Wait for remaining jobs
-        for pid in "${pids[@]}"; do
-            wait "$pid"
-        done
-        
-        cat "$TEMP_LOG"
-        rm "$TEMP_LOG"
-    elif is_linux; then
-        if command -v apt-get >/dev/null; then
-            local apt_output=$(mktemp)
-            sudo apt-get install -y "${packages[@]}" > "$apt_output" 2>&1
-            local exit_code=$?
-            if [[ $exit_code -eq 100 ]]; then
-                log_error "One or more packages not found"
-                log_info "Last 20 lines of output:"
-                tail -n 20 "$apt_output" | sed 's/^/    /'
-                rm -f "$apt_output"
-                return 1
-            elif [[ $exit_code -ne 0 ]]; then
-                log_error "Failed to install packages (exit code: $exit_code)"
-                log_info "Last 20 lines of output:"
-                tail -n 20 "$apt_output" | sed 's/^/    /'
-                rm -f "$apt_output"
-                return 1
-            fi
-            rm -f "$apt_output"
-        elif command -v dnf >/dev/null; then
-            sudo dnf install -y "${packages[@]}"
-        elif command -v pacman >/dev/null; then
-            sudo pacman -S --noconfirm "${packages[@]}"
-        fi
+  # apt-get install -y handles both install and update.
+  if command -v apt-get >/dev/null 2>&1; then
+    if sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "$package_name"; then
+      return 0
     fi
+  fi
+
+  # dnf install -y handles both install and update.
+  if command -v dnf >/dev/null 2>&1; then
+    if sudo dnf install -y "$package_name"; then
+      return 0
+    fi
+  fi
+
+  # pacman -S --noconfirm handles both install and update.
+  if command -v pacman >/dev/null; then
+    if sudo pacman -S --noconfirm "$package_name"; then
+      return 0
+    fi
+  fi
+
+  log_error "No supported package manager found for installing ${package_name}"
+  return 1
 }
 
 # Usage: setup_vscode
@@ -627,20 +596,20 @@ install_packages() {
 #   ➜ Setting up VS Code CLI tools
 #   ✓ VS Code CLI tools installed successfully
 setup_vscode() {
-    if [ -d "/Applications/Visual Studio Code.app" ]; then
-        log_info "Setting up VS Code CLI tools"
-        # Install command line tools via VS Code
-        "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" --install-extension ms-vscode.cpptools
+  if [ -d "/Applications/Visual Studio Code.app" ]; then
+    log_info "Setting up VS Code CLI tools"
+    # Install command line tools via VS Code
+    "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" --install-extension ms-vscode.cpptools
 
-        # Create symbolic link if it doesn't exist
-        if [ ! -f "/usr/local/bin/code" ]; then
-            sudo ln -s "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" "/usr/local/bin/code"
-        fi
-        
-        log_success "VS Code CLI tools installed successfully"
-    else
-        log_warning "VS Code not found. Please install it first."
+    # Create symbolic link if it doesn't exist
+    if [ ! -f "/usr/local/bin/code" ]; then
+        sudo ln -s "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" "/usr/local/bin/code"
     fi
+    
+    log_success "VS Code CLI tools installed successfully"
+  else
+    log_warning "VS Code not found. Please install it first."
+  fi
 }
 
 # Usage: error_handler $? $LINENO ${BASH_LINENO[0]} "$BASH_COMMAND" "${FUNCNAME[*]}"

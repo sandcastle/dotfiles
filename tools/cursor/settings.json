@@ -4,6 +4,7 @@
   "cursor.composer.collapsePaneInputBoxPills": true,
   "cursor.composer.shouldAllowCustomModes": true,
   "cursor.composer.shouldChimeAfterChatFinishes": true,
+  "cursor.terminal.usePreviewBox": true,
   "diffEditor.ignoreTrimWhitespace": true,
   "editor.fontSize": 13,
   "editor.fontLigatures": true,
@@ -36,7 +37,6 @@
   "terminal.integrated.shell.osx": "zsh",
   "terminal.integrated.scrollback": 10000,
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "window.zoomLevel": 0,
   "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.shellIntegration.enabled": true,
   "terminal.integrated.inheritEnv": true,
@@ -93,5 +93,6 @@
   "workbench.preferredLightColorTheme": "Default Light Modern",
   "window.autoDetectColorScheme": true,
   "window.systemColorTheme": "auto",
+  "window.zoomLevel": 0,
   "update.releaseTrack": "prerelease"
 }

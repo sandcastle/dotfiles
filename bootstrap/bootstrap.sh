@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
+set -e && ( set -o pipefail; ) 2>/dev/null || true
 
-( set -o pipefail; ) 2>/dev/null || true
-set -e
-
-# Get script directory in a POSIX-compatible way
-if [ -n "$BASH_VERSION" ]; then
-    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-else
-    SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+# Get current directory, works in both source and execution contexts
+if [[ -n "${BASH_SOURCE[0]}" ]]; then
+    SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+elif [[ -n "$0" ]]; then
+    SCRIPT_DIR="$( cd "$( dirname "$0" )" && pwd )"
+else 
+    echo "Error: Cannot determine script location" >&2
+    exit 1
 fi
 
 . "$SCRIPT_DIR/_funcs.sh"
@@ -38,9 +39,6 @@ fi
 
 # Handle interrupts and termination
 trap 'echo; echo "Goodbye, script interrupted."; exit 130' INT
-
-# Source common functions and utilities
-. "$SCRIPT_DIR/_funcs.sh"
 
 # Detect OS
 case "$OSTYPE" in

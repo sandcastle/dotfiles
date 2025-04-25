@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
 # Performance profiling (uncomment to debug slow startup)
 # zmodload zsh/zprof
 
@@ -30,11 +33,8 @@ export LC_ALL='en_US.UTF-8'
 
 # History configuration
 HISTFILE="$HOME/.zsh_history"
-HISTSIZE=50000
-SAVEHIST=10000
-
-# FZF configuration
-[ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
+HISTSIZE=1000
+SAVEHIST=2000
 
 # Performance improvements
 # Skip compinit on every shell load
@@ -60,17 +60,13 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 ZSH_AUTOSUGGEST_USE_ASYNC=1
-ZSH_AUTOSUGGEST_MANUAL_REBIND=1
-
-# Syntax Highlighting Colors
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
 
 # Customize colors
 typeset -A ZSH_HIGHLIGHT_STYLES
-
+# Syntax Highlighting Colors
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
 # Paste warning (optional)
 ZSH_HIGHLIGHT_STYLES[paste]='fg=black,bold,bg=yellow'
-
 # Highlight dangerous commands with red background and white text
 ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
 # Base styles
@@ -106,21 +102,6 @@ ZSH_HIGHLIGHT_STYLES[quoted]='fg=yellow'     # Quoted text
 # Assignment style
 ZSH_HIGHLIGHT_STYLES[assign]=fg=blue,bold           # Variable assignments (VAR=value)
 
-# Source additional configurations
-. "$DOTFILES/zsh/aliases.sh"
-. "$DOTFILES/zsh/functions.sh"
-. "$DOTFILES/zsh/tools.sh"
-. "$DOTFILES/zsh/cloud.sh"
-. "$DOTFILES/zsh/git.sh"
-. "$DOTFILES/zsh/osx.sh"
-. "$DOTFILES/zsh/mcp.sh"
-
-# Language environments
-. "$DOTFILES/lang/dotnet/env.sh"
-. "$DOTFILES/lang/js/env.sh"
-. "$DOTFILES/lang/ruby/env.sh"
-. "$DOTFILES/lang/go/env.sh"
-
 # iTerm2 integration (if exists)
 [ -f "${HOME}/.iterm2_shell_integration.zsh" ] && . "${HOME}/.iterm2_shell_integration.zsh"
 
@@ -129,25 +110,6 @@ ZSH_HIGHLIGHT_STYLES[assign]=fg=blue,bold           # Variable assignments (VAR=
 
 # Load dotfile completions
 fpath=("$DOTFILES/zsh/completions" $fpath)
-
-# Optimize command completion system
-autoload -Uz compinit
-# Cross-platform check for zcompdump modification time
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    # macOS version
-    if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ${ZDOTDIR:-$HOME}/.zcompdump) ]; then
-        compinit -u
-    else
-        compinit -u -C
-    fi
-else
-    # Linux version - simpler approach that checks if dump file is older than 24 hours
-    if [[ -f ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
-        compinit -u
-    else
-        compinit -u -C
-    fi
-fi
 
 # Install zi if not already installed
 if [[ ! -f $HOME/.zi/bin/zi.zsh ]]; then
@@ -171,27 +133,24 @@ zi light-mode for \
 # Configure OMZP and OMZL shorthands
 zi light z-shell/z-a-patch-dl
 
-# Core zsh plugins with optimized loading
-zi wait lucid atload"zicompinit; zicdreplay" blockf for \
-  zsh-users/zsh-completions \
-  zsh-users/zsh-autosuggestions \
-  zsh-users/zsh-syntax-highlighting \
-  zsh-users/zsh-history-substring-search
-  # zsh-fast-syntax-highlighting
+# Load core zsh plugins SYNCHRONOUSLY for stability
+zi ice pick"zcomp.zsh" atload"zicompinit_fast" blockf
+zi for \
+    zsh-users/zsh-completions \
+    zsh-users/zsh-autosuggestions \
+    zsh-users/zsh-history-substring-search \
+    zdharma-continuum/fast-syntax-highlighting
+
+# Source dotfiles
+command find "$DOTFILES/zsh" -name '*.sh' -type f -print0 | while IFS= read -r -d $'\0' file; do
+  if [ -r "$file" ]; then
+    . "$file"
+  fi
+done
 
 # Load git plugin and setup aliases
-# zi snippet OMZL::git.zsh
-# zi snippet OMZP::git
-
-# Theme appearance settings
-# zi snippet OMZL::theme-and-appearance.zsh
-
-# # Prompt setup
-# zi snippet OMZL::prompt_info_functions.zsh
-# setopt prompt_subst
-
-# # Load the robbyrussell theme directly
-# zi snippet OMZT::robbyrussell
+zi snippet OMZL::git.zsh
+zi snippet OMZP::git
 
 # Load cloud/container plugins
 # zi wait lucid as"completion" for \
@@ -208,24 +167,34 @@ zi wait lucid for \
     OMZP::kubectl \
   has"terraform" \
     OMZP::terraform \
+  has"dotnet" \
+    atload". $DOTFILES/lang/dotnet/env.sh" \
+    OMZP::dotnet \
   has"go" \
+    atload". $DOTFILES/lang/go/env.sh" \
     OMZP::golang \
   has"node" \
+    atload". $DOTFILES/lang/js/env.sh" \
     OMZP::node \
   has"yarn" \
     OMZP::yarn \
+  has"ruby" \
+    atload". $DOTFILES/lang/ruby/env.sh" \
+    OMZP::ruby \
   has"z" \
     OMZP::z \
   has'pip' \
     OMZP::pip \
   has"python" \
     OMZP::python
-#   has"zoxide" \
-#     OMZP::zoxide
-
-# Configure keybindings for history-substring-search
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
 
 # Initialize modern tools
-eval "$(starship init zsh)" # Modern prompt
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)" # Modern prompt
+fi
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"   # Smarter cd command
+fi
+if command -v mise >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"   # Smarter cd command
+fi

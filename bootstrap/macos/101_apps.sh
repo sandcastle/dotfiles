@@ -4,6 +4,7 @@ log_h1 "Installing macOS apps"
 
 # general
 log_h4 "Installing general utilities"
+install_brew "msie"
 install_brew "iterm2" "iTerm"
 install_brew "openssl"
 install_brew "htop-osx"
@@ -55,7 +56,7 @@ install_brew "cloudflare-warp"
 install_brew "cloudflared"
 run_with_progress "Installing wrangler" true npm install -g wrangler
 
-# tools
+# Docker
 log_h4 "Installing Docker tools"
 install_brew "docker"
 install_brew "docker-compose"

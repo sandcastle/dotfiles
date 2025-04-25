@@ -22,8 +22,5 @@ if [[ "$SHELL" != *"zsh"* ]]; then
     log_success "ZSH set as default shell"
 fi
 
-# Starship
-curl -sS https://starship.rs/install.sh | sudo sh
-
-# Zi
-sh -c "$(curl -fsSL get.zshell.dev)" -- -a annex
+run_with_progress "Installing Starship" true curl -sS https://starship.rs/install.sh | sudo sh -s -- -y
+run_with_progress "Installing Zi" true curl -fsSL get.zshell.dev | sudo sh -s -- -i skip -a annex

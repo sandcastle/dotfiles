@@ -1,6 +1,12 @@
-#!/usr/bin/env bash
-
-DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+# Get parent directory, works in both source and execution contexts
+if [[ -n "${BASH_SOURCE[0]}" ]]; then
+    DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+elif [[ -n "$0" ]]; then
+    DOTFILES="$( cd "$( dirname "$0" )/.." && pwd )"
+else 
+    echo "Error: Cannot determine dotfiles location" >&2
+    exit 1
+fi
 
 # Computer name
 COMPUTER_NAME=${COMPUTER_NAME:-""}

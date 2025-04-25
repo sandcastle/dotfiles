@@ -2,8 +2,8 @@
 
 log_info "Initializing common settings"
 
-# Set up initial environment variables
-export DOTFILES_REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Update package managers first
+ensure_package_managers_updated
 
 # Create necessary directories
 log_info "Creating required directories"

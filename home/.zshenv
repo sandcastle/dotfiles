@@ -62,6 +62,7 @@ unset path_file
 
 # Set the list of directories that Zsh searches for programs.
 path=(
+  $HOME/.local/bin
   /usr/local/{bin,sbin}
   /usr/local/opt/ruby/bin
   /usr/local/lib/python2.7/site-packages

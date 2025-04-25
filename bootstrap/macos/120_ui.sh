@@ -39,10 +39,9 @@ sudo defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 
 # Restart UI components
 log_success "Restarting UI components"
-# Temporarily disable exit on error
-set +e
+
+set +e # Temporarily disable exit on error
 for app in Safari Finder Dock SystemUIServer; do 
     killall "$app" >/dev/null 2>&1
 done
-# Re-enable exit on error
-set -e
+set -e # Re-enable exit on error

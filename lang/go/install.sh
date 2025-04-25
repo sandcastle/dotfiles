@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
+set -e && ( set -o pipefail; ) 2>/dev/null || true
 
-set -e
+log_h1 "Go & Tools"
 
-log_h1 "Installing Go"
-
-install_brew "go"
+run_with_progress "Installing Go" true mise use -g go@latest

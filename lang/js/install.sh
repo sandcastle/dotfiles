@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
+set -e && ( set -o pipefail; ) 2>/dev/null || true
 
-set -e
+log_h1 "Node & Tools"
 
-log_h1 "Installing Node, Yarn, PNPM"
-
-install_brew "nvm"
-install_brew "yarn"
-install_brew "pnpm"
+run_with_progress "Installing Node" true mise use -g node@latest
+run_with_progress "Installing Yarn" true mise use -g yarn@latest
+run_with_progress "Installing PNPM" true mise use -g pnpm@latest

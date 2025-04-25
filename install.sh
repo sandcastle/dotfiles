@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-
-( set -o pipefail; ) 2>/dev/null || true
-set -e
+set -e && ( set -o pipefail; ) 2>/dev/null || true
 
 # Enhanced error handler
 error_handler() {
@@ -149,17 +147,11 @@ fi
 
 # Symlink files
 chmod +x "$DOTFILES/install-symlink.sh"
-if ! "$DOTFILES/install-symlink.sh"; then
-    echo "Error running symlink setup"
-    exit 1
-fi
+. $DOTFILES/install-symlink.sh
 
 # Bootstrap the system
 chmod +x "$DOTFILES/bootstrap/bootstrap.sh"
-if ! "$DOTFILES/bootstrap/bootstrap.sh"; then
-    echo "Error running bootstrap"
-    exit 1
-fi
+. $DOTFILES/bootstrap/bootstrap.sh
 
 # Final message
 echo "✨ $(text cyan "Installation complete!") ✨"

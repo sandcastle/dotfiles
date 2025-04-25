@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-
-set -e
+set -e && ( set -o pipefail; ) 2>/dev/null || true
 
 log_h1 "Installing .Net SDKs"
 

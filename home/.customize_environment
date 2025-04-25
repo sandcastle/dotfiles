@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+# install dotfiles
 sudo apt-get update
 sudo apt-get install -y curl
-
-curl -sS "https://raw.githubusercontent.com/sandcastle/dotfiles/master/install.sh?t=$(date +%s%N)" | bash
