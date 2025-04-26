@@ -26,9 +26,6 @@
   mr          = "!sh -c 'git push -u origin -o merge_request.create -o merge_request.target=${1:-develop} -o merge_request.merge_when_pipeline_succeeds -o merge_request.should_remove_source_branch' -"
 
   feat        = "!sh -c 'git branch \"feature/$1\"; git checkout \"feature/$1\"' -"
-  rmfeat      = !sh "$DOTFILES/git-extras/git-branch-delete.sh"
-
-  setup       = !sh "$DOTFILES/git-extras/git-setup.sh"
   first       = commit -au -m 'Initial commit.'
 
   graph       = log --graph
@@ -36,15 +33,8 @@
   url         = !git remote -v|sed "'s|.*git[:@]\\(.*\\).git.*|http://\\1|;s|m:|m/|'"|uniq|xargs open
   whois       = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
 
-  changelog   = !sh "$DOTFILES/git-extras/git-changelog.sh"
-  rstatus     = !sh "$DOTFILES/git-extras/git-rstatus.sh"
-  release     = !sh "$DOTFILES/git-extras/git-release.sh"
-  summary     = !sh "$DOTFILES/git-extras/git-summary.sh"
-
   rmtag       = "!sh -c 'git tag -d $1; git push origin :refs/tags/$1'"
   pr          = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1; } ; f"
-  ghfork      = !sh "$DOTFILES/git-extras/git-ghpull.sh"
-  cleanup     = !ruby "$DOTFILES/git-extras/git-cleanup.rb"
 
 [pull]
   rebase = true
@@ -141,6 +131,3 @@
 
 [tag]
   forceSignAnnotated = false
-
-[includeIf "hasconfig:remote.origin.url:github.com/komo-tech/"]
-  path = ~/.gitconfig-komo-tech

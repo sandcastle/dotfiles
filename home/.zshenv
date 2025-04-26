@@ -1,18 +1,10 @@
-# Homebrew.
-# ---------
-HOMEBREW_NO_ENV_HINTS=true
-
-# Editors.
-# --------
-export EDITOR='code'
-export KUBE_EDITOR="nvim"
-export PAGER='moar'
-
-# Moar pager.
-# ---------
-export MOAR_PAGER='less' # Use less as the pager for moar's own help pages
-export MOAR_STYLE='plain' # Set a clean, readable style with syntax highlighting
-export MOAR_KEYBINDINGS='q:quit,h:help,j:down,k:up,g:top,G:bottom,f:forward,b:backward,/:search,n:next,N:prev'
+# Load the shell dotfiles, and then some:
+# * ~/.path can be used to extend `$PATH`.
+# * ~/.extra can be used for other settings you don’t want to commit.
+for file in ~/.{exports,aliases,functions}; do
+  [ -r "$file" ] && [ -f "$file" ] && source "$file"
+done
+unset file
 
 # Docker.
 # ---------
@@ -29,12 +21,6 @@ fi
 # ------
 typeset -gU cdpath fpath mailpath manpath path
 typeset -gUT INFOPATH infopath
-
-# Commonly used directories.
-export DEV_HOME="$HOME/Developer"
-export DEV_TMP="$DEV_HOME/tmp"
-export DEV_WORK="$DEV_HOME/work"
-export DEV_ME="$DEV_HOME/me"
 
 # Set the the list of directories that cd searches.
 cdpath=(
@@ -64,8 +50,6 @@ unset path_file
 path=(
   $HOME/.local/bin
   /usr/local/{bin,sbin}
-  /usr/local/opt/ruby/bin
-  /usr/local/lib/python2.7/site-packages
   /usr/local/opt/go/libexec/bin
   /usr/{bin,sbin}
   /{bin,sbin}

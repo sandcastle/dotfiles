@@ -6,7 +6,7 @@ if [[ -n "${BASH_SOURCE[0]}" ]]; then
     SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 elif [[ -n "$0" ]]; then
     SCRIPT_DIR="$( cd "$( dirname "$0" )" && pwd )"
-else 
+else
     echo "Error: Cannot determine script location" >&2
     exit 1
 fi
@@ -19,7 +19,7 @@ error_handler() {
     local command="$2"
     local code="${3:-1}"
     local script="$(basename "$0")"
-    
+
     echo
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo "Error in $script at line $line"
@@ -85,11 +85,6 @@ else
 fi
 
 log_info "Running final checks"
-
-# Verify shell setup
-if [ "$SHELL" != "/bin/zsh" ]; then
-    log_warning "ZSH is not set as default shell"
-fi
 
 log_h1 "Bootstrap complete!"
 exit 0

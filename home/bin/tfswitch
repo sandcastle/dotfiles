@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+
+# Function to manage Terraform profiles
+TF_PROFILES_DIR="$HOME/.terraform.d/.tfswitch"
+CREDENTIALS_FILE="$HOME/.terraform.d/credentials.tfrc.json"
+TERRAFORM_RC="$HOME/.terraformrc"
+
+# Create profiles directory if it doesn't exist
+mkdir -p "$TF_PROFILES_DIR"
+
+# Function to show usage
+function _show_usage() {
+  echo "Usage:"
+  echo "  tfswitch <profile_name>           # Switch to specified profile"
+  echo "  tfswitch import <profile_name>    # Import current config as new profile"
+  echo "  tfswitch list                     # List available profiles"
+  echo "  tfswitch clean                    # Remove current profile files"
+  echo "  tfswitch --help                   # Show this help message"
+}
+
+# Show usage if no arguments provided or --help is used
+if [[ $# -eq 0 ]] || [[ "$1" == "--help" ]]; then
+  _show_usage
+  return 1
+fi
+
+# Function to clean current profile files
+function _clean_profile() {
+  if [[ -f "$CREDENTIALS_FILE" ]]; then
+    rm "$CREDENTIALS_FILE"
+  fi
+  if [[ -f "$TERRAFORM_RC" ]]; then
+    rm "$TERRAFORM_RC"
+  fi
+}
+
+# Handle different commands
+case "$1" in
+"import")
+  if [[ $# -ne 2 ]]; then
+    echo "Error: Profile name required for import"
+    echo "Usage: tfswitch import <profile_name>"
+    return 1
+  fi
+
+  local profile_name="$2"
+  local profile_dir="$TF_PROFILES_DIR/$profile_name"
+
+  # Create profile directory
+  mkdir -p "$profile_dir"
+
+  # Copy credentials file if it exists
+  if [[ -f "$CREDENTIALS_FILE" ]]; then
+    cp "$CREDENTIALS_FILE" "$profile_dir/credentials.tfrc.json"
+  fi
+
+  # Copy terraformrc if it exists
+  if [[ -f "$TERRAFORM_RC" ]]; then
+    cp "$TERRAFORM_RC" "$profile_dir/terraformrc"
+  fi
+
+  echo "Profile '$profile_name' imported successfully"
+  ;;
+
+"list")
+  local profiles=("$TF_PROFILES_DIR"/*(N))
+  if [[ ${#profiles} -eq 0 ]]; then
+    echo "  No profiles found."
+    echo "  Use 'tfswitch import <profile_name>' to create one."
+  else
+    echo "Available profiles:"
+    for profile in "$TF_PROFILES_DIR"/*; do
+      if [[ -d "$profile" ]]; then
+        echo "  - $(basename "$profile")"
+      fi
+    done
+  fi
+  ;;
+
+"clean")
+  _clean_profile
+  echo "Current profile files removed"
+  ;;
+
+*)
+  local profile_name="$1"
+  local profile_dir="$TF_PROFILES_DIR/$profile_name"
+
+  # Check if profile exists
+  if [[ ! -d "$profile_dir" ]]; then
+    echo "Error: Profile '$profile_name' does not exist"
+    echo "Once you have logged in via 'terraform login', use 'tfswitch import $profile_name' to create the profile"
+    return 1
+  fi
+
+  # Clean current profile first
+  _clean_profile
+
+  # Create .terraform.d directory if it doesn't exist
+  mkdir -p "$HOME/.terraform.d"
+
+  # Copy credentials file if it exists in profile
+  if [[ -f "$profile_dir/credentials.tfrc.json" ]]; then
+    cp "$profile_dir/credentials.tfrc.json" "$CREDENTIALS_FILE"
+  fi
+
+  # Copy terraformrc if it exists in profile
+  if [[ -f "$profile_dir/terraformrc" ]]; then
+    cp "$profile_dir/terraformrc" "$TERRAFORM_RC"
+  fi
+
+  echo "Switched to profile: $profile_name"
+  ;;
+esac

@@ -21,16 +21,3 @@ if [[ -n "${COMPUTER_NAME}" ]]; then
         log_success "Computer name is already set to: $COMPUTER_NAME"
     fi
 fi
-
-# System-wide settings
-log_success "Configuring system-wide settings"
-sudo nvram SystemAudioVolume=" "  # Disable boot sound
-defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false  # Save to disk by default
-defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2  # Set sidebar icon size to medium
-defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
-
-# Security settings
-log_success "Configuring security settings"
-defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
-defaults write com.apple.screensaver askForPassword -int 1
-defaults write com.apple.screensaver askForPasswordDelay -int 0

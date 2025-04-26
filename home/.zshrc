@@ -23,19 +23,6 @@ setopt HIST_FIND_NO_DUPS  # Do not display a previously found event
 setopt HIST_IGNORE_SPACE  # Do not record an event starting with a space
 setopt HIST_SAVE_NO_DUPS  # Do not write a duplicate event to the history file
 
-# Environment variables
-export EDITOR='nvim'
-export KUBE_EDITOR='nvim'
-export VISUAL='code'
-export PAGER='moar'
-export LANG='en_US.UTF-8'
-export LC_ALL='en_US.UTF-8'
-
-# History configuration
-HISTFILE="$HOME/.zsh_history"
-HISTSIZE=1000
-SAVEHIST=2000
-
 # Performance improvements
 # Skip compinit on every shell load
 skip_global_compinit=1
@@ -54,6 +41,9 @@ zstyle ':completion:*' cache-path "$HOME/.zcompcache"
 
 # Performance optimization settings
 HIST_STAMPS="yyyy-mm-dd"
+
+# History configuration
+HISTFILE="$HOME/.zsh_history"
 
 # Autosuggestions configuration
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
@@ -108,9 +98,6 @@ ZSH_HIGHLIGHT_STYLES[assign]=fg=blue,bold           # Variable assignments (VAR=
 # Local environment (if exists)
 [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
-# Load dotfile completions
-fpath=("$DOTFILES/zsh/completions" $fpath)
-
 # Install zi if not already installed
 if [[ ! -f $HOME/.zi/bin/zi.zsh ]]; then
   print -P "%F{33}▓▒░ %F{160}Installing (%F{33}z-shell/zi%F{160})…%f"
@@ -140,13 +127,6 @@ zi for \
     zsh-users/zsh-autosuggestions \
     zsh-users/zsh-history-substring-search \
     zdharma-continuum/fast-syntax-highlighting
-
-# Source dotfiles
-command find "$DOTFILES/zsh" -name '*.sh' -type f -print0 | while IFS= read -r -d $'\0' file; do
-  if [ -r "$file" ]; then
-    . "$file"
-  fi
-done
 
 # Load git plugin and setup aliases
 zi snippet OMZL::git.zsh
@@ -188,13 +168,17 @@ zi wait lucid for \
   has"python" \
     OMZP::python
 
-# Initialize modern tools
+# Modern prompt
 if command -v starship >/dev/null 2>&1; then
-  eval "$(starship init zsh)" # Modern prompt
+  eval "$(starship init zsh)"
 fi
+
+# Smarter cd command
 if command -v zoxide >/dev/null 2>&1; then
-  eval "$(zoxide init zsh)"   # Smarter cd command
+  eval "$(zoxide init zsh)"
 fi
+
+# Language environments
 if command -v mise >/dev/null 2>&1; then
-  eval "$(zoxide init zsh)"   # Smarter cd command
+  eval "$(mise activate zsh)"
 fi

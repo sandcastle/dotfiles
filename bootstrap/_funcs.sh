@@ -201,7 +201,6 @@ show_progress() {
   log_success "${message}"
 }
 
-
 # 🚀 Run command with progress indicator and success/failure feedback
 run_command() {
   message=$1
@@ -498,7 +497,11 @@ require_sudo() {
     log_info "Requesting sudo access"
     sudo -v
     # Keep sudo alive
-    (while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null) &
+    (while true; do
+      sudo -n true
+      sleep 60
+      kill -0 "$$" || exit
+    done 2>/dev/null) &
     SUDO_PID=$!
     # Make sure to kill the sudo refresh process on exit
     trap 'echo "sudo keep alive cleaned up"; kill $SUDO_PID 2>/dev/null || true' EXIT

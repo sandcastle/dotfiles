@@ -38,11 +38,12 @@ dotfiles-update
 
 ### Development Environments
 
-- Node.js with NVM
-- Python with pyenv
-- Ruby with rbenv
+- MSIE
+- Node
+- Python
+- Ruby
 - Go
-- dotnet
+- Dotnet
 - Docker and Kubernetes tools
 
 ### Shell Configuration
@@ -86,38 +87,36 @@ dotfiles-update
 │   ├── common/         # Cross-platform scripts
 │   ├── linux/          # Linux-specific scripts
 │   └── macos/          # macOS-specific scripts
+│
 ├── etc/                # System configuration files
-├── git-extras/         # Git helper scripts
+│
 ├── home/               # Home directory dotfiles
-│   └── .config/        # XDG config files
+│   ├── bin/            #
+│   ├── .vim/           # Vim workspace
+│   ├── .config/        # Starship config files
+│   ├── .aliases        # Shell aliases
+│   └── .functions      # Shell functions
+│
 ├── lang/               # Language-specific setup
-│   ├── dotnet/         # .NET configuration
+│   ├── dotnet/         # dotnet configuration
 │   ├── go/             # Go configuration
-│   ├── js/             # JavaScript/Node.js configuration
+│   ├── node/           # Node configuration
 │   ├── python/         # Python configuration
 │   └── ruby/           # Ruby configuration
-├── tools/              # Tool-specific configuration
-│   ├── cursor/         # Cursor editor settings
-│   ├── mcp/            # MCP tool configuration
-│   └── vscode/         # VS Code settings
-└── zsh/                # ZSH configuration
-    ├── aliases.sh      # Shell aliases
-    ├── cloud.sh        # Cloud provider configurations
-    ├── functions.sh    # Shell functions
-    ├── git.sh          # Git-specific settings
-    ├── mcp.sh          # MCP-specific settings
-    ├── osx.sh          # macOS-specific settings
-    ├── tools.sh        # Tool-specific config
-    ├── completions/    # ZSH completions
-    └── functions/      # Custom ZSH functions
+│
+└── tools/              # Tool-specific configuration
+    ├── cursor/         # Cursor editor settings
+    ├── mcp/            # MCP tool configuration
+    └── vscode/         # VS Code settings
 ```
 
 ## Credits
 
-Inspired by various dotfiles repositories, including:
+Inspired by various dotfiles, including:
 
-- [Paul Miller's dotfiles](https://github.com/paulmillr/dotfiles)
-- [Mathias Bynens' dotfiles](https://github.com/mathiasbynens/dotfiles)
+- [Paul Miller](https://github.com/paulmillr/dotfiles)
+- [Mathias Bynens](https://github.com/mathiasbynens/dotfiles)
+- [Zach Holman](https://github.com/holman/dotfiles)
 
 ## License
 

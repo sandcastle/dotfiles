@@ -2,7 +2,3 @@
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
-
-# install dotfiles
-sudo apt-get update
-sudo apt-get install -y curl

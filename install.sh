@@ -7,7 +7,7 @@ error_handler() {
     local command="$2"
     local code="${3:-1}"
     local script="$(basename "$0")"
-    
+
     echo
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo "Error in $script at line $line"
@@ -31,7 +31,7 @@ trap 'echo; echo "Goodbye, script interrupted."; exit 130' INT
 text() {
   local format=""
   local reset="\033[0m"
-  
+
   # Process all style arguments
   while [[ $# -gt 0 && "$1" =~ ^[a-z]+$ ]]; do
     case "$1" in
@@ -46,7 +46,7 @@ text() {
     esac
     shift
   done
-  
+
   if [ -z "$format" ]; then
     format=$reset
   fi
@@ -76,7 +76,7 @@ echo "→ You can cancel at any time by pressing CTRL+C"
 echo
 
 # Detect OS
-OS="$(uname -s)"
+OS="$(uname)"
 if [ "$OS" = "Darwin" ]; then
   # macOS specific
   COMPUTER_NAME_DEFAULT="$(scutil --get ComputerName 2>/dev/null || hostname)"
@@ -91,10 +91,10 @@ prompt_user() {
   local default=${3:-""}
   local current_value=""
   eval "current_value=\"\${$variable:-}\""
-  
+
   # Print the prompt
   printf "%s [%s]: " "$prompt" "$default"
-  
+
   # Check if stdin is a terminal
   if [ -t 0 ]; then
       # Interactive mode
@@ -104,10 +104,10 @@ prompt_user() {
       value=""
       echo ""  # Add a newline for better formatting
   fi
-  
+
   value=${value:-$default}
   eval "$variable=\"\$value\""
-  
+
   # If in non-interactive mode, show what was selected
   if [ ! -t 0 ]; then
       echo "Using default: $value"

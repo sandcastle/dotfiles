@@ -97,22 +97,26 @@ symlink_directory() {
         continue
       fi
 
+      local filename=$(basename "$file")
+      local dest="$dest_dir/$filename"
+
       if [[ -f "$file" ]]; then
-        local filename=$(basename "$file")
-        local dest="$dest_dir/$filename"
         file_count=$((file_count + 1))
         create_symlink "$file" "$dest" "$use_sudo"
+      elif [[ -d "$file" ]]; then
+        # Recursively handle subdirectories
+        symlink_directory "$file" "$dest" "$use_sudo"
       fi
     done
 
     # Reset dotglob
     shopt -u dotglob
+
+    log_finished "Processed $file_count files"
   else
     log_warning "Source directory does not exist: $src_dir"
     return 1
   fi
-
-  log_finished "Processed $file_count files"
 }
 
 symlink_file() {
@@ -142,10 +146,9 @@ log_h1 "Symlinking dotfiles"
 log_info "Dotfiles: $DOTFILES"
 
 symlink_directory "$DOTFILES/home" "$HOME" "false"
-symlink_directory "$DOTFILES/home/.config" "$HOME/.config" "false"
 
 # Only symlink etc/hosts on macOS
-if [ "$(uname -s)" = "Darwin" ]; then
+if [[ "$(uname)" == "Darwin" ]]; then
   symlink_directory "$DOTFILES/etc" "/etc" "true"
 fi
 

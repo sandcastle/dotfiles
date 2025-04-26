@@ -1,0 +1,199 @@
+#!/usr/bin/env bash
+
+# Open a file or URL in the default browser
+b() {
+  local url="$1"
+  # If it's not a URL (doesn't start with http:// or https:// or file://)
+  if [[ ! "$url" =~ ^(https?://|file://) ]]; then
+    # If it's a local file that exists, use file:// protocol
+    if [[ -f "$url" ]]; then
+      url="file://$(realpath "$url")"
+    # If it's a local directory that exists, use file:// protocol
+    elif [[ -d "$url" ]]; then
+      url="file://$(realpath "$url")"
+    # Otherwise, assume it's a website and add https://
+    else
+      url="https://$url"
+    fi
+  fi
+  ${BROWSER:-open} "$url"
+}
+
+# Open a file in the default pager
+page() {
+  ${PAGER:-moar} "$@"
+}
+
+# Copy file(s) from remote ssh path to desktop
+mecp() {
+  scp "$@" ${SSH_CLIENT%% *}:Desktop/
+}
+
+# Show current Finder directory.
+function finder {
+  osascript 2>/dev/null <<EOF
+    tell application "Finder"
+      return POSIX path of (target of window 1 as alias)
+    end tell
+EOF
+}
+
+# Execute commands for each file in current directory.
+function each() {
+  for dir in *; do
+    # echo "${dir}:"
+    cd $dir
+    $@
+    cd ..
+  done
+}
+
+# Find files and exec commands at them.
+# $ find-exec .coffee cat | wc -l
+# # => 9762
+function find-exec() {
+  if command -v fd >/dev/null 2>&1; then
+    fd --type f --hidden --follow --exclude .git --glob "*${1:-}*" --exec "${2:-file}" '{}'
+  else
+    find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
+  fi
+}
+
+# Better find(1)
+function ff() {
+  if command -v fd >/dev/null 2>&1; then
+    fd --type f --hidden --follow --exclude .git --glob "*${1:-}*"
+  else
+    find . -iname "*${1:-}*"
+  fi
+}
+
+# Count code lines in some directory.
+# $ loc py js css
+# # => Lines of code for .py: 3781
+# # => Lines of code for .js: 3354
+# # => Lines of code for .css: 2970
+# # => Total lines of code: 10105
+function loc() {
+  local total
+  local firstletter
+  local ext
+  local lines
+  total=0
+  for ext in $@; do
+    firstletter=$(echo $ext | cut -c1-1)
+    if [[ firstletter != "." ]]; then
+      ext=".$ext"
+    fi
+    if command -v bat >/dev/null 2>&1; then
+      lines=$(find-exec "*$ext" bat --style=plain --color=never | wc -l)
+    else
+      lines=$(find-exec "*$ext" cat | wc -l)
+    fi
+    lines=${lines// /}
+    total=$(($total + $lines))
+    echo "Lines of code for ${fg[blue]}$ext${reset_color}: ${fg[green]}$lines${reset_color}"
+  done
+  echo "${fg[blue]}Total${reset_color} lines of code: ${fg[green]}$total${reset_color}"
+}
+
+# $ git log --no-merges --pretty=format:"%ae" | stats
+# # => 514 a@example.com
+# # => 200 b@example.com
+function stats() {
+  sort | uniq -c | sort -r
+}
+
+# Monitor IO in real-time (open files etc).
+function openfiles() {
+  sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }'
+}
+
+# retries a command every 1 second
+# $ retry ping google.com
+function retry() {
+  echo Retrying "$@"
+  $@
+  sleep 1
+  retry $@
+}
+
+# Open curr dir in preview.app.
+function preview() {
+  local item=$1
+  [[ -z "$item" ]] && item='.'
+  open $1 -a 'Preview'
+}
+
+# Makes a directory and changes to it.
+function mkdcd() {
+  [[ -n "$1" ]] && mkdir -p "$1" && builtin cd "$1"
+}
+
+# Displays user owned processes status.
+function psu {
+  ps -U "${1:-$USER}" -o 'pid,%cpu,%mem,command' "${@:2}"
+}
+
+# Simple .tar archiving.
+function tar_() {
+  tar -cvf "$1.tar" "$1"
+}
+
+function untar() {
+  tar -xvf $1
+}
+
+# Create a directory and cd into it
+mkcd() {
+  mkdir -p "$@" && cd "$_"
+}
+
+# Extract any archive
+extract() {
+  if [ -f $1 ]; then
+    case $1 in
+    *.tar.bz2) tar xjf $1 ;;
+    *.tar.gz) tar xzf $1 ;;
+    *.bz2) bunzip2 $1 ;;
+    *.rar) unrar x $1 ;;
+    *.gz) gunzip $1 ;;
+    *.tar) tar xf $1 ;;
+    *.tbz2) tar xjf $1 ;;
+    *.tgz) tar xzf $1 ;;
+    *.zip) unzip $1 ;;
+    *.Z) uncompress $1 ;;
+    *.7z) 7z x $1 ;;
+    *) echo "'$1' cannot be extracted" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+# Git commit browser using fzf
+fzf-git-log() {
+  git log --graph --color=always \
+    --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+    fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+      --bind "ctrl-m:execute:
+                (grep -o '[a-f0-9]\{7\}' | head -1 |
+                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
+                {}
+FZF-EOF"
+}
+
+# Search directory contents with fzf
+fzf-find() {
+  local file
+  file=$(fd --type f --hidden --follow --exclude .git | fzf \
+    --preview 'bat --style=numbers --color=always {}')
+  if [[ -n $file ]]; then
+    $EDITOR "$file"
+  fi
+}
+
+# Add a new function that summaires all aliases in aliases.sh
+function aliases() {
+  cat "${DOTFILES}/.aliases" | grep "^alias" | sort | bat --color=always --paging=always
+}

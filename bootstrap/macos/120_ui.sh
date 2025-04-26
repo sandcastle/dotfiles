@@ -6,6 +6,22 @@ log_h1 "Configuring UI preferences"
 log_success "Configuring Dock settings"
 defaults write com.apple.dock tilesize -int 36
 
+# System-wide settings
+log_success "Configuring system-wide settings"
+sudo nvram SystemAudioVolume=" "                                # Disable boot sound
+defaults write -g NSDocumentSaveNewDocumentsToCloud -bool false # Save to disk by default
+defaults write -g NSTableViewDefaultSizeMode -int 2             # Set sidebar icon size to medium
+defaults write -g AppleShowScrollBars -string "Always"
+
+# Update settings
+log_success "Configuring update settings"
+defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
+
+# Security settings
+log_success "Configuring security settings"
+defaults write com.apple.screensaver askForPassword -int 1
+defaults write com.apple.screensaver askForPasswordDelay -int 0
+
 ## Dock animation
 log_success "Configuring Dock animations"
 defaults write com.apple.dock autohide -bool true
@@ -32,6 +48,11 @@ defaults write com.apple.Finder _FXShowPosixPathInTitle -bool true
 defaults write com.apple.Finder _FXSortFoldersFirst -bool true
 defaults write com.apple.Finder FXDefaultSearchScope -string "SCcf"
 defaults write com.apple.Finder FXEnableExtensionChangeWarning -bool false
+defaults write com.apple.Finder ShowExternalHardDrivesOnDesktop -bool true
+defaults write com.apple.Finder ShowRemovableMediaOnDesktop -bool true
+
+# Use AirDrop over every interface.
+defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
 
 ## Safari
 log_success "Configuring Safari preferences"
@@ -41,7 +62,7 @@ sudo defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 log_success "Restarting UI components"
 
 set +e # Temporarily disable exit on error
-for app in Safari Finder Dock SystemUIServer; do 
+for app in Safari Finder Dock SystemUIServer; do
     killall "$app" >/dev/null 2>&1
 done
 set -e # Re-enable exit on error
