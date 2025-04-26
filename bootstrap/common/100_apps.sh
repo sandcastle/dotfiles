@@ -3,7 +3,7 @@
 log_h1 "Installing common apps"
 
 # core tools
-install_package "neovim" -snap nvim -check nvim # Modern text editor
+install_package "neovim" -check nvim # Modern text editor
 install_package "git"                           # Version control system
 install_package "gh"                            # GitHub CLI tool
 install_package "fzf"                           # Command-line fuzzy finder
