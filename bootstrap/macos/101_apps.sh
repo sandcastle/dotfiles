@@ -61,7 +61,11 @@ install_brew "docker"
 install_brew "docker-compose"
 install_brew "ngrok"
 
-# terminal tools
+# modern tools
+log_h4 "Installing modern tools"
+install_brew "sd"       # Intuitive find & replace CLI (sed alternative)
+install_brew "yq"       # YAML processor (like jq but for YAML)
+install_brew "gping"    # Ping with a graphical display
 install_brew "dust"     # More intuitive version of du with colored output
 install_brew "bottom"   # Graphical system/process monitor, alternative to top/htop
 install_brew "procs"    # Modern replacement for ps with additional features
@@ -96,10 +100,5 @@ install_brew "discord"
 log_h4 "Installing git tools"
 install_brew "gitkraken"
 install_brew "tig"
-
-# modern tools
-log_h4 "Installing modern tools"
-install_brew "sd" # Intuitive find & replace CLI (sed alternative)
-install_brew "yq" # YAML processor (like jq but for YAML)
 
 log_success "Application configuration complete"
