@@ -208,6 +208,7 @@ run_command() {
   show_output=${1:-true}
   cmd="$@"
   tmp_out=$(mktemp)
+  debug=${DEBUG:-false}
 
   # Run command in background
   (eval "$cmd") >"$tmp_out" 2>&1 &
@@ -219,6 +220,9 @@ run_command() {
   # Wait for the command to finish
   wait "$cmd_pid"
   result=$?
+
+  [ "$debug" = true ] && echo "Command '$cmd' finished with exit code $result"
+  [ "$debug" = true ] && echo "Output: $(cat $tmp_out)"
 
   if [ $result -ne 0 ]; then
     log_failure "$message (exit code $result)"
@@ -531,7 +535,7 @@ ensure_package_managers_updated() {
   fi
 }
 
-# Usage: install_package "default_package_name" [-brew name] [-snap name] [-apt name] [-dnf name] [-pacman name]
+# Usage: install_package "default_package_name" [-brew name] [-snap name] [-apt name] [-dnf name] [-pacman name] [-check command]
 # Installs a package using the system's available package manager
 # Supports package name overrides for different package managers via flags
 # Example: install_package "python3" -brew python -snap python3.11
@@ -540,7 +544,9 @@ install_package() {
   local default_package="$1"
   shift # Remove the default package name from args
   local package_name="$default_package"
-  local brew_name="" snap_name="" apt_name="" dnf_name="" pacman_name=""
+  local brew_name="" snap_name="" apt_name="" dnf_name="" pacman_name="" check="$default_package"
+  local debug=${DEBUG:-false}
+  local skip_check=false
 
   # Parse flag arguments
   while [[ $# -gt 0 ]]; do
@@ -565,6 +571,14 @@ install_package() {
       pacman_name="$2"
       shift 2
       ;;
+    -check)
+      check="$2"
+      shift 2
+      ;;
+    -skip-check)
+      skip_check=$2
+      shift 2
+      ;;
     *)
       log_error "Unknown flag: $1"
       return 1
@@ -575,49 +589,73 @@ install_package() {
   # Set package name based on available package manager
   if command -v brew >/dev/null 2>&1 && [ -n "$brew_name" ]; then
     package_name="$brew_name"
+    [ "$debug" = true ] && echo "Overriding package name: $brew_name"
   elif command -v snap >/dev/null 2>&1 && [ -n "$snap_name" ]; then
     package_name="$snap_name"
+    [ "$debug" = true ] && echo "Overriding package name: $snap_name"
   elif command -v apt-get >/dev/null 2>&1 && [ -n "$apt_name" ]; then
     package_name="$apt_name"
+    [ "$debug" = true ] && echo "Overriding package name: $apt_name"
   elif command -v dnf >/dev/null 2>&1 && [ -n "$dnf_name" ]; then
     package_name="$dnf_name"
+    [ "$debug" = true ] && echo "Overriding package name: $dnf_name"
   elif command -v pacman >/dev/null 2>&1 && [ -n "$pacman_name" ]; then
     package_name="$pacman_name"
+    [ "$debug" = true ] && echo "Overriding package name: $pacman_name"
   fi
+
+  [ "$debug" = true ] && echo "Trying package managers to install $package_name $check"
 
   # Homebrew
   if command -v brew >/dev/null 2>&1; then
+    [ "$debug" = true ] && echo "Installing $package_name with brew"
     run_command "Installing $package_name" brew install "$package_name"
-    if program_exists "$package_name"; then
+    [ "$debug" = true ] && echo "Checking if $check is installed"
+    if [ "$skip_check" = false ] && command -v "$check" >/dev/null 2>&1; then
       return 0
     fi
+    [ "$debug" = true ] && echo "Couldnt find $check after installing $package_name with brew"
   fi
 
+  [ "$debug" = true ] && echo "Installing $package_name with snap"
   # Snap
   if command -v snap >/dev/null 2>&1; then
+    [ "$debug" = true ] && echo "Installing $package_name with snap"
     run_command "Installing $package_name" sudo snap install "$package_name"
-    # only continue if the package is installed, otherwise try fallback to apt-get
-    if program_exists "$package_name"; then
+    if [ "$skip_check" = false ] && command -v "$check" >/dev/null 2>&1; then
       return 0
     fi
+    [ "$debug" = true ] && echo "Couldnt find $check after installing $package_name with snap"
   fi
 
   # apt-get install -y handles both install and update.
   if command -v apt-get >/dev/null 2>&1; then
+    [ "$debug" = true ] && echo "Installing $package_name with apt-get"
     run_command "Installing $package_name" DEBIAN_FRONTEND=noninteractive sudo apt-get install -y "$package_name"
-    return 0
+    if [ "$skip_check" = false ] && command -v "$check" >/dev/null 2>&1; then
+      return 0
+    fi
+    [ "$debug" = true ] && echo "Couldnt find $check after installing $package_name with apt-get"
   fi
 
   # dnf
   if command -v dnf >/dev/null 2>&1; then
+    [ "$debug" = true ] && echo "Installing $package_name with dnf"
     run_command "Installing $package_name" sudo dnf install -y "$package_name"
-    return 0
+    if [ "$skip_check" = false ] && command -v "$check" >/dev/null 2>&1; then
+      return 0
+    fi
+    [ "$debug" = true ] && echo "Couldnt find $check after installing $package_name with dnf"
   fi
 
   # pacman -S --noconfirm handles both install and update.
   if command -v pacman >/dev/null 2>&1; then
+    [ "$debug" = true ] && echo "Installing $package_name with pacman"
     run_command "Installing $package_name" false sudo pacman -S --noconfirm "$package_name"
-    return 0
+    if [ "$skip_check" = false ] && command -v "$check" >/dev/null 2>&1; then
+      return 0
+    fi
+    [ "$debug" = true ] && echo "Couldnt find $check after installing $package_name with pacman"
   fi
 
   log_error "No supported package manager found or installation failed for ${package_name}"

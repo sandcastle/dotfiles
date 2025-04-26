@@ -4,7 +4,6 @@ log_h1 "Installing macOS apps"
 
 # general
 log_h4 "Installing general utilities"
-install_brew "msie"
 install_brew "iterm2" "iTerm"
 install_brew "openssl"
 install_brew "htop-osx"
@@ -90,7 +89,7 @@ install_brew "losslesscut"
 install_brew "imageoptim"
 
 # gaming
-log_h4 "Installing gaming applications" 
+log_h4 "Installing gaming applications"
 install_brew "discord"
 
 # git
