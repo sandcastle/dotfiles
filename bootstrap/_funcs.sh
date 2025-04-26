@@ -531,25 +531,70 @@ ensure_package_managers_updated() {
   fi
 }
 
-# Usage: install_package "package_name"
+# Usage: install_package "default_package_name" [-brew name] [-snap name] [-apt name] [-dnf name] [-pacman name]
 # Installs a package using the system's available package manager
-# Supports Homebrew, apt-get, and dnf
+# Supports package name overrides for different package managers via flags
+# Example: install_package "python3" -brew python -snap python3.11
 # Returns 0 on success, 1 on failure
-# Output example:
-#   ➜ Installing git...
-#   ✓ Package git is already installed
 install_package() {
-  local package_name="$1"
-  local try_snap=${2:-false}
+  local default_package="$1"
+  shift # Remove the default package name from args
+  local package_name="$default_package"
+  local brew_name="" snap_name="" apt_name="" dnf_name="" pacman_name=""
+
+  # Parse flag arguments
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+    -brew)
+      brew_name="$2"
+      shift 2
+      ;;
+    -snap)
+      snap_name="$2"
+      shift 2
+      ;;
+    -apt)
+      apt_name="$2"
+      shift 2
+      ;;
+    -dnf)
+      dnf_name="$2"
+      shift 2
+      ;;
+    -pacman)
+      pacman_name="$2"
+      shift 2
+      ;;
+    *)
+      log_error "Unknown flag: $1"
+      return 1
+      ;;
+    esac
+  done
+
+  # Set package name based on available package manager
+  if command -v brew >/dev/null 2>&1 && [ -n "$brew_name" ]; then
+    package_name="$brew_name"
+  elif command -v snap >/dev/null 2>&1 && [ -n "$snap_name" ]; then
+    package_name="$snap_name"
+  elif command -v apt-get >/dev/null 2>&1 && [ -n "$apt_name" ]; then
+    package_name="$apt_name"
+  elif command -v dnf >/dev/null 2>&1 && [ -n "$dnf_name" ]; then
+    package_name="$dnf_name"
+  elif command -v pacman >/dev/null 2>&1 && [ -n "$pacman_name" ]; then
+    package_name="$pacman_name"
+  fi
 
   # Homebrew
   if command -v brew >/dev/null 2>&1; then
     run_command "Installing $package_name" brew install "$package_name"
-    return 0
+    if program_exists "$package_name"; then
+      return 0
+    fi
   fi
 
   # Snap
-  if command -v snap >/dev/null 2>&1 && [ "$try_snap" = true ]; then
+  if command -v snap >/dev/null 2>&1; then
     run_command "Installing $package_name" sudo snap install "$package_name"
     # only continue if the package is installed, otherwise try fallback to apt-get
     if program_exists "$package_name"; then
@@ -570,7 +615,7 @@ install_package() {
   fi
 
   # pacman -S --noconfirm handles both install and update.
-  if command -v pacman >/dev/null 2>&1; then # Correct check: `pacman >/dev/null` not `pacman >/dev/null;`
+  if command -v pacman >/dev/null 2>&1; then
     run_command "Installing $package_name" false sudo pacman -S --noconfirm "$package_name"
     return 0
   fi
