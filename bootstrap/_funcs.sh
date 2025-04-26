@@ -540,6 +540,7 @@ ensure_package_managers_updated() {
 #   ✓ Package git is already installed
 install_package() {
   local package_name="$1"
+  local try_snap=${2:-false}
 
   # Homebrew
   if command -v brew >/dev/null 2>&1; then
@@ -548,7 +549,7 @@ install_package() {
   fi
 
   # Snap
-  if command -v snap >/dev/null 2>&1; then
+  if command -v snap >/dev/null 2>&1 && [ "$try_snap" = true ]; then
     run_command "Installing $package_name" sudo snap install "$package_name"
     # only continue if the package is installed, otherwise try fallback to apt-get
     if program_exists "$package_name"; then
