@@ -9,7 +9,6 @@ install_package "gh"                 # GitHub CLI tool
 install_package "fzf"                # Command-line fuzzy finder
 install_package "ripgrep" -check rg  # Fast text search tool (grep alternative)
 install_package "jq"                 # Command-line JSON processor
-install_package "yq" -try-snap       # YAML processor (like jq but for YAML)
 install_package "tree"               # Display directory structure as a tree
 install_package "wget"               # Network file downloader
 install_package "curl"               # Command-line tool for transferring data with URL syntax
