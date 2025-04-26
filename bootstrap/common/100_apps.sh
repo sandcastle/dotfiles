@@ -15,15 +15,15 @@ install_package "curl"               # Command-line tool for transferring data w
 install_package "bats"               # Bash Automated Testing System
 
 # modern replacements
-install_package "bat"       # Modern cat alternative with syntax highlighting
-install_package "eza"       # Modern ls replacement with better defaults and colors
-install_package "delta"     # Syntax-highlighting pager for git and diff output
-install_package "zoxide"    # Smarter cd command that learns your most used directories
-install_package "duf"       # Better disk usage/free utility with colorful graphs
-install_package "sd"        # Intuitive find & replace CLI (sed alternative)
-install_package "gping"     # Ping with a graphical display
-install_package "hyperfine" # Command-line benchmarking tool
-install_package "pwgen"     # Password generator
+install_package "bat"          # Modern cat alternative with syntax highlighting
+install_package "eza" -apt exa # Modern ls replacement with better defaults and colors
+install_package "delta"        # Syntax-highlighting pager for git and diff output
+install_package "zoxide"       # Smarter cd command that learns your most used directories
+install_package "duf"          # Better disk usage/free utility with colorful graphs
+install_package "sd"           # Intuitive find & replace CLI (sed alternative)
+install_package "gping"        # Ping with a graphical display
+install_package "hyperfine"    # Command-line benchmarking tool
+install_package "pwgen"        # Password generator
 
 # monitoring tools
 install_package "cloc"   # Count lines of code in a project
