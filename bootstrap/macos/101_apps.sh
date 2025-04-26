@@ -29,8 +29,6 @@ install_brew "handbrake"
 
 # browsers
 log_h4 "Installing browsers"
-install_brew "google-chrome" "Google Chrome"
-
 defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false
 
 # cloud/kube
@@ -77,7 +75,6 @@ install_brew "choose"   # cut/awk alternative with a more intuitive interface
 # IDE
 log_h4 "Installing IDEs"
 install_brew "jetbrains-toolbox"
-install_brew "visual-studio-code" "Visual Studio Code"
 install_brew "cursor"
 
 run_command "Setting up VS Code CLI tools" setup_vscode

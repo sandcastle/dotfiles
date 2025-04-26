@@ -63,6 +63,8 @@ log_success "Restarting UI components"
 
 set +e # Temporarily disable exit on error
 for app in Safari Finder Dock SystemUIServer; do
+  if pgrep -x "$app" >/dev/null; then
     killall "$app" >/dev/null 2>&1
+  fi
 done
 set -e # Re-enable exit on error
