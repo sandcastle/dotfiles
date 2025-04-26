@@ -24,11 +24,11 @@ install_package "hyperfine"    # Command-line benchmarking tool
 install_package "pwgen"        # Password generator
 
 # monitoring tools
-install_package "cloc"   # Count lines of code in a project
-install_package "httpie" # User-friendly HTTP client
-install_package "watch"  # Execute commands periodically and show output
-install_package "htop"   # Interactive process viewer
-install_package "ncdu"   # Disk usage analyzer with ncurses interface
+install_package "cloc"               # Count lines of code in a project
+install_package "httpie" -check http # User-friendly HTTP client
+install_package "watch"              # Execute commands periodically and show output
+install_package "htop"               # Interactive process viewer
+install_package "ncdu"               # Disk usage analyzer with ncurses interface
 
 # MSIE - https://mise.jdx.dev/
 run_command "Installing MSIE" $(curl -s https://mise.run | MISE_QUIET=1 MISE_INSTALL_HELP=0 sh -s >/dev/null 2>&1)
