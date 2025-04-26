@@ -550,7 +550,10 @@ install_package() {
   # Snap
   if command -v snap >/dev/null 2>&1; then
     run_command "Installing $package_name" sudo snap install "$package_name"
-    return 0
+    # only continue if the package is installed, otherwise try fallback to apt-get
+    if program_exists "$package_name"; then
+      return 0
+    fi
   fi
 
   # apt-get install -y handles both install and update.
