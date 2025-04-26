@@ -43,4 +43,4 @@ link_tools() {
     log_success "Tools linked successfully"
 }
 
-run_with_progress "Linking tools" true link_tools
+run_command "Linking tools" link_tools

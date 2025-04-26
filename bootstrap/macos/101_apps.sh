@@ -46,15 +46,15 @@ install_brew "terraformer"
 install_brew "terragrunt"
 
 log_h4 "Updating gcloud components"
-run_with_progress "Updating gcloud components" true gcloud components update --quiet
-run_with_progress "Installing gke-gcloud-auth-plugin" true gcloud components install gke-gcloud-auth-plugin --quiet
-run_with_progress "Installing gsutil" true gcloud components install gsutil --quiet
+run_command "Updating gcloud components" gcloud components update --quiet
+run_command "Installing gke-gcloud-auth-plugin" gcloud components install gke-gcloud-auth-plugin --quiet
+run_command "Installing gsutil" gcloud components install gsutil --quiet
 
 # Cloudflare
 log_h4 "Installing Cloudflare tools"
 install_brew "cloudflare-warp"
 install_brew "cloudflared"
-run_with_progress "Installing wrangler" true npm install -g wrangler
+run_command "Installing wrangler" npm install -g wrangler
 
 # Docker
 log_h4 "Installing Docker tools"
@@ -77,7 +77,7 @@ install_brew "jetbrains-toolbox"
 install_brew "visual-studio-code" "Visual Studio Code"
 install_brew "cursor"
 
-run_with_progress "Setting up VS Code CLI tools" true setup_vscode
+run_command "Setting up VS Code CLI tools" setup_vscode
 
 # design
 log_h4 "Installing design tools"

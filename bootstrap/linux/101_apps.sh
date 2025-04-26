@@ -9,6 +9,6 @@ install_package "vim"
 install_package "zsh"
 
 # MSIE - https://mise.jdx.dev/
-run_with_progress "Installing MSIE" true curl -fsSL https://mise.run | sh -s -- -y
+run_command "Installing MSIE" $(curl -fsSL https://mise.run | sh -s -- -y >/dev/null)
 
 log_success "Linux apps installed"

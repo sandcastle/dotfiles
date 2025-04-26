@@ -2,7 +2,7 @@
 
 # This file is called by install.sh; it symlinks dotfiles to the $HOME path
 
-DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Source functions
 source "$DOTFILES/bootstrap/_funcs.sh"
@@ -22,7 +22,7 @@ create_symlink() {
         # Check if it's already a symlink to our target
         if [[ -L "$dest" ]]; then
             local current_target=$(readlink "$dest")
-            
+
             if [[ "$current_target" == "$src" ]]; then
                 log_success "Already linked: $dest"
                 return 0
@@ -32,24 +32,31 @@ create_symlink() {
         else
             log_warning "Backing up existing file: $dest"
         fi
-        
+
         # Backup existing file or symlink
         if [[ "$use_sudo" == "true" ]]; then
             sudo cp -P "$dest" "$BACKUP_DIR/" 2>/dev/null || true
-            sudo rm -f "$dest"
+            # Try to remove, but don't fail if the file is busy
+            sudo rm -f "$dest" 2>/dev/null || {
+                log_warning "Cannot remove $dest - file is in use. Skipping..."
+                return 1
+            }
         else
             cp -P "$dest" "$BACKUP_DIR/" 2>/dev/null || true
-            rm -f "$dest"
+            rm -f "$dest" 2>/dev/null || {
+                log_warning "Cannot remove $dest - file is in use. Skipping..."
+                return 1
+            }
         fi
     fi
-    
+
     # Create new symlink
     if [[ "$use_sudo" == "true" ]]; then
         sudo ln -sf "$src" "$dest"
     else
         ln -sf "$src" "$dest"
     fi
-    
+
     # Verify symlink was created correctly
     if [[ -L "$dest" ]]; then
         local actual_target=$(readlink "$dest")
@@ -76,20 +83,20 @@ symlink_directory() {
     else
         mkdir -p "$dest_dir"
     fi
-    
+
     # Iterate over all files in source directory
     if [[ -d "$src_dir" ]]; then
         local file_count=0
-        
+
         # Enable dotglob to match hidden files
         shopt -s dotglob
-        
+
         for file in "$src_dir"/*; do
             # Skip . and .. directories
             if [[ "$(basename "$file")" == "." || "$(basename "$file")" == ".." ]]; then
                 continue
             fi
-            
+
             if [[ -f "$file" ]]; then
                 local filename=$(basename "$file")
                 local dest="$dest_dir/$filename"
@@ -97,7 +104,7 @@ symlink_directory() {
                 create_symlink "$file" "$dest" "$use_sudo"
             fi
         done
-        
+
         # Reset dotglob
         shopt -u dotglob
     else

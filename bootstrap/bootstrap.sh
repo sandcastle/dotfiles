@@ -56,16 +56,7 @@ esac
 
 log_h1 "Bootstrap $OS_TYPE"
 
-# Check if sudo requires a password or can run without it
-if ! sudo -n true 2>/dev/null; then
-    log_info "Requesting sudo access"
-    sudo -v
-    # Keep sudo alive
-    (while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null) &
-    SUDO_PID=$!
-    # Make sure to kill the sudo refresh process on exit
-    trap 'kill $SUDO_PID 2>/dev/null || true' EXIT
-fi
+require_sudo
 
 # Installation phases
 . "$SCRIPT_DIR/common/init.sh"

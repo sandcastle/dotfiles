@@ -6,12 +6,12 @@ FUNCS_SOURCED=1
 
 # Get current directory, works in both source and execution contexts
 if [[ -n "${BASH_SOURCE[0]}" ]]; then
-    SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+  SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 elif [[ -n "$0" ]]; then
-    SCRIPT_DIR="$( cd "$( dirname "$0" )" && pwd )"
-else 
-    echo "Error: Cannot determine script location" >&2
-    exit 1
+  SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+else
+  echo "Error: Cannot determine script location" >&2
+  exit 1
 fi
 
 # Load the config file using absolute path
@@ -23,14 +23,14 @@ fi
 # Optional second parameter controls whether to add a newline (defaults to true)
 # Output example: ➜ Information message
 log_info() {
-    local message="$1"
-    local newline=${2:-true}
+  local message="$1"
+  local newline=${2:-true}
 
-    if [ "$newline" = true ]; then
-        printf "\033[0;34m➜\033[0m %s\n" "$message"
-    else
-        printf "\033[0;34m➜\033[0m %s" "$message"
-    fi
+  if [ "$newline" = true ]; then
+    printf "\033[0;34m➜\033[0m %s\n" "$message"
+  else
+    printf "\033[0;34m➜\033[0m %s" "$message"
+  fi
 }
 
 # Usage: log_success "Success message" [true/false]
@@ -38,14 +38,14 @@ log_info() {
 # Optional second parameter controls whether to add a newline (defaults to true)
 # Output example: ✓ Success message
 log_success() {
-    local message="$1"
-    local newline=${2:-true}
+  local message="$1"
+  local newline=${2:-true}
 
-    if [ "$newline" = true ]; then
-        printf "\033[0;32m✓\033[0m %s\n" "$message"
-    else
-        printf "\033[0;32m✓\033[0m %s" "$message"
-    fi
+  if [ "$newline" = true ]; then
+    printf "\033[0;32m✓\033[0m %s\n" "$message"
+  else
+    printf "\033[0;32m✓\033[0m %s" "$message"
+  fi
 }
 
 # Usage: log_error "Error message" [true/false]
@@ -53,14 +53,14 @@ log_success() {
 # Optional second parameter controls whether to add a newline (defaults to true)
 # Output example: ✗ Error message
 log_error() {
-    local message="$1"
-    local newline=${2:-true}
+  local message="$1"
+  local newline=${2:-true}
 
-    if [ "$newline" = true ]; then
-        printf "\033[0;31m✗\033[0m %s\n" "$message" >&2
-    else
-        printf "\033[0;31m✗\033[0m %s" "$message" >&2
-    fi
+  if [ "$newline" = true ]; then
+    printf "\033[0;31m✗\033[0m %s\n" "$message" >&2
+  else
+    printf "\033[0;31m✗\033[0m %s" "$message" >&2
+  fi
 }
 
 # Usage: log_warning "Warning message" [true/false]
@@ -68,14 +68,14 @@ log_error() {
 # Optional second parameter controls whether to add a newline (defaults to true)
 # Output example: ! Warning message
 log_warning() {
-    local message="$1"
-    local newline=${2:-true}
+  local message="$1"
+  local newline=${2:-true}
 
-    if [ "$newline" = true ]; then
-        printf "\033[0;33m!\033[0m %s\n" "$message"
-    else
-        printf "\033[0;33m!\033[0m %s" "$message"
-    fi
+  if [ "$newline" = true ]; then
+    printf "\033[0;33m!\033[0m %s\n" "$message"
+  else
+    printf "\033[0;33m!\033[0m %s" "$message"
+  fi
 }
 
 # Usage: log_finished "Process completed" [true/false] ["Next step 1" "Next step 2" ...]
@@ -90,98 +90,41 @@ log_warning() {
 #    → Next step 2
 #
 log_finished() {
-    local message="$1"
-    local newline=true
-    local args=()
+  local message="$1"
+  local newline=true
+  local args=()
 
-    # Check if second argument is a boolean for newline control
-    if [ $# -gt 1 ] && { [ "$2" = true ] || [ "$2" = false ]; }; then
-        newline="$2"
-        shift 2  # Remove message and newline flag
-        args=("$@")  # Store remaining arguments
-    else
-        shift 1  # Remove only the message
-        args=("$@")  # Store remaining arguments
-    fi
+  # Check if second argument is a boolean for newline control
+  if [ $# -gt 1 ] && { [ "$2" = true ] || [ "$2" = false ]; }; then
+    newline="$2"
+    shift 2     # Remove message and newline flag
+    args=("$@") # Store remaining arguments
+  else
+    shift 1     # Remove only the message
+    args=("$@") # Store remaining arguments
+  fi
 
-    if [ "$newline" = true ]; then
-        printf "\033[0;36m✨\033[0m\033[1m%s\033[0m\n" "$message"
-    else
-        printf "\033[0;36m✨\033[0m\033[1m%s\033[0m" "$message"
-        return  # Early return if no newline desired (skipping next steps)
-    fi
+  if [ "$newline" = true ]; then
+    printf "\033[0;36m✨\033[0m\033[1m%s\033[0m\n" "$message"
+  else
+    printf "\033[0;36m✨\033[0m\033[1m%s\033[0m" "$message"
+    return # Early return if no newline desired (skipping next steps)
+  fi
 
-    # Check if there are additional arguments for next steps/considerations
-    if [ ${#args[@]} -gt 0 ]; then
-        echo ""
+  # Check if there are additional arguments for next steps/considerations
+  if [ ${#args[@]} -gt 0 ]; then
+    echo ""
 
-        # Iterate through each of the remaining arguments
-        for item in "${args[@]}"; do
-            printf "  \033[0;36m→\033[0m %s\n" "$item"
-        done
-    fi
+    # Iterate through each of the remaining arguments
+    for item in "${args[@]}"; do
+      printf "  \033[0;36m→\033[0m %s\n" "$item"
+    done
+  fi
 
-    echo ""  # Add blank line after completed message for better readability
-}
-
-# Usage: run_with_progress "Message to display" [show_output] command [args...]
-# Executes a command while showing a progress indicator
-# First argument is the message to display during execution
-# All remaining arguments form the command to be executed
-# Returns the exit code of the executed command
-# Captures and displays the command output below the progress message
-# Cleans up all output when complete, leaving only a success message
-# If the command fails, shows an error message and the last 20 lines of output
-# Output example: ⠋ Message to display (with spinning animation)
-#                 [command output appears here]
-# When complete: ✓ Message to display
-# When failed:   ✗ Message to display (failed)
-#                [last 20 lines of command output]
-run_with_progress() {
-    local message=$1
-    local show_output=true  # Default to showing output
-    
-    # Check if the second argument is a boolean for output control
-    if [ $# -gt 1 ] && { [ "$2" = true ] || [ "$2" = false ]; }; then
-        show_output="$2"
-        shift 2  # Remove the message and show_output flag
-    else
-        shift 1  # Remove only the message
-    fi
-
-    # Create a temporary file to store command output
-    local temp_file
-    temp_file=$(mktemp)
-
-    # Execute the command in the background, redirecting output to the temp file
-    "$@" > "$temp_file" 2>&1 &
-    local pid=$!
-
-    # Show progress and output while the command is running
-    show_progress "$message" $pid "$temp_file" "$show_output"
-
-    # Wait for the command to finish and capture its exit code
-    wait $pid
-    local exit_code=$?
-
-    # If the command failed, display an error and the last 20 lines of output
-    if [ $exit_code -ne 0 ]; then
-        log_error "${message} (failed)"
-        echo ""
-        echo "Last 20 lines of output:"
-        echo "------------------------"
-        tail -n 20 "$temp_file" | sed 's/^/    /'
-        echo ""
-    fi
-
-    # Clean up temporary file
-    rm -f "$temp_file"
-
-    return $exit_code
+  echo "" # Add blank line after completed message for better readability
 }
 
 # Usage: show_progress "Message to display" process_pid output_file [show_output]
-# Internal function used by run_with_progress
 # Displays an animated spinner next to the message while the process is running
 # Shows the command output below the progress message, updating in real-time
 # Cleans up all displayed output when the process completes
@@ -190,72 +133,103 @@ run_with_progress() {
 #                 [command output appears here]
 # When complete: ✓ Message to display
 show_progress() {
-    local message=$1
-    local pid=$2
-    local output_file=$3
-    local show_output=${4:-true}  # Default to showing output
-    local delay=0.2  # Increased delay for smoother animation
-    local spinstr='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
-    local i=0
-    local prev_output=""
-    local last_lines=""
-    local lines_displayed=0
-    local output_changed=false
-    local first_run=true
+  local message=$1
+  local pid=$2
+  local output_file=$3
+  local show_output=${4:-true} # Default to showing output
+  local delay=0.2              # Increased delay for smoother animation
+  local spinstr='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
+  local i=0
+  local prev_output=""
+  local last_lines=""
+  local lines_displayed=0
+  local output_changed=false
+  local first_run=true
 
-    # Function to clear previously displayed output lines
-    clear_previous_output() {
-        if [ $lines_displayed -gt 0 ]; then
-            # Move up 'lines_displayed' lines and clear to the end of screen
-            printf "\033[%dA\033[J" "$lines_displayed"
-            lines_displayed=0
+  # Function to clear previously displayed output lines
+  clear_previous_output() {
+    if [ $lines_displayed -gt 0 ]; then
+      # Move up 'lines_displayed' lines and clear to the end of screen
+      printf "\033[%dA\033[J" "$lines_displayed"
+      lines_displayed=0
+    fi
+  }
+
+  while kill -0 $pid 2>/dev/null; do
+    local current_char=${spinstr:$i:1}
+    i=$(((i + 1) % ${#spinstr}))
+
+    # Print progress spinner and message
+    printf "\r\033[0;34m%s\033[0m %s" "${current_char}" "${message}"
+
+    # Check for new output (only if show_output is true)
+    if [ "$show_output" = true ]; then
+      output_changed=false
+      if [ -f "$output_file" ]; then
+        # Display up to 10 most recent lines from the file
+        last_lines=$(tail -n 10 "$output_file" 2>/dev/null)
+
+        # Only update display if output has changed or this is the first run
+        if [ "$last_lines" != "$prev_output" ] || [ "$first_run" = true ]; then
+          output_changed=true
+          prev_output="$last_lines"
+          first_run=false
         fi
-    }
+      fi
 
-    while kill -0 $pid 2>/dev/null; do
-        local current_char=${spinstr:$i:1}
-        i=$(( (i+1) % ${#spinstr} ))
+      # Only redraw if the output has changed
+      if [ "$output_changed" = true ] && [ -n "$last_lines" ]; then
+        # Clear previous output
+        clear_previous_output
 
-        # Print progress spinner and message
-        printf "\r\033[0;34m%s\033[0m %s" "${current_char}" "${message}"
+        # Count how many lines we're displaying
+        lines_displayed=$(echo "$last_lines" | wc -l)
 
-        # Check for new output (only if show_output is true)
-        if [ "$show_output" = true ]; then
-            output_changed=false
-            if [ -f "$output_file" ]; then
-                # Display up to 10 most recent lines from the file
-                last_lines=$(tail -n 10 "$output_file" 2>/dev/null)
+        # Print the output indented
+        printf "\n%s" "$(echo "$last_lines" | sed 's/^/    /')"
+      fi
+    fi
 
-                # Only update display if output has changed or this is the first run
-                if [ "$last_lines" != "$prev_output" ] || [ "$first_run" = true ]; then
-                    output_changed=true
-                    prev_output="$last_lines"
-                    first_run=false
-                fi
-            fi
+    sleep $delay
+  done
 
-            # Only redraw if the output has changed
-            if [ "$output_changed" = true ] && [ -n "$last_lines" ]; then
-                # Clear previous output
-                clear_previous_output
+  # Clear spinner line and all output lines
+  printf "\r\033[K"     # Clear the current line (spinner)
+  clear_previous_output # Clear all output lines
 
-                # Count how many lines we're displaying
-                lines_displayed=$(echo "$last_lines" | wc -l)
+  # Call log_success with true for newline to ensure it appears on a new line
+  log_success "${message}"
+}
 
-                # Print the output indented
-                printf "\n%s" "$(echo "$last_lines" | sed 's/^/    /')"
-            fi
-        fi
 
-        sleep $delay
-    done
+# 🚀 Run command with progress indicator and success/failure feedback
+run_command() {
+  message=$1
+  shift 1
+  show_output=${1:-true}
+  cmd="$@"
+  tmp_out=$(mktemp)
 
-    # Clear spinner line and all output lines
-    printf "\r\033[K"  # Clear the current line (spinner)
-    clear_previous_output  # Clear all output lines
+  # Run command in background
+  (eval "$cmd") >"$tmp_out" 2>&1 &
+  cmd_pid=$!
 
-    # Call log_success with true for newline to ensure it appears on a new line
-    log_success "${message}"
+  # Show animated progress
+  show_progress "$message" "$cmd_pid" "$tmp_out"
+
+  # Wait for the command to finish
+  wait "$cmd_pid"
+  result=$?
+
+  if [ $result -ne 0 ]; then
+    log_failure "$message (exit code $result)"
+    echo "---- Output ----"
+    cat "$tmp_out"
+    echo "---- /Output ----"
+  fi
+
+  rm -f "$tmp_out"
+  return $result
 }
 
 # Usage: log_h1 level "Heading text" [true/false]
@@ -269,17 +243,17 @@ show_progress() {
 #   log_h1 3 "Tertiary Heading"   # Calls log_h3
 #   log_h1 4 "Quaternary Heading" # Calls log_h4
 log_h1() {
-    local level="$1"
-    local heading="$2"
-    local newline=${3:-true}
+  local level="$1"
+  local heading="$2"
+  local newline=${3:-true}
 
-    case "$level" in
-        1) log_h1 "$heading" "$newline" ;;
-        2) log_h2 "$heading" "$newline" ;;
-        3) log_h3 "$heading" "$newline" ;;
-        4) log_h4 "$heading" "$newline" ;;
-        *) log_error "Invalid heading level: $level. Use 1-4." ;;
-    esac
+  case "$level" in
+  1) log_h1 "$heading" "$newline" ;;
+  2) log_h2 "$heading" "$newline" ;;
+  3) log_h3 "$heading" "$newline" ;;
+  4) log_h4 "$heading" "$newline" ;;
+  *) log_error "Invalid heading level: $level. Use 1-4." ;;
+  esac
 }
 
 # Usage: log_h1 "Primary Heading" [true/false]
@@ -291,22 +265,22 @@ log_h1() {
 #   PRIMARY HEADING
 # ═════════════════════════════════════
 log_h1() {
-    local heading="${1:-}"
-    local newline=${2:-true}
-    local line="═════════════════════════════════════"
-    local uppercase_heading
+  local heading="${1:-}"
+  local newline=${2:-true}
+  local line="═════════════════════════════════════"
+  local uppercase_heading
 
-    # Cross-platform uppercase conversion
-    uppercase_heading=$(echo "$heading" | awk '{print toupper($0)}')
+  # Cross-platform uppercase conversion
+  uppercase_heading=$(echo "$heading" | awk '{print toupper($0)}')
 
+  echo
+  printf "\033[1;34m%s\033[0m\n" "$line"
+  printf "\033[1;34m%s\033[0m\n" "$uppercase_heading"
+  printf "\033[1;34m%s\033[0m\n" "$line"
+
+  if [ "$newline" = true ]; then
     echo
-    printf "\033[1;34m%s\033[0m\n" "$line"
-    printf "\033[1;34m%s\033[0m\n" "$uppercase_heading"
-    printf "\033[1;34m%s\033[0m\n" "$line"
-
-    if [ "$newline" = true ]; then
-        echo
-    fi
+  fi
 }
 
 # Usage: log_h2 "Secondary Heading" [true/false]
@@ -316,15 +290,15 @@ log_h1() {
 #
 # ❯❯ Secondary Heading
 log_h2() {
-    local heading="${1:-}"
-    local newline=${2:-true}
+  local heading="${1:-}"
+  local newline=${2:-true}
 
-    echo ""  # Add blank line before heading
-    if [ "$newline" = true ]; then
-        printf "\033[1;33m❯❯\033[0m \033[1m%s\033[0m\n" "$heading"
-    else
-        printf "\033[1;33m❯❯\033[0m \033[1m%s\033[0m" "$heading"
-    fi
+  echo "" # Add blank line before heading
+  if [ "$newline" = true ]; then
+    printf "\033[1;33m❯❯\033[0m \033[1m%s\033[0m\n" "$heading"
+  else
+    printf "\033[1;33m❯❯\033[0m \033[1m%s\033[0m" "$heading"
+  fi
 }
 
 # Usage: log_h3 "Tertiary Heading" [true/false]
@@ -334,15 +308,15 @@ log_h2() {
 #
 # ❯ Tertiary Heading
 log_h3() {
-    local heading="${1:-}"
-    local newline=${2:-true}
+  local heading="${1:-}"
+  local newline=${2:-true}
 
-    echo ""  # Add blank line before heading
-    if [ "$newline" = true ]; then
-        printf "\033[1;33m❯\033[0m \033[1m%s\033[0m\n" "$heading"
-    else
-        printf "\033[1;33m❯\033[0m \033[1m%s\033[0m" "$heading"
-    fi
+  echo "" # Add blank line before heading
+  if [ "$newline" = true ]; then
+    printf "\033[1;33m❯\033[0m \033[1m%s\033[0m\n" "$heading"
+  else
+    printf "\033[1;33m❯\033[0m \033[1m%s\033[0m" "$heading"
+  fi
 }
 
 # Usage: log_h4 "Quaternary Heading" [true/false]
@@ -352,15 +326,15 @@ log_h3() {
 #
 # Quaternary Heading
 log_h4() {
-    local heading="${1:-}"
-    local newline=${2:-true}
+  local heading="${1:-}"
+  local newline=${2:-true}
 
-    echo ""  # Add blank line before heading
-    if [ "$newline" = true ]; then
-        printf "\033[0;1m%s\033[0m\n" "$heading"
-    else
-        printf "\033[0;1m%s\033[0m" "$heading"
-    fi
+  echo "" # Add blank line before heading
+  if [ "$newline" = true ]; then
+    printf "\033[0;1m%s\033[0m\n" "$heading"
+  else
+    printf "\033[0;1m%s\033[0m" "$heading"
+  fi
 }
 
 # Usage: program_exists "command_name"
@@ -372,7 +346,7 @@ log_h4() {
 #     echo "Git is installed"
 #   fi
 program_exists() {
-    command -v "$1" >/dev/null 2>&1
+  command -v "$1" >/dev/null 2>&1
 }
 
 # OS detection functions
@@ -385,7 +359,7 @@ program_exists() {
 #     echo "This is running on macOS"
 #   fi
 is_macos() {
-    [[ "$(uname)" == "Darwin" ]]
+  [[ "$(uname)" == "Darwin" ]]
 }
 
 # Usage: if is_linux; then ... fi
@@ -396,104 +370,104 @@ is_macos() {
 #     echo "This is running on Linux"
 #   fi
 is_linux() {
-    [[ "$(uname)" == "Linux" ]]
+  [[ "$(uname)" == "Linux" ]]
 }
 
 # Function to install any brew package (auto-detects if it's a cask)
 install_brew() {
-    run_with_progress "Installing $1" false _install_brew "$@"
+  run_command "Installing $1" _install_brew "$@"
 }
 
 # Function to install any brew package (auto-detects if it's a cask)
 _install_brew() {
-    local package=$1
-    local name=${2:-$1}
-    local is_cask=${3:-""}
-    
-    log_info "Installing $name..."
-    
-    # Check if already installed
-    if program_exists "$name"; then
-        log_success "$name is already installed"
+  local package=$1
+  local name=${2:-$1}
+  local is_cask=${3:-""}
+
+  log_info "Installing $name..."
+
+  # Check if already installed
+  if program_exists "$name"; then
+    log_success "$name is already installed"
+    return 0
+  fi
+
+  # Check for macOS applications and Homebrew packages
+  if is_macos; then
+    # Check for .app bundles
+    if [ -d "/Applications/${name}.app" ] || [ -d "$HOME/Applications/${name}.app" ]; then
+      log_success "$name is already installed"
+      return 0
+    fi
+
+    # Check if already installed via Homebrew
+    if [[ "$is_cask" == "--cask" ]]; then
+      if brew list --cask "$package" &>/dev/null; then
+        log_success "$name is already installed via Homebrew Cask"
         return 0
-    fi
-    
-    # Check for macOS applications and Homebrew packages
-    if is_macos; then
-        # Check for .app bundles
-        if [ -d "/Applications/${name}.app" ] || [ -d "$HOME/Applications/${name}.app" ]; then
-            log_success "$name is already installed"
-            return 0
-        fi
-        
-        # Check if already installed via Homebrew
-        if [[ "$is_cask" == "--cask" ]]; then
-            if brew list --cask "$package" &>/dev/null; then
-                log_success "$name is already installed via Homebrew Cask"
-                return 0
-            fi
-        else
-            if brew list "$package" &>/dev/null; then
-                log_success "$name is already installed via Homebrew"
-                return 0
-            fi
-        fi
-    fi
-    
-    # Install with progress indicator
-    if [[ "$is_cask" == "--cask" ]]; then
-        (brew install --cask "$package" > /tmp/brew.log 2>&1) &
+      fi
     else
-        (brew install "$package" > /tmp/brew.log 2>&1) &
+      if brew list "$package" &>/dev/null; then
+        log_success "$name is already installed via Homebrew"
+        return 0
+      fi
     fi
-    
-    show_progress "Installing $name" $!
-    
-    # Verify installation
-    if [[ "$is_cask" == "--cask" ]]; then
-        # For casks, check if the application exists in /Applications or ~/Applications
-        if [ ! -d "/Applications/${name}.app" ] && [ ! -d "$HOME/Applications/${name}.app" ]; then
-            if ! brew list --cask "$package" &>/dev/null; then
-                log_error "Failed to install $name"
-                cat /tmp/brew.log
-                return 1
-            fi
-        fi
-    else
-        # For regular brew packages, check if the command exists
-        if ! program_exists "$name"; then
-            if ! brew list "$package" &>/dev/null; then
-                log_error "Failed to install $name"
-                cat /tmp/brew.log
-                return 1
-            fi
-        fi
+  fi
+
+  # Install with progress indicator
+  if [[ "$is_cask" == "--cask" ]]; then
+    (brew install --cask "$package" >/tmp/brew.log 2>&1) &
+  else
+    (brew install "$package" >/tmp/brew.log 2>&1) &
+  fi
+
+  show_progress "Installing $name" $!
+
+  # Verify installation
+  if [[ "$is_cask" == "--cask" ]]; then
+    # For casks, check if the application exists in /Applications or ~/Applications
+    if [ ! -d "/Applications/${name}.app" ] && [ ! -d "$HOME/Applications/${name}.app" ]; then
+      if ! brew list --cask "$package" &>/dev/null; then
+        log_error "Failed to install $name"
+        cat /tmp/brew.log
+        return 1
+      fi
     fi
-    
-    log_success "$name installed successfully"
+  else
+    # For regular brew packages, check if the command exists
+    if ! program_exists "$name"; then
+      if ! brew list "$package" &>/dev/null; then
+        log_error "Failed to install $name"
+        cat /tmp/brew.log
+        return 1
+      fi
+    fi
+  fi
+
+  log_success "$name installed successfully"
 }
 
 # Usage: check_system
 # Checks if the system meets minimum requirements for memory and disk space
 # Displays warnings if the system does not meet the recommended specifications
-# Output example: 
+# Output example:
 #   ! Low memory detected: 6GB (recommended: 8GB)
 #   ! Low disk space: 15GB available (recommended: 20GB)
 check_system() {
-    local min_memory=8 # GB
-    local min_disk=20  # GB
-    
-    # Check memory
-    local memory=$(sysctl hw.memsize | awk '{print $2 / 1024^3}')
-    if (( $(echo "$memory < $min_memory" | bc -l) )); then
-        log_warning "Low memory detected: ${memory}GB (recommended: ${min_memory}GB)"
-    fi
-    
-    # Check disk space
-    local disk=$(df -h / | awk 'NR==2 {print $4}' | sed 's/G//')
-    if (( $(echo "$disk < $min_disk" | bc -l) )); then
-        log_warning "Low disk space: ${disk}GB available (recommended: ${min_disk}GB)"
-    fi
+  local min_memory=8 # GB
+  local min_disk=20  # GB
+
+  # Check memory
+  local memory=$(sysctl hw.memsize | awk '{print $2 / 1024^3}')
+  if (($(echo "$memory < $min_memory" | bc -l))); then
+    log_warning "Low memory detected: ${memory}GB (recommended: ${min_memory}GB)"
+  fi
+
+  # Check disk space
+  local disk=$(df -h / | awk 'NR==2 {print $4}' | sed 's/G//')
+  if (($(echo "$disk < $min_disk" | bc -l))); then
+    log_warning "Low disk space: ${disk}GB available (recommended: ${min_disk}GB)"
+  fi
 }
 
 # Usage: backup_file "/path/to/file"
@@ -501,33 +475,56 @@ check_system() {
 # Will only attempt to backup if the file exists
 # Output example: ➜ Backing up /path/to/file to /path/to/backup/file
 backup_file() {
-    local file=$1
-    if [[ -e "$file" ]]; then
-        local backup="$BACKUP_DIR/$(basename "$file")"
-        log_info "Backing up $file to $backup"
-        mv "$file" "$backup"
-    fi
+  local file=$1
+  if [[ -e "$file" ]]; then
+    local backup="$BACKUP_DIR/$(basename "$file")"
+    log_info "Backing up $file to $backup"
+    mv "$file" "$backup"
+  fi
+}
+
+# Usage: require_sudo ["Prompt message"]
+# Ensures sudo credentials are active, prompting if necessary.
+# Use before operations that will require sudo non-interactively.
+require_sudo() {
+  # Check if we are already root
+  if [[ $EUID -eq 0 ]]; then
+    # log_info "Already running as root." # Optional: uncomment if needed
+    return 0
+  fi
+
+  # Check if sudo requires a password or can run without it
+  if ! sudo -n true 2>/dev/null; then
+    log_info "Requesting sudo access"
+    sudo -v
+    # Keep sudo alive
+    (while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null) &
+    SUDO_PID=$!
+    # Make sure to kill the sudo refresh process on exit
+    trap 'echo "sudo keep alive cleaned up"; kill $SUDO_PID 2>/dev/null || true' EXIT
+  fi
 }
 
 ensure_package_managers_updated() {
-    run_with_progress "Updating package managers" false _ensure_package_managers_updated
-}
-
-_ensure_package_managers_updated() {
   if command -v brew >/dev/null 2>&1; then
-    brew update
+    brew update >/dev/null 2>&1
+    log_success "Brew updated"
   fi
   if command -v snap >/dev/null 2>&1; then
-    sudo snap refresh
+    sudo snap refresh >/dev/null 2>&1
+    log_success "Snap refreshed"
   fi
   if command -v apt-get >/dev/null 2>&1; then
-    sudo apt-get update -y
+    sudo apt-get update -y >/dev/null 2>&1
+    log_success "Apt-get updated"
   fi
   if command -v dnf >/dev/null 2>&1; then
-    sudo dnf update -y
+    sudo dnf update -y >/dev/null 2>&1
+    log_success "Dnf updated"
   fi
   if command -v pacman >/dev/null 2>&1; then
-    sudo pacman -Syu --noconfirm
+    sudo pacman -Syu --noconfirm >/dev/null 2>&1
+    log_success "Pacman updated"
   fi
 }
 
@@ -535,57 +532,43 @@ _ensure_package_managers_updated() {
 # Installs a package using the system's available package manager
 # Supports Homebrew, apt-get, and dnf
 # Returns 0 on success, 1 on failure
-# Output example: 
+# Output example:
 #   ➜ Installing git...
 #   ✓ Package git is already installed
 install_package() {
-    run_with_progress "Installing $1" false _install_package "$@"
-}
-
-_install_package() {
   local package_name="$1"
 
-  # Homebrew handles updates gracefully during install.
+  # Homebrew
   if command -v brew >/dev/null 2>&1; then
-    if brew install "$package_name"; then
-      return 0
-    fi
+    run_command "Installing $package_name" brew install "$package_name"
+    return 0
   fi
 
-  # Snap: try refresh first (updates if installed), then install.
+  # Snap
   if command -v snap >/dev/null 2>&1; then
-    if sudo snap refresh "$package_name"; then
-      return 0 # Already installed and up-to-date
-    else
-      # If refresh failed (maybe not installed), try installing
-      if sudo snap install "$package_name"; then
-        return 0 # Installed successfully
-      fi
-    fi
+    run_command "Installing $package_name" sudo snap install "$package_name"
+    return 0
   fi
 
   # apt-get install -y handles both install and update.
   if command -v apt-get >/dev/null 2>&1; then
-    if sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "$package_name"; then
-      return 0
-    fi
+    run_command "Installing $package_name" DEBIAN_FRONTEND=noninteractive sudo apt-get install -y "$package_name"
+    return 0
   fi
 
-  # dnf install -y handles both install and update.
+  # dnf
   if command -v dnf >/dev/null 2>&1; then
-    if sudo dnf install -y "$package_name"; then
-      return 0
-    fi
+    run_command "Installing $package_name" sudo dnf install -y "$package_name"
+    return 0
   fi
 
   # pacman -S --noconfirm handles both install and update.
-  if command -v pacman >/dev/null; then
-    if sudo pacman -S --noconfirm "$package_name"; then
-      return 0
-    fi
+  if command -v pacman >/dev/null 2>&1; then # Correct check: `pacman >/dev/null` not `pacman >/dev/null;`
+    run_command "Installing $package_name" false sudo pacman -S --noconfirm "$package_name"
+    return 0
   fi
 
-  log_error "No supported package manager found for installing ${package_name}"
+  log_error "No supported package manager found or installation failed for ${package_name}"
   return 1
 }
 
@@ -596,19 +579,40 @@ _install_package() {
 #   ➜ Setting up VS Code CLI tools
 #   ✓ VS Code CLI tools installed successfully
 setup_vscode() {
-  if [ -d "/Applications/Visual Studio Code.app" ]; then
+  if is_macos && [ -d "/Applications/Visual Studio Code.app" ]; then
     log_info "Setting up VS Code CLI tools"
-    # Install command line tools via VS Code
-    "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" --install-extension ms-vscode.cpptools
+    local code_cmd="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
+    # Install command line tools via VS Code - these usually don't need sudo
+    "$code_cmd" --install-extension ms-vscode.cpptools # Example extension
 
     # Create symbolic link if it doesn't exist
     if [ ! -f "/usr/local/bin/code" ]; then
-        sudo ln -s "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" "/usr/local/bin/code"
+      log_info "Creating symbolic link for 'code' command..."
+      # Ensure sudo is available before attempting the link
+      require_sudo "Creating 'code' symlink requires administrator privileges." || return 1
+      # Try with sudo directly, as require_sudo ensured timestamp is active
+      sudo ln -s "$code_cmd" "/usr/local/bin/code"
+
+      # Verify link creation
+      if [ -f "/usr/local/bin/code" ]; then
+        log_success "Symbolic link for 'code' created successfully."
+      else
+        log_error "Failed to create symbolic link for 'code'."
+        # Don't necessarily return 1 here, VS Code might still work
+        # Let the user know it failed.
+      fi
+    else
+      log_info "'code' command symbolic link already exists."
     fi
-    
-    log_success "VS Code CLI tools installed successfully"
+
+    log_success "VS Code setup completed."
+  elif is_linux && command -v code >/dev/null 2>&1; then
+    log_info "VS Code seems to be installed via package manager (Linux)."
+    # Add any Linux-specific VSCode setup if needed, e.g., installing extensions
+    code --install-extension ms-vscode.cpptools # Example
+    log_success "VS Code setup completed (Linux)."
   else
-    log_warning "VS Code not found. Please install it first."
+    log_warning "VS Code application not found. Please install it manually."
   fi
 }
 
@@ -623,17 +627,17 @@ setup_vscode() {
 #     - Function: main setup_environment
 #   Exit code: 1
 error_handler() {
-    local exit_code=$1
-    local line_no=$2
-    local bash_lineno=$3
-    local last_command=$4
-    local func_stack=$5
+  local exit_code=$1
+  local line_no=$2
+  local bash_lineno=$3
+  local last_command=$4
+  local func_stack=$5
 
-    echo "Error occurred in:"
-    echo "  - Command: $last_command"
-    echo "  - Line: $line_no"
-    echo "  - Function: $func_stack"
-    echo "Exit code: $exit_code"
+  echo "Error occurred in:"
+  echo "  - Command: $last_command"
+  echo "  - Line: $line_no"
+  echo "  - Function: $func_stack"
+  echo "Exit code: $exit_code"
 }
 
 # Usage: prompt_user "Enter your name" USERNAME "default_value"
@@ -641,21 +645,21 @@ error_handler() {
 # First parameter is the prompt text
 # Second parameter is the variable name to store the result in
 # Third parameter (optional) is the default value if user provides no input
-# Output example: Enter your name [default_value]: 
+# Output example: Enter your name [default_value]:
 prompt_user() {
-    local prompt=$1
-    local variable=$2
-    local default=${3:-""}
-    
-    # Use indirect reference with default empty string if variable doesn't exist
-    local current_value=""
-    if [ -n "${!variable+x}" ]; then
-        current_value="${!variable}"
-    fi
-    
-    if [[ -z "$current_value" ]]; then
-        read -rp "$prompt [${default}]: " value
-        value=${value:-$default}
-        printf -v "$variable" "%s" "$value"
-    fi
+  local prompt=$1
+  local variable=$2
+  local default=${3:-""}
+
+  # Use indirect reference with default empty string if variable doesn't exist
+  local current_value=""
+  if [ -n "${!variable+x}" ]; then
+    current_value="${!variable}"
+  fi
+
+  if [[ -z "$current_value" ]]; then
+    read -rp "$prompt [${default}]: " value
+    value=${value:-$default}
+    printf -v "$variable" "%s" "$value"
+  fi
 }

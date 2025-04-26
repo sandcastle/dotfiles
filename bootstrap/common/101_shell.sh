@@ -18,9 +18,9 @@ if [[ "$SHELL" != *"zsh"* ]]; then
     # Add ZSH to /etc/shells if not already present
     grep -q "$ZSH_PATH" /etc/shells || echo "$ZSH_PATH" | sudo tee -a /etc/shells >/dev/null
     # Change shell
-    sudo chsh -s "$ZSH_PATH"
+    sudo chsh -s "$ZSH_PATH" "$USER"
     log_success "ZSH set as default shell"
 fi
 
-run_with_progress "Installing Starship" true curl -sS https://starship.rs/install.sh | sudo sh -s -- -y
-run_with_progress "Installing Zi" true curl -fsSL get.zshell.dev | sudo sh -s -- -i skip -a annex
+run_command "Installing Starship" $(curl -sS https://starship.rs/install.sh | sh -s -- -y >/dev/null)
+run_command "Installing Zi" $(curl -fsSL https://git.io/zi-install | bash -s -- --yes -i skip -a annex >/dev/null)
