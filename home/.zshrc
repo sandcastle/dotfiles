@@ -154,7 +154,7 @@ zi wait lucid for \
     atload". $DOTFILES/lang/go/env.sh" \
     OMZP::golang \
   has"node" \
-    atload". $DOTFILES/lang/js/env.sh" \
+    atload". $DOTFILES/lang/node/env.sh" \
     OMZP::node \
   has"yarn" \
     OMZP::yarn \

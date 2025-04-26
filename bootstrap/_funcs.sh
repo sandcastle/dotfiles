@@ -387,7 +387,7 @@ _install_brew() {
   local name=${2:-$1}
   local is_cask=${3:-""}
 
-  log_info "Installing $name..."
+  log_info "Installing $name"
 
   # Check if already installed
   if program_exists "$name"; then
@@ -660,7 +660,7 @@ install_package() {
     [ "$debug" = true ] && echo "Couldnt find $check after installing $package_name with pacman"
   fi
 
-  log_error "No supported package manager found or installation failed for ${package_name}"
+  log_error "Couldnt install ${package_name}"
 }
 
 # Usage: setup_vscode
@@ -741,16 +741,66 @@ prompt_user() {
   local prompt=$1
   local variable=$2
   local default=${3:-""}
-
-  # Use indirect reference with default empty string if variable doesn't exist
   local current_value=""
-  if [ -n "${!variable+x}" ]; then
-    current_value="${!variable}"
+  eval "current_value=\"\${$variable:-}\""
+
+  # Print the prompt
+  printf "%s [%s]: " "$prompt" "$default"
+
+  # Check if stdin is a terminal
+  if [ -t 0 ]; then
+    # Interactive mode
+    read -r value
+  else
+    # Non-interactive mode (being piped)
+    value=""
+    echo "" # Add a newline for better formatting
   fi
 
-  if [[ -z "$current_value" ]]; then
-    read -rp "$prompt [${default}]: " value
-    value=${value:-$default}
-    printf -v "$variable" "%s" "$value"
+  value=${value:-$default}
+  eval "$variable=\"\$value\""
+
+  # If in non-interactive mode, show what was selected
+  if [ ! -t 0 ]; then
+    echo "Using default: $value"
+  fi
+}
+
+get_computer_name() {
+  if is_macos; then
+    # macOS specific
+    COMPUTER_NAME="$(scutil --get ComputerName 2>/dev/null || hostname)"
+  else
+    # Linux/other OS
+    COMPUTER_NAME="$(hostname)"
+  fi
+}
+
+set_computer_name() {
+  local computer_name="$1"
+
+  if [[ -z "$computer_name" ]]; then
+    log_error "Computer name is required"
+    return 1
+  fi
+
+  if is_macos; then
+    local current_name=$(scutil --get ComputerName)
+    if [[ "$current_name" != "$computer_name" ]]; then
+      log_success "Setting computer name to: $computer_name"
+      sudo scutil --set ComputerName "$computer_name"
+      sudo scutil --set HostName "$computer_name"
+      sudo scutil --set LocalHostName "$computer_name"
+      sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$COMPUTER_NAME"
+    else
+      log_success "Computer name is already set to: $computer_name"
+    fi
+  else
+    if [[ "$(hostname)" != "$computer_name" ]]; then
+      log_success "Setting computer name to: $computer_name"
+      sudo hostname "$computer_name"
+    else
+      log_success "Computer name is already set to: $computer_name"
+    fi
   fi
 }

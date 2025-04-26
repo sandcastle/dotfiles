@@ -1,28 +1,28 @@
 #!/usr/bin/env bash
-set -e && ( set -o pipefail; ) 2>/dev/null || true
+set -e && (set -o pipefail) 2>/dev/null || true
 
 # Enhanced error handler
 error_handler() {
-    local line="$1"
-    local command="$2"
-    local code="${3:-1}"
-    local script="$(basename "$0")"
+  local line="$1"
+  local command="$2"
+  local code="${3:-1}"
+  local script="$(basename "$0")"
 
-    echo
-    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    echo "Error in $script at line $line"
-    echo "Command: $command"
-    echo "Exit code: $code"
-    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "Error in $script at line $line"
+  echo "Command: $command"
+  echo "Exit code: $code"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-    exit "$code"
+  exit "$code"
 }
 
 # Set up traps for different signals
 if [ -n "$BASH_VERSION" ]; then
-    trap 'error_handler $LINENO "$BASH_COMMAND" $?' ERR
+  trap 'error_handler $LINENO "$BASH_COMMAND" $?' ERR
 else
-    trap 'error_handler $LINENO "command" $?' ERR
+  trap 'error_handler $LINENO "command" $?' ERR
 fi
 
 # Handle interrupts and termination
@@ -35,14 +35,14 @@ text() {
   # Process all style arguments
   while [[ $# -gt 0 && "$1" =~ ^[a-z]+$ ]]; do
     case "$1" in
-      bold) format="${format}\033[1m" ;;
-      red) format="${format}\033[31m" ;;
-      green) format="${format}\033[32m" ;;
-      yellow) format="${format}\033[33m" ;;
-      blue) format="${format}\033[34m" ;;
-      magenta) format="${format}\033[35m" ;;
-      cyan) format="${format}\033[36m" ;;
-      *) break ;;
+    bold) format="${format}\033[1m" ;;
+    red) format="${format}\033[31m" ;;
+    green) format="${format}\033[32m" ;;
+    yellow) format="${format}\033[33m" ;;
+    blue) format="${format}\033[34m" ;;
+    magenta) format="${format}\033[35m" ;;
+    cyan) format="${format}\033[36m" ;;
+    *) break ;;
     esac
     shift
   done
@@ -63,12 +63,12 @@ error_handler() {
 trap 'error_handler $LINENO' ERR
 
 # Initial setup
-echo "$(text cyan    " _____        _    __ _ _            ")"
+echo "$(text cyan " _____        _    __ _ _            ")"
 echo "$(text magenta "|  __ \      | |  / _(_) |           ")"
-echo "$(text blue    "| |  | | ___ | |_| |_ _| | ___  ___  ")"
-echo "$(text yellow  "| |  | |/ _ \| __| _| | |/ _ \/ __|  ")"
-echo "$(text green   "| |__| | (_) | |_| | | | |  __/\__ \ ")"
-echo "$(text red     "|_____/ \___/ \__|_| |_|_|\___||___/ ")"
+echo "$(text blue "| |  | | ___ | |_| |_ _| | ___  ___  ")"
+echo "$(text yellow "| |  | |/ _ \| __| _| | |/ _ \/ __|  ")"
+echo "$(text green "| |__| | (_) | |_| | | | |  __/\__ \ ")"
+echo "$(text red "|_____/ \___/ \__|_| |_|_|\___||___/ ")"
 echo ""
 echo "$(text bold "$(text yellow "Welcome to the dotfiles installer!")")"
 echo "→ This will set up your system with a complete development environment."
@@ -97,12 +97,12 @@ prompt_user() {
 
   # Check if stdin is a terminal
   if [ -t 0 ]; then
-      # Interactive mode
-      read -r value
+    # Interactive mode
+    read -r value
   else
-      # Non-interactive mode (being piped)
-      value=""
-      echo ""  # Add a newline for better formatting
+    # Non-interactive mode (being piped)
+    value=""
+    echo "" # Add a newline for better formatting
   fi
 
   value=${value:-$default}
@@ -110,7 +110,7 @@ prompt_user() {
 
   # If in non-interactive mode, show what was selected
   if [ ! -t 0 ]; then
-      echo "Using default: $value"
+    echo "Using default: $value"
   fi
 }
 
@@ -130,19 +130,19 @@ mkdir -p "$BACKUP_DIR"
 # Repository setup
 mkdir -p "$DOTFILES"
 if [ -d "$DOTFILES/.git" ]; then
-    echo "Updating existing dotfiles repository..."
-    cd "$DOTFILES"
-    git pull --rebase=true
+  echo "Updating existing dotfiles repository..."
+  cd "$DOTFILES"
+  git pull --rebase=true
 else
-    echo "Cloning dotfiles repository..."
-    # If we're in the repo already, move to a temp dir to prevent conflicts
-    if [ -f "$DOTFILES/install.sh" ] && [ ! -d "$DOTFILES/.git" ]; then
-        TMP_DIR=$(mktemp -d)
-        mv "$DOTFILES"/* "$TMP_DIR/" 2>/dev/null || true
-        mv "$DOTFILES"/.[!.]* "$TMP_DIR/" 2>/dev/null || true
-    fi
-    git clone https://github.com/sandcastle/dotfiles.git "$DOTFILES"
-    rm -rf "$TMP_DIR"
+  echo "Cloning dotfiles repository..."
+  # If we're in the repo already, move to a temp dir to prevent conflicts
+  if [ -f "$DOTFILES/install.sh" ] && [ ! -d "$DOTFILES/.git" ]; then
+    TMP_DIR=$(mktemp -d)
+    mv "$DOTFILES"/* "$TMP_DIR/" 2>/dev/null || true
+    mv "$DOTFILES"/.[!.]* "$TMP_DIR/" 2>/dev/null || true
+  fi
+  git clone https://github.com/sandcastle/dotfiles.git "$DOTFILES"
+  rm -rf "$TMP_DIR"
 fi
 
 # Symlink files
