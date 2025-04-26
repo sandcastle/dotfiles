@@ -547,6 +547,7 @@ install_package() {
   local brew_name="" snap_name="" apt_name="" dnf_name="" pacman_name="" check="$default_package"
   local debug=${DEBUG:-false}
   local skip_check=false
+  local try_snap=false
 
   # Parse flag arguments
   while [[ $# -gt 0 ]]; do
@@ -579,6 +580,10 @@ install_package() {
       skip_check=$2
       shift 2
       ;;
+    -try-snap)
+      try_snap=$2
+      shift 2
+      ;;
     *)
       log_error "Unknown flag: $1"
       return 1
@@ -604,8 +609,6 @@ install_package() {
     [ "$debug" = true ] && echo "Overriding package name: $pacman_name"
   fi
 
-  [ "$debug" = true ] && echo "Trying package managers to install $package_name $check"
-
   # Homebrew
   if command -v brew >/dev/null 2>&1; then
     [ "$debug" = true ] && echo "Installing $package_name with brew"
@@ -617,9 +620,8 @@ install_package() {
     [ "$debug" = true ] && echo "Couldnt find $check after installing $package_name with brew"
   fi
 
-  [ "$debug" = true ] && echo "Installing $package_name with snap"
   # Snap
-  if command -v snap >/dev/null 2>&1; then
+  if [ "$try_snap" = true ] && command -v snap >/dev/null 2>&1; then
     [ "$debug" = true ] && echo "Installing $package_name with snap"
     run_command "Installing $package_name" sudo snap install "$package_name"
     if [ "$skip_check" = false ] && command -v "$check" >/dev/null 2>&1; then
