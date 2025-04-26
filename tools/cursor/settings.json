@@ -37,9 +37,18 @@
   "terminal.integrated.shell.osx": "zsh",
   "terminal.integrated.scrollback": 10000,
   "typescript.updateImportsOnFileMove.enabled": "always",
+  "terminal.integrated.allowedLinkSchemes": [
+    "file",
+    "http",
+    "https",
+    "mailto",
+    "vscode",
+    "vscode-insiders",
+    "docker-desktop"
+  ],
   "terminal.integrated.defaultProfile.osx": "zsh",
-  "terminal.integrated.shellIntegration.enabled": true,
   "terminal.integrated.inheritEnv": true,
+  "terminal.integrated.shellIntegration.enabled": true,
   "terminal.integrated.profiles.osx": {
     "bash": {
       "path": "bash",
@@ -83,6 +92,9 @@
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
   },
   "workbench.colorTheme": "Default Dark Modern",
   "workbench.editor.enablePreview": false,
