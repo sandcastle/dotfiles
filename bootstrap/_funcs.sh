@@ -661,7 +661,6 @@ install_package() {
   fi
 
   log_error "No supported package manager found or installation failed for ${package_name}"
-  return 1
 }
 
 # Usage: setup_vscode
