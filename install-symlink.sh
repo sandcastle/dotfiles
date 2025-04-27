@@ -149,7 +149,9 @@ symlink_directory "$DOTFILES/home" "$HOME" "false"
 
 # Only symlink etc/hosts on macOS
 if [[ "$(uname)" == "Darwin" ]]; then
+  sudo cp /etc/hosts "$BACKUP_DIR/hosts"
   symlink_directory "$DOTFILES/etc" "/etc" "true"
+  sudo chmod 644 /etc/hosts
 fi
 
 log_finished "All files symlinked"
