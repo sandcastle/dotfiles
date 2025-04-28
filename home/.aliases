@@ -375,9 +375,9 @@ alias kubeproxy='kube proxy &'
 # ------------------------------ OSX -------------------------------
 
 # Mac OS X Everywhere
-if [ "$(uname)" = "Darwin" ]; then
+if [[ "$(uname)" = "Darwin" ]]; then
   alias o='open'
-elif [ "$(uname)" = "CYGWIN"* ]; then
+elif [[ "$(uname)" =~ ^CYGWIN ]]; then
   alias o='cygstart'
   alias pbcopy='tee > /dev/clipboard'
   alias pbpaste='cat /dev/clipboard'
