@@ -21,7 +21,7 @@ function _show_usage() {
 # Show usage if no arguments provided or --help is used
 if [[ $# -eq 0 ]] || [[ "$1" == "--help" ]]; then
   _show_usage
-  return 1
+  exit 1
 fi
 
 # Function to clean current profile files
@@ -40,11 +40,11 @@ case "$1" in
   if [[ $# -ne 2 ]]; then
     echo "Error: Profile name required for import"
     echo "Usage: tfswitch import <profile_name>"
-    return 1
+    exit 1
   fi
 
-  local profile_name="$2"
-  local profile_dir="$TF_PROFILES_DIR/$profile_name"
+  profile_name="$2"
+  profile_dir="$TF_PROFILES_DIR/$profile_name"
 
   # Create profile directory
   mkdir -p "$profile_dir"
@@ -63,17 +63,17 @@ case "$1" in
   ;;
 
 "list")
-  local profiles=("$TF_PROFILES_DIR"/*(N))
-  if [[ ${#profiles} -eq 0 ]]; then
-    echo "  No profiles found."
-    echo "  Use 'tfswitch import <profile_name>' to create one."
-  else
+  # List profiles in a way that works in both bash and zsh
+  if [ -d "$TF_PROFILES_DIR" ] && [ "$(ls -A "$TF_PROFILES_DIR" 2>/dev/null)" ]; then
     echo "Available profiles:"
     for profile in "$TF_PROFILES_DIR"/*; do
       if [[ -d "$profile" ]]; then
         echo "  - $(basename "$profile")"
       fi
     done
+  else
+    echo "  No profiles found."
+    echo "  Use 'tfswitch import <profile_name>' to create one."
   fi
   ;;
 
@@ -83,14 +83,14 @@ case "$1" in
   ;;
 
 *)
-  local profile_name="$1"
-  local profile_dir="$TF_PROFILES_DIR/$profile_name"
+  profile_name="$1"
+  profile_dir="$TF_PROFILES_DIR/$profile_name"
 
   # Check if profile exists
   if [[ ! -d "$profile_dir" ]]; then
     echo "Error: Profile '$profile_name' does not exist"
     echo "Once you have logged in via 'terraform login', use 'tfswitch import $profile_name' to create the profile"
-    return 1
+    exit 1
   fi
 
   # Clean current profile first
