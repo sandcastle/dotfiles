@@ -30,5 +30,5 @@ install_package "watch"              # Execute commands periodically and show ou
 install_package "htop"               # Interactive process viewer
 install_package "ncdu"               # Disk usage analyzer with ncurses interface
 
-# MSIE - https://mise.jdx.dev/
-run_command "Installing MSIE" $(curl -s https://mise.run | MISE_QUIET=1 MISE_INSTALL_HELP=0 sh -s >/dev/null 2>&1)
+# MISE - https://mise.jdx.dev/
+run_command "Installing MISE" $(curl -s https://mise.run | MISE_QUIET=1 MISE_INSTALL_HELP=0 sh -s >/dev/null 2>&1)

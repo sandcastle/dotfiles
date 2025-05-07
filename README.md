@@ -38,7 +38,7 @@ dotfiles-update
 
 ### Development Environments
 
-- MSIE
+- MISE
 - Node
 - Python
 - Ruby

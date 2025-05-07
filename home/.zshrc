@@ -177,6 +177,7 @@ if command -v zoxide >/dev/null 2>&1; then
 fi
 
 # Language environments
+export PATH="$HOME/.mise/bin:$PATH"
 if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate zsh)"
 fi
