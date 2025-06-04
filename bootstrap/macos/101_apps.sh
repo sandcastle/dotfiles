@@ -38,7 +38,7 @@ install_brew "kubernetes-helm"
 install_brew "kubectx"
 install_brew "google-cloud-sdk"
 install_brew "awscli"
-install_brew "terraform"
+install_brew "tfenv"
 install_brew "terraformer"
 install_brew "terragrunt"
 
