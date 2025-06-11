@@ -186,11 +186,6 @@ if command -v fd >/dev/null 2>&1; then
   alias find='fd'
 fi
 
-if command -v rg >/dev/null 2>&1; then
-  # ripgrep: Fast line-oriented search tool (grep replacement)
-  alias grep='rg'
-fi
-
 if command -v procs >/dev/null 2>&1; then
   # procs: Modern replacement for ps with additional features
   alias ps='procs'
