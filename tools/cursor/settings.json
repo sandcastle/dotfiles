@@ -105,6 +105,5 @@
   "workbench.preferredLightColorTheme": "Default Light Modern",
   "window.autoDetectColorScheme": true,
   "window.systemColorTheme": "auto",
-  "window.zoomLevel": 0,
-  "update.releaseTrack": "prerelease"
+  "window.zoomLevel": 0
 }
