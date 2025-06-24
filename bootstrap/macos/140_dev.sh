@@ -31,3 +31,6 @@ open 'https://github.com/account/ssh'
 log_info "Installing programming languages"
 install_brew "java"
 install_brew "powershell"
+
+# AI Command Line Tools
+npm install -g @anthropic-ai/claude-code
