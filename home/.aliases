@@ -191,11 +191,6 @@ if command -v procs >/dev/null 2>&1; then
   alias ps='procs'
 fi
 
-if command -v sd >/dev/null 2>&1; then
-  # sd: Intuitive find & replace CLI (sed alternative)
-  alias sed='sd'
-fi
-
 if command -v gping >/dev/null 2>&1; then
   # gping: Ping with a graphical display
   alias ping='gping'
@@ -278,7 +273,6 @@ alias sb='sh script/build'   # build the application
 alias ss='sh script/start'   # run the application
 alias sf='sh script/format'  # format the code
 alias sp='sh script/package' # package the application
-alias sd='sh script/deploy'  # deploy the application
 alias s!='aliases | grep script/'
 
 # yarn shortcuts

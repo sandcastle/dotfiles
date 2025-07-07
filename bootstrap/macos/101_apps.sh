@@ -61,7 +61,6 @@ install_brew "ngrok"
 
 # modern tools
 log_h4 "Installing modern tools"
-install_brew "sd"       # Intuitive find & replace CLI (sed alternative)
 install_brew "yq"       # YAML processor (like jq but for YAML)
 install_brew "gping"    # Ping with a graphical display
 install_brew "dust"     # More intuitive version of du with colored output

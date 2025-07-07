@@ -1,11 +1,4 @@
-# Load the shell dotfiles, and then some:
-# * ~/.path can be used to extend `$PATH`.
-# * ~/.extra can be used for other settings you don’t want to commit.
-# The _local files are for settings that are specific to the local machine only - not stored in dotfiles.
-for file in ~/.{exports,aliases,functions,exports_local,aliases_local,functions_local}; do
-  [ -r "$file" ] && [ -f "$file" ] && source "$file"
-done
-unset file
+
 
 # Docker.
 # ---------
@@ -70,3 +63,12 @@ if [[ -d "$TMPDIR" ]]; then
     mkdir -p "$TMPPREFIX"
   fi
 fi
+
+# Load the shell dotfiles, and then some:
+# * ~/.path can be used to extend `$PATH`.
+# * ~/.extra can be used for other settings you don’t want to commit.
+# The _local files are for settings that are specific to the local machine only - not stored in dotfiles.
+for file in ~/.{exports,aliases,functions,exports_local,aliases_local,functions_local}; do
+  [ -r "$file" ] && [ -f "$file" ] && source "$file"
+done
+unset file
