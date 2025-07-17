@@ -804,3 +804,62 @@ set_computer_name() {
     fi
   fi
 }
+
+# Usage: run_command2 [--show-output] "Task description" -- command [args...]
+# Runs a command with gum spinner and displays styled success/failure message
+# --show-output flag controls whether to show command output during execution
+# Uses -- to separate function flags from the command being executed (like gum spin)
+# First parameter (after flags) is the task description shown in the spinner
+# Everything after -- is the command and its arguments
+# Output example: Shows spinner during execution, then styled success/failure message
+# Example usage:
+#   run_command2 "Installing package" -- brew install package-name
+#   run_command2 --show-output "Building project" -- make build
+#   run_command2 "Installing zellij" -- sh ./app-zellij.sh
+run_command2() {
+  local show_output=false
+
+  # Parse flags
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --show-output)
+        show_output=true
+        shift
+        ;;
+      --)
+        shift
+        break  # Stop parsing flags, everything after -- is the command
+        ;;
+      *)
+        break  # Stop parsing flags when we hit a non-flag argument
+        ;;
+    esac
+  done
+
+  local message="$1"
+  shift 1
+
+  # Check for -- separator
+  if [[ "$1" == "--" ]]; then
+    shift 1
+  fi
+
+  local cmd="$@"
+  local gum_flags="--spinner dot --title $message..."
+
+  # Add --show-output flag if requested
+  if [ "$show_output" = true ]; then
+    gum_flags="$gum_flags --show-output"
+  fi
+
+  # Run command with gum spinner
+  if gum spin $gum_flags -- $cmd; then
+    # Success: show green checkmark and message
+    echo "$(gum style --foreground 2 "✓") $(gum style --foreground 7 "$message")"
+    return 0
+  else
+    # Failure: show red X and message
+    echo "$(gum style --foreground 1 "✗") $(gum style --foreground 7 "$message")"
+    return 1
+  fi
+}

@@ -15,3 +15,6 @@ if ! command -v brew >/dev/null; then
   fi
   log_success "Homebrew installed successfully"
 fi
+
+# Install gum (CLI prompt)
+brew install gum

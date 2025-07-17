@@ -1,0 +1,13 @@
+# https://alacritty.org/config-alacritty.html
+
+[window]
+padding.x = 30
+padding.y = 30
+
+[general]
+import = [
+  "~/.config/alacritty/theme.toml",
+  "~/.config/alacritty/font-size.toml",
+  "~/.config/alacritty/fonts/JetBrainsMono.toml",
+  "~/.config/alacritty/shared.toml",
+]

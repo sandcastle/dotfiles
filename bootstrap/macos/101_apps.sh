@@ -2,6 +2,14 @@
 
 log_h1 "Installing macOS apps"
 
+# terminal
+gum spin --spinner dot --title "Zellij - installing..." -- sh ./app-zellij.sh
+echo "$(gum style --foreground 2 "✓") $(gum style --foreground 7 "Zellij")"
+
+log_h4 "Installing fonts"
+install_brew "font-jetbrains-mono-nerd-font"
+install_brew "font-jetbrains-mono"
+
 # general
 log_h4 "Installing general utilities"
 install_brew "iterm2" "iTerm"
