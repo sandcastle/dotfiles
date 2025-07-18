@@ -91,12 +91,3 @@ export GPG_TTY=$(tty)
 # CLI mapping for py version
 export CLOUDSDK_PYTHON=python3
 export CLOUDSDK_PYTHON_SITEPACKAGES=1
-
-GCLOUD_SDK_ROOT=$(gcloud info --format='value(installation.sdk_root)')
-if [ -f "$GCLOUD_SDK_ROOT/path.zsh.inc" ]; then
-  source "$GCLOUD_SDK_ROOT/path.zsh.inc"
-fi
-
-if [ -f "$GCLOUD_SDK_ROOT/completion.zsh.inc" ]; then
-  source "$GCLOUD_SDK_ROOT/completion.zsh.inc"
-fi
