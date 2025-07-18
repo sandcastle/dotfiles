@@ -159,6 +159,8 @@ zi wait lucid for \
   has"ruby" \
     atload". $DOTFILES/lang/ruby/env.sh" \
     OMZP::ruby \
+  has"gcloud" \
+    OMZP::gcloud \
   has"z" \
     OMZP::z \
   has'pip' \
