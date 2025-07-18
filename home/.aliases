@@ -15,8 +15,9 @@ alias week='date +%V'
 # Remove all items safely, to Trash (`brew install trash`).
 alias rm='trash'
 
-# Shortcut for nvim
+# Shortcut for common tools
 alias n='nvim'
+alias a='alacritty'
 
 # Reload the shell (i.e. invoke as a login shell)
 alias reload="exec ${SHELL} -l"
