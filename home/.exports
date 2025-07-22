@@ -2,14 +2,16 @@
 
 # ---------------------------- DOTFILES ----------------------------
 
-# Set dotfiles directory
-if [[ -n "${BASH_SOURCE[0]}" ]]; then
-  export DOTFILES="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/.." && pwd)"
-elif [[ -n "$0" ]]; then
-  export DOTFILES="$(cd "$(dirname "$0")/.." && pwd)"
-else
-  echo "Error: Cannot determine dotfiles location" >&2
-  exit 1
+# Set dotfiles directory (only if not already set by .zshenv)
+if [[ -z "$DOTFILES" ]]; then
+  if [[ -n "${BASH_SOURCE[0]}" ]]; then
+    export DOTFILES="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/.." && pwd)"
+  elif [[ -n "$0" ]]; then
+    export DOTFILES="$(cd "$(dirname "$0")/.." && pwd)"
+  else
+    echo "Error: Cannot determine dotfiles location" >&2
+    exit 1
+  fi
 fi
 
 # ---------------------------- SHELL ----------------------------

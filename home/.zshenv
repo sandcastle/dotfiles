@@ -44,6 +44,7 @@ unset path_file
 path=(
   $HOME/bin
   $HOME/.local/bin
+  /opt/homebrew/{bin,sbin}
   /usr/local/{bin,sbin}
   /usr/local/opt/go/libexec/bin
   /usr/{bin,sbin}
@@ -68,6 +69,26 @@ fi
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
 # The _local files are for settings that are specific to the local machine only - not stored in dotfiles.
+# Get the actual dotfiles directory path, handling both direct and symlinked cases
+# Use the real path of ~/.zshenv to find dotfiles directory
+if [[ -L "$HOME/.zshenv" ]]; then
+  # Follow the symlink to get the real dotfiles location
+  real_zshenv="$(readlink "$HOME/.zshenv")"
+  export DOTFILES="$(dirname "$(dirname "$real_zshenv")")"
+else
+  # Fallback: assume standard location
+  export DOTFILES="$HOME/.dotfiles"
+fi
+
+# Add mise to PATH
+export PATH="$HOME/.mise/bin:$PATH"
+
+# Performance optimization settings
+HIST_STAMPS="yyyy-mm-dd"
+
+# History configuration
+HISTFILE="$HOME/.zsh_history"
+
 for file in ~/.{exports,aliases,functions,exports_local,aliases_local,functions_local}; do
   [ -r "$file" ] && [ -f "$file" ] && source "$file"
 done

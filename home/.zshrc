@@ -4,8 +4,6 @@
 # Performance profiling (uncomment to debug slow startup)
 # zmodload zsh/zprof
 
-# Get the actual dotfiles directory path, handling both direct and symlinked cases
-export DOTFILES="$(dirname "$(dirname "$(readlink -f "${(%):-%x}")")")"
 
 # ZSH Options
 setopt AUTO_CD              # cd by typing directory name
@@ -37,11 +35,6 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$HOME/.zcompcache"
 
-# Performance optimization settings
-HIST_STAMPS="yyyy-mm-dd"
-
-# History configuration
-HISTFILE="$HOME/.zsh_history"
 
 # Autosuggestions configuration
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
@@ -179,7 +172,6 @@ if command -v zoxide >/dev/null 2>&1; then
 fi
 
 # Language environments
-export PATH="$HOME/.mise/bin:$PATH"
 if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate zsh)"
 fi

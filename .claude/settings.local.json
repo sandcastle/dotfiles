@@ -1,7 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mise *)"
+      "Bash(mise *)",
+      "Bash(find:*)",
+      "Bash(zellij:*)",
+      "Bash(echo $SHELL)",
+      "Bash(zsh:*)",
+      "Bash(ls:*)",
+      "Bash(readlink:*)",
+      "Bash(dirname:*)"
     ],
     "deny": []
   }
