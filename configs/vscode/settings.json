@@ -18,7 +18,7 @@
   },
   "git.autofetch": true,
   "git.confirmSync": false,
-  "git.enableSmartCommit": true,,
+  "git.enableSmartCommit": true,
   "github.copilot.chat.agent.thinkingTool": true,
   "github.copilot.chat.codesearch.enabled": true,
   "github.copilot.chat.editor.temporalContext.enabled": true,
@@ -40,6 +40,11 @@
   "terminal.integrated.shell.osx": "/bin/zsh",
   "terminal.integrated.shellIntegration.enabled": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
+  "workbench.colorTheme": "Tokyo Night",
+  "workbench.editor.enablePreview": false,
+  "workbench.editorAssociations": {
+    "*.mdc": "default"
+  },
   "window.zoomLevel": 0,
   "terminal.integrated.profiles.osx": {
     "zsh (via bash)": {

@@ -5,6 +5,7 @@
   "cursor.composer.shouldAllowCustomModes": true,
   "cursor.composer.shouldChimeAfterChatFinishes": true,
   "cursor.terminal.usePreviewBox": true,
+  "cursor.windowSwitcher.sidebarHoverCollapsed": true,
   "diffEditor.ignoreTrimWhitespace": true,
   "editor.fontSize": 13,
   "editor.fontLigatures": true,
@@ -27,8 +28,6 @@
   "git.autofetch": true,
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
-  "github.copilot.chat.generateTests.codeLens": true,
-  "github.copilot.chat.search.semanticTextResults": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
   "redhat.telemetry.enabled": false,
   "security.workspace.trust.untrustedFiles": "open",
@@ -36,7 +35,8 @@
   "task.slowProviderWarning": true,
   "terminal.integrated.shell.osx": "zsh",
   "terminal.integrated.scrollback": 10000,
-  "typescript.updateImportsOnFileMove.enabled": "always",
+  "terminal.integrated.inheritEnv": true,
+  "terminal.integrated.shellIntegration.enabled": true,
   "terminal.integrated.allowedLinkSchemes": [
     "file",
     "http",
@@ -47,8 +47,6 @@
     "docker-desktop"
   ],
   "terminal.integrated.defaultProfile.osx": "zsh",
-  "terminal.integrated.inheritEnv": true,
-  "terminal.integrated.shellIntegration.enabled": true,
   "terminal.integrated.profiles.osx": {
     "bash": {
       "path": "bash",
@@ -72,6 +70,13 @@
       "icon": "terminal-powershell"
     }
   },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "workbench.colorTheme": "Tokyo Night",
+  "workbench.editor.enablePreview": false,
+  "workbench.editorAssociations": {
+    "*.mdc": "default"
+  },
+  "window.zoomLevel": 0,
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -95,16 +100,5 @@
   },
   "[dockerfile]": {
     "editor.defaultFormatter": "ms-azuretools.vscode-docker"
-  },
-  "workbench.colorTheme": "Default Dark Modern",
-  "workbench.editor.enablePreview": false,
-  "workbench.editorAssociations": {
-    "*.mdc": "default"
-  },
-  "workbench.preferredDarkColorTheme": "Default Dark Modern",
-  "workbench.preferredLightColorTheme": "Default Light Modern",
-  "window.autoDetectColorScheme": true,
-  "window.systemColorTheme": "auto",
-  "window.zoomLevel": 0,
-  "cursor.windowSwitcher.sidebarHoverCollapsed": true
+  }
 }
