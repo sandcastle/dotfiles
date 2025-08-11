@@ -48,7 +48,6 @@ install_brew "google-cloud-sdk"
 install_brew "awscli"
 install_brew "tfenv"
 install_brew "terraformer"
-install_brew "terragrunt"
 
 log_h4 "Updating gcloud components"
 run_command "Updating gcloud components" gcloud components update --quiet
