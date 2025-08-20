@@ -1,14 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mise *)",
+      "Bash(dirname:*)",
+      "Bash(echo:*)",
       "Bash(find:*)",
-      "Bash(zellij:*)",
-      "Bash(echo $SHELL)",
-      "Bash(zsh:*)",
+      "Bash(git config:*)",
       "Bash(ls:*)",
+      "Bash(mise:*)",
       "Bash(readlink:*)",
-      "Bash(dirname:*)"
+      "Bash(zellij:*)"
     ],
     "deny": []
   }
