@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "Installing GenAI MCP Toolbox..."
+# GenAI MCP Toolbox
 # https://cloud.google.com/bigquery/docs/pre-built-tools-with-mcp-toolbox#mcp-configure-your-mcp-client-cursor
 
 mkdir -p ~/.local/bin

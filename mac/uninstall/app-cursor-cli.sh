@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-# Installl command:
-# curl https://cursor.com/install -fsS
-#
+# Cursor CLI
+# https://www.cursor.com/
+
+# Remove git clone and bin file
 rm ~/.local/bin/cursor-agent
 rm ~/.local/share/cursor-agent
