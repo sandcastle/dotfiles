@@ -49,7 +49,7 @@
   editor = code
   excludesfile = ~/.gitignore
   ignorecase = false
-  pager = delta | moar
+  pager = delta | moor
 
 [delta]
   navigate = true

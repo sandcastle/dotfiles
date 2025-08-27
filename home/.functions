@@ -21,7 +21,7 @@ b() {
 
 # Open a file in the default pager
 page() {
-  ${PAGER:-moar} "$@"
+  ${PAGER:-moor} "$@"
 }
 
 # Copy file(s) from remote ssh path to desktop

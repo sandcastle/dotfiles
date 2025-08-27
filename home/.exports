@@ -66,11 +66,11 @@ export HOMEBREW_NO_ENV_HINTS=true
 
 # ---------------------------- PAGING ----------------------------
 
-if command -v moar >/dev/null 2>&1; then
-  export PAGER='moar'
-  export MOAR_PAGER='less'  # Use less as the pager for moar's own help pages
-  export MOAR_STYLE='plain' # Set a clean, readable style with syntax highlighting
-  export MOAR_KEYBINDINGS='q:quit,h:help,j:down,k:up,g:top,G:bottom,f:forward,b:backward,/:search,n:next,N:prev'
+if command -v moor >/dev/null 2>&1; then
+  export PAGER='moor'
+  export MOOR_PAGER='less'  # Use less as the pager for moor's own help pages
+  export MOOR_STYLE='plain' # Set a clean, readable style with syntax highlighting
+  export MOOR_KEYBINDINGS='q:quit,h:help,j:down,k:up,g:top,G:bottom,f:forward,b:backward,/:search,n:next,N:prev'
 fi
 
 # Don’t clear the screen after quitting a manual page.
