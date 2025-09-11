@@ -30,7 +30,7 @@ else
 fi
 
 # Build the status line
-status_line="$model_name in $git_info$node_info"
+status_line="$model_name in $dir_name$git_info$node_info"
 
 # Only show output style if not default
 if [[ "$output_style" != "default" ]]; then
@@ -47,4 +47,3 @@ status_line="$status_line • US \$$(printf "%.2f" "$cost")"
 
 # Output the status line and current folder on next line
 echo "$status_line"
-echo "$dir_name"
