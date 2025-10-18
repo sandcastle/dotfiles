@@ -18,7 +18,6 @@ install_brew "htop-osx"
 install_brew "httpie"
 install_brew "cardhop"
 install_brew "fantastical"
-install_brew "bartender"
 
 # ai
 install_brew "claude"
