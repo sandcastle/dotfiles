@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
+# Cert-Manager CLI(cmctl)
+# https://cert-manager.io/docs/reference/cmctl/
 echo "Installing Cert-Manager CLI(cmctl)..."
 
-# https://cert-manager.io/docs/reference/cmctl/
 mkdir -p ~/.local/bin
 
 temp_file=$(mktemp)
