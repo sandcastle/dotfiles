@@ -264,6 +264,13 @@ command -v md5sum >/dev/null || alias md5sum="md5"
 # macOS has no `sha1sum`, so use `shasum` as a fallback
 command -v sha1sum >/dev/null || alias sha1sum="shasum"
 
+# Terraform shortcuts
+alias tf='terraform'
+alias tfi='terraform init'
+alias tfv='terraform validate'
+alias tfp='terraform plan'
+alias tfs='terraform show'
+
 # Common project scripts - used on all project irrespective of lang
 alias sc='sh script/clean'   # clean the application
 alias si='sh script/install' # install packages/dependencies
