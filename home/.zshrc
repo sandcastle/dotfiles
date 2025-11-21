@@ -23,7 +23,10 @@ setopt HIST_SAVE_NO_DUPS  # Do not write a duplicate event to the history file
 # Skip compinit on every shell load
 skip_global_compinit=1
 
-  # macOS specific path helper
+# Prefer Homebrew over system paths, i.e. for bash 5 on mac
+export PATH="/opt/homebrew/bin:$PATH"
+
+# macOS specific path helper
 if [[ "$OSTYPE" == "darwin"* ]]; then
   eval $(/usr/libexec/path_helper -s)
 fi
@@ -160,9 +163,6 @@ zi wait lucid for \
     OMZP::pip \
   has"python" \
     OMZP::python
-
-# Prefer Homebrew over system paths, i.e. for bash 5 on mac
-export PATH="/opt/homebrew/bin:$PATH"
 
 # Modern prompt
 if command -v starship >/dev/null 2>&1; then

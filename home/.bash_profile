@@ -1,3 +1,6 @@
+# Prefer Homebrew over system paths, i.e. for bash 5 on mac
+export PATH="/opt/homebrew/bin:$PATH"
+
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 
@@ -32,9 +35,6 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
-# Prefer Homebrew over system paths, i.e. for bash 5 on mac
-export PATH="/opt/homebrew/bin:$PATH"
 
 # Modern prompt
 if command -v starship >/dev/null 2>&1; then
