@@ -161,6 +161,9 @@ zi wait lucid for \
   has"python" \
     OMZP::python
 
+# Prefer Homebrew over system paths, i.e. for bash 5 on mac
+export PATH="/opt/homebrew/bin:$PATH"
+
 # Modern prompt
 if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
