@@ -33,6 +33,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Prefer Homebrew over system paths, i.e. for bash 5 on mac
+export PATH="/opt/homebrew/bin:$PATH"
+
 # Modern prompt
 if command -v starship >/dev/null 2>&1; then
   eval "$(starship init bash)"
