@@ -182,11 +182,6 @@ if command -v bat >/dev/null 2>&1; then
   alias cat='bat_wrapper'
 fi
 
-if command -v fd >/dev/null 2>&1; then
-  # fd: Faster and friendlier alternative to the find command
-  alias find='fd'
-fi
-
 if command -v procs >/dev/null 2>&1; then
   # procs: Modern replacement for ps with additional features
   alias ps='procs'
