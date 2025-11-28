@@ -3,7 +3,7 @@
 # Claude Code
 # https://github.com/anthropic-ai/claude-code
 # https://code.claude.com/docs/en/overview
-brew install --cask claude-code
+curl -fsSL https://claude.ai/install.sh | bash
 
 # Create config directory
 if [ ! -d "~/.claude" ]; then
