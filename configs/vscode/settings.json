@@ -34,10 +34,10 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
   "redhat.telemetry.enabled": false,
   "security.workspace.trust.untrustedFiles": "open",
-  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.defaultProfile.osx": "bash",
+  "terminal.integrated.shell.osx": "bash",
   "terminal.integrated.inheritEnv": true,
   "terminal.integrated.scrollback": 10000,
-  "terminal.integrated.shell.osx": "/bin/zsh",
   "terminal.integrated.shellIntegration.enabled": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "workbench.colorTheme": "Tokyo Night",
@@ -47,10 +47,6 @@
   },
   "window.zoomLevel": 0,
   "terminal.integrated.profiles.osx": {
-    "zsh (via bash)": {
-      "path": "/bin/bash",
-      "args": ["-c", "zsh"]
-    },
     "bash": {
       "path": "bash",
       "args": ["-l"],
