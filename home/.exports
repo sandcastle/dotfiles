@@ -24,7 +24,7 @@ export LC_ALL='en_US.UTF-8'
 
 if [[ "$(uname)" == "Darwin" ]]; then
   export EDITOR='cursor'
-  export KUBE_EDITOR='cursor'
+  export KUBE_EDITOR='nvim'
   export VISUAL='cursor'
 else
   export EDITOR='nvim'
@@ -98,3 +98,5 @@ export CLOUDSDK_PYTHON_SITEPACKAGES=1
 
 # Added by Antigravity
 export PATH="/Users/glenn/.antigravity/antigravity/bin:$PATH"
+
+export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
