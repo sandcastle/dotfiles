@@ -408,7 +408,7 @@ alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say
 
 # ------------------------------ AI -------------------------------
 
-alias claude-update="npm install -g @anthropic-ai/claude-code"
+alias gemini="npx -y @google/gemini-cli"
 
 # ------------------------------ MCP -------------------------------
 
