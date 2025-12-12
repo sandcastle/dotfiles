@@ -29,6 +29,3 @@ install_package "httpie" -check http # User-friendly HTTP client
 install_package "watch"              # Execute commands periodically and show output
 install_package "htop"               # Interactive process viewer
 install_package "ncdu"               # Disk usage analyzer with ncurses interface
-
-# MISE - https://mise.jdx.dev/
-run_command "Installing MISE" $(curl -s https://mise.run | MISE_QUIET=1 MISE_INSTALL_HELP=0 sh -s >/dev/null 2>&1)
