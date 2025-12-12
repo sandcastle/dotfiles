@@ -63,7 +63,6 @@ run_command "Installing wrangler" npm install -g wrangler
 log_h4 "Installing Docker tools"
 install_brew "docker"
 install_brew "docker-compose"
-install_brew "ngrok"
 
 # modern tools
 log_h4 "Installing modern tools"
