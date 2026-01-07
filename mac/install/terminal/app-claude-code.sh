@@ -11,4 +11,4 @@ if [ ! -d "~/.claude" ]; then
 fi
 
 # Copy config files
-cp -f $DOTFILES/configs/claude-code/ ~/.claude/
+cp -rf $DOTFILES/configs/claude-code/* ~/.claude/
