@@ -1,0 +1,48 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(command:*)",
+      "Bash(curl:*)",
+      "Bash(dig:*)",
+      "Bash(dotnet:*)",
+      "Bash(echo:*)",
+      "Bash(fd:*)",
+      "Bash(find:*)",
+      "Bash(gh auth status:*)",
+      "Bash(gh issue:*)",
+      "Bash(gh label:*)",
+      "Bash(gh pr:*)",
+      "Bash(gh run:*)",
+      "Bash(grep:*)",
+      "Bash(nslookup:*)",
+      "Bash(rg:*)",
+      "Bash(sed:*)",
+      "Bash(timeout:*)",
+      "Bash(yarn:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebSearch"
+    ],
+    "deny": [
+      "Bash(gh issue delete:*)",
+      "Bash(gh issue transfer:*)",
+      "Bash(gh pr merge:*)",
+      "Bash(gh run delete:*)",
+      "Bash(git push -u origin staging:*)",
+      "Bash(git push -u origin main:*)"
+    ],
+    "ask": [
+      "Bash(chmod:*)",
+      "Bash(git commit:*)",
+      "Bash(gcloud compute ssh:*)",
+      "Bash(gcloud auth application-default print-access-token:*)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
+  "alwaysThinkingEnabled": true
+}
