@@ -11,3 +11,8 @@ import = [
   "~/.config/alacritty/fonts/JetBrainsMono.toml",
   "~/.config/alacritty/shared.toml",
 ]
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001b\r"
