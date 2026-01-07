@@ -324,7 +324,7 @@ alias dot!='aliases | grep dotnet'
 alias lines='git ls-files | xargs cloc'
 
 # Pretty print json
-alias json='python3 -m json.tool'
+alias json='python -m json.tool'
 
 # Docker aliases
 alias dock='docker'
@@ -333,7 +333,7 @@ alias dockps='docker ps'
 alias docki='docker images'
 
 # Python
-alias python='python3'
+alias python='python'
 alias pip='pip3'
 
 # --------------------------- NETWORK ------------------------------
