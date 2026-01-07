@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# ---------------------------- HOMEBREW ----------------------------
+
+export HOMEBREW_REPOSITORY="/opt/homebrew"
+export HOMEBREW_PREFIX="/opt/homebrew"
+export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+export BREW_PATH="$HOMEBREW_REPOSITORY" # shorthand
+
 # ---------------------------- DOTFILES ----------------------------
 
 # Set dotfiles directory (only if not already set by .zshenv)
@@ -94,9 +101,19 @@ export GPG_TTY=$(tty)
 export CLOUDSDK_PYTHON=python3
 export CLOUDSDK_PYTHON_SITEPACKAGES=1
 
-# ---------------------------- IDEs----------------------------
+# ---------------------------- PATHS----------------------------
 
-# Added by Antigravity
-export PATH="/Users/glenn/.antigravity/antigravity/bin:$PATH"
+mkdir -p "$HOME/.local/paths"
 
-export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+paths=(
+  "$HOMEBREW_REPOSITORY/bin" # Prefer Homebrew over system paths, i.e. for bash 5 on mac
+  "$HOME/.local/bin" # ~/.local/bin
+  "$HOME/bin" # ~/bin
+  "$HOMEBREW_REPOSITORY/opt/postgresql@17/bin" # PostgreSQL (pgdump, psql, etc.)
+  "$HOMEBREW_REPOSITORY/share/google-cloud-sdk/bin" # Google Cloud SDK (gcloud, cloud-sql-proxy, etc.)
+  "$HOME/.antigravity/antigravity/bin" # Antigravity
+)
+
+# Join paths with colon separator
+joined_paths=$(IFS=:; echo "${paths[*]}")
+export PATH="${joined_paths}:$PATH"

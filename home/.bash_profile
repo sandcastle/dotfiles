@@ -1,9 +1,3 @@
-# Prefer Homebrew over system paths, i.e. for bash 5 on mac
-export PATH="/opt/homebrew/bin:$PATH"
-
-# Add `~/bin` to the `$PATH`
-export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.

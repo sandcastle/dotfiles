@@ -369,6 +369,7 @@ alias kubeproxy='kube proxy &'
 # Mac OS X Everywhere
 if [[ "$(uname)" = "Darwin" ]]; then
   alias o='open'
+  alias brew-up='brew update && brew upgrade && brew cleanup'
 elif [[ "$(uname)" =~ ^CYGWIN ]]; then
   alias o='cygstart'
   alias pbcopy='tee > /dev/clipboard'
