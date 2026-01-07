@@ -97,22 +97,48 @@ export GPG_TTY=$(tty)
 [ -f $HOME/.config/gcloud/application_default_credentials.json ] &&
   export GOOGLE_APPLICATION_CREDENTIALS=$HOME/.config/gcloud/application_default_credentials.json
 
-# CLI mapping for py version
-export CLOUDSDK_PYTHON=python3
 export CLOUDSDK_PYTHON_SITEPACKAGES=1
 
-# ---------------------------- PATHS----------------------------
+# CLI mapping for py version - use Python 3.13
+# Check for python3.13 command (from Homebrew), fall back to mise, then python3
+if command -v python3.13 >/dev/null 2>&1; then
+  export CLOUDSDK_PYTHON=python3.13
+else
+  # Find the latest Python 3.13.x installation in mise directory
+  MISE_INSTALLS_DIR="$HOME/.local/share/mise/installs/python"
+  if [[ -d "$MISE_INSTALLS_DIR" ]]; then
+    PYTHON_313_PATH=$(find "$MISE_INSTALLS_DIR" -maxdepth 1 -type d -name "3.13.*" 2>/dev/null | sort -V | tail -n1)
+    if [[ -n "$PYTHON_313_PATH" && -f "$PYTHON_313_PATH/bin/python" ]]; then
+      export CLOUDSDK_PYTHON="$PYTHON_313_PATH/bin/python"
+    else
+      export CLOUDSDK_PYTHON=python3
+    fi
+  else
+    export CLOUDSDK_PYTHON=python3
+  fi
+fi
 
-mkdir -p "$HOME/.local/paths"
+# ---------------------------- PATHS----------------------------
+# macOS specific path helper
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  eval "$(/usr/libexec/path_helper -s)"
+fi
 
 paths=(
-  "$HOMEBREW_REPOSITORY/bin" # Prefer Homebrew over system paths, i.e. for bash 5 on mac
   "$HOME/.local/bin" # ~/.local/bin
   "$HOME/bin" # ~/bin
-  "$HOMEBREW_REPOSITORY/opt/postgresql@17/bin" # PostgreSQL (pgdump, psql, etc.)
-  "$HOMEBREW_REPOSITORY/share/google-cloud-sdk/bin" # Google Cloud SDK (gcloud, cloud-sql-proxy, etc.)
   "$HOME/.antigravity/antigravity/bin" # Antigravity
 )
+
+# Add macOS-specific paths
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  paths=(
+    "$HOMEBREW_REPOSITORY/bin" # Prefer Homebrew over system paths, i.e. for bash 5 on mac
+    "${paths[@]}"
+    "$HOMEBREW_REPOSITORY/opt/postgresql@17/bin" # PostgreSQL (pgdump, psql, etc.)
+    "$HOMEBREW_REPOSITORY/share/google-cloud-sdk/bin" # Google Cloud SDK (gcloud, cloud-sql-proxy, etc.)
+  )
+fi
 
 # Join paths with colon separator
 joined_paths=$(IFS=:; echo "${paths[*]}")
