@@ -1,6 +1,6 @@
 [user]
-	name = Glenn Morton
-	email = glenn.morton@komo.tech
+  name = Glenn Morton
+  email = glenn.morton@komo.tech
 
 [github]
   user = sandcastle
@@ -23,18 +23,15 @@
   discardall  = reset --hard
   undo        = reset HEAD~1 --mixed
 
-  mr          = "!sh -c 'git push -u origin -o merge_request.create -o merge_request.target=${1:-develop} -o merge_request.merge_when_pipeline_succeeds -o merge_request.should_remove_source_branch' -"
-
+  # Branch shortcuts
   feat        = "!sh -c 'git branch \"feature/$1\"; git checkout \"feature/$1\"' -"
+  fix         = "!sh -c 'git branch \"fix/$1\"; git checkout \"fix/$1\"' -"
+  hotfix      = "!sh -c 'git branch \"hotfix/$1\"; git checkout \"hotfix/$1\"' -"
+
   first       = commit -au -m 'Initial commit.'
 
   graph       = log --graph
   last        = log -n 10
-  url         = !git remote -v|sed "'s|.*git[:@]\\(.*\\).git.*|http://\\1|;s|m:|m/|'"|uniq|xargs open
-  whois       = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
-
-  rmtag       = "!sh -c 'git tag -d $1; git push origin :refs/tags/$1'"
-  pr          = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1; } ; f"
 
 [pull]
   rebase = true
@@ -46,7 +43,7 @@
   ui = auto
 
 [core]
-  editor = code
+  editor = cursor
   excludesfile = ~/.gitignore
   ignorecase = false
   pager = delta | moor
@@ -97,7 +94,7 @@
   pushInsteadOf = "gh:"
   pushInsteadOf = "git://github.com/"
 
-# gist:3928760
+# gist:1234567
 [url "git@gist.github.com:"]
   insteadOf = "gist:"
   pushInsteadOf = "gist:"
