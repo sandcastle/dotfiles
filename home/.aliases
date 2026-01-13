@@ -410,6 +410,10 @@ alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say
 # ------------------------------ AI -------------------------------
 
 alias gemini="npx -y @google/gemini-cli"
+alias g="gemini"
+
+alias oc="opencode"
+alias c="claude"
 
 # ------------------------------ MCP -------------------------------
 
