@@ -6,3 +6,4 @@ source $DOTFILES_PATH/mac/install/init/app-gum.sh
 source $DOTFILES_PATH/mac/install/init/app-curl.sh
 source $DOTFILES_PATH/mac/install/init/app-git.sh
 source $DOTFILES_PATH/mac/install/init/app-bash.sh
+source $DOTFILES_PATH/mac/install/init/app-mise.sh
