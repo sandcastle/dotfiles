@@ -160,14 +160,17 @@ zi wait lucid for \
   has"python" \
     OMZP::python
 
-# Modern prompt
-if command -v starship >/dev/null 2>&1; then
-  eval "$(starship init zsh)"
-fi
+# Interactive-only settings
+if [[ "$TERM" != "dumb" ]]; then
+  # Modern prompt
+  if command -v starship >/dev/null 2>&1; then
+    eval "$(starship init zsh)"
+  fi
 
-# Smarter cd command
-if command -v zoxide >/dev/null 2>&1; then
-  eval "$(zoxide init zsh)"
+  # Smarter cd command
+  if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init zsh)"
+  fi
 fi
 
 # Language environments
