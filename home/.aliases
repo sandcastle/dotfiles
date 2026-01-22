@@ -31,7 +31,6 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ~="cd ~"
-alias -- -="cd -"
 
 # Simple clear command
 alias cl='clear'
