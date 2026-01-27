@@ -4,4 +4,4 @@
 # https://www.cursor.com/
 
 # Install Cursor CLI
-brew install cursor-cli
+curl https://cursor.com/install -fsS | bash
