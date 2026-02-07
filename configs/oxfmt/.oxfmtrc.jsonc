@@ -1,0 +1,53 @@
+{
+  // Oxfmt configuration
+  // Docs: https://oxc.rs/docs/guide/usage/formatter/configuration
+  // Copy to project root: cp ~/.dotfiles/configs/oxfmt/.oxfmtrc.jsonc ./.oxfmtrc.jsonc
+
+  // Layout
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false,
+
+  // Syntax
+  "semi": true,
+  "singleQuote": false,
+  "jsxSingleQuote": false,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "bracketSameLine": false,
+  "arrowParens": "always",
+  "quoteProps": "as-needed",
+  "singleAttributePerLine": false,
+
+  // Prose
+  "proseWrap": "preserve",
+
+  // HTML
+  "htmlWhitespaceSensitivity": "css",
+  "vueIndentScriptAndStyle": false,
+
+  // File handling
+  "endOfLine": "lf",
+  "insertFinalNewline": true,
+  "embeddedLanguageFormatting": "auto",
+
+  // Oxfmt extensions
+  "objectWrap": "preserve",
+
+  // Per-file overrides
+  "overrides": [
+    {
+      "files": ["*.md", "*.mdx"],
+      "options": {
+        "proseWrap": "always"
+      }
+    },
+    {
+      // Any yaml file - use double quotes
+      "files": ["**/*.{yml,yaml}"],
+      "options": {
+        "singleQuote": false
+      }
+    }
+  ]
+}

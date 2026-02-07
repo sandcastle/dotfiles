@@ -10,22 +10,24 @@ vim.api.nvim_set_hl(0, "Folded", { bg = "none" })
 vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
 vim.api.nvim_set_hl(0, "WhichKeyFloat", { bg = "none" })
-vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = "none" })
-vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
-vim.api.nvim_set_hl(0, "TelescopePromptBorder", { bg = "none" })
-vim.api.nvim_set_hl(0, "TelescopePromptTitle", { bg = "none" })
 
--- transparent background for neotree
+-- transparent background for snacks (picker, explorer, notifications)
+vim.api.nvim_set_hl(0, "SnacksNormal", { bg = "none" })
+vim.api.nvim_set_hl(0, "SnacksNormalNC", { bg = "none" })
+vim.api.nvim_set_hl(0, "SnacksPicker", { bg = "none" })
+vim.api.nvim_set_hl(0, "SnacksPickerBorder", { bg = "none" })
+vim.api.nvim_set_hl(0, "SnacksPickerInput", { bg = "none" })
+vim.api.nvim_set_hl(0, "SnacksPickerInputBorder", { bg = "none" })
+vim.api.nvim_set_hl(0, "SnacksPickerPreview", { bg = "none" })
+vim.api.nvim_set_hl(0, "SnacksPickerList", { bg = "none" })
+vim.api.nvim_set_hl(0, "SnacksExplorerNormal", { bg = "none" })
+
+-- transparent background for neotree (LazyVim fallback)
 vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "none" })
 vim.api.nvim_set_hl(0, "NeoTreeVertSplit", { bg = "none" })
 vim.api.nvim_set_hl(0, "NeoTreeWinSeparator", { bg = "none" })
 vim.api.nvim_set_hl(0, "NeoTreeEndOfBuffer", { bg = "none" })
-
--- transparent background for nvim-tree
-vim.api.nvim_set_hl(0, "NvimTreeNormal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NvimTreeVertSplit", { bg = "none" })
-vim.api.nvim_set_hl(0, "NvimTreeEndOfBuffer", { bg = "none" })
 
 -- transparent notify background
 vim.api.nvim_set_hl(0, "NotifyINFOBody", { bg = "none" })

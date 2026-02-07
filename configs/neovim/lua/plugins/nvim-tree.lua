@@ -1,24 +1,14 @@
+-- Use snacks.explorer instead of nvim-tree (built into snacks.nvim, zero extra deps)
+-- Toggle with <leader>e (LazyVim default)
 return {
-  "nvim-tree/nvim-tree.lua",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
-  config = function()
-    require("nvim-tree").setup({
-      filters = {
-        dotfiles = false,      -- ✅ show dotfiles
-        git_ignored = false,   -- ✅ also show .gitignored files
-      },
-      view = {
-        width = 30,
-        side = "left"
-      },
-      renderer = {
-        group_empty = true,
-      },
-      actions = {
-        open_file = {
-          quit_on_open = false,
-        },
-      },
-    })
-  end,
+  -- Disable nvim-tree (replaced by snacks.explorer)
+  { "nvim-tree/nvim-tree.lua", enabled = false },
+
+  -- Enable snacks explorer
+  {
+    "folke/snacks.nvim",
+    opts = {
+      explorer = {},
+    },
+  },
 }
