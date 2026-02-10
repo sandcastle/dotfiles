@@ -29,6 +29,8 @@
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
+  "mise.terminal.enableEnvironment": true,
+  "mise.updateOpenTerminalsEnvAutomatically": true,
   "redhat.telemetry.enabled": false,
   "security.workspace.trust.untrustedFiles": "open",
   "task.problemMatchers.neverPrompt": false,

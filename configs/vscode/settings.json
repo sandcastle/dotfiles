@@ -87,6 +87,8 @@
   "gitlens.ai.gitkraken.model": "gemini:gemini-2.0-flash",
   "gitlens.ai.model": "gitkraken",
   "javascript.updateImportsOnFileMove.enabled": "always",
+  "mise.terminal.enableEnvironment": true,
+  "mise.updateOpenTerminalsEnvAutomatically": true,
   "redhat.telemetry.enabled": false,
   "security.workspace.trust.untrustedFiles": "open",
   "task.problemMatchers.neverPrompt": false,
