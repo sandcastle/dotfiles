@@ -4,7 +4,6 @@
 # Performance profiling (uncomment to debug slow startup)
 # zmodload zsh/zprof
 
-
 # ZSH Options
 setopt AUTO_CD              # cd by typing directory name
 setopt INTERACTIVE_COMMENTS # Allow comments in interactive mode
@@ -88,80 +87,98 @@ ZSH_HIGHLIGHT_STYLES[assign]=fg=blue,bold           # Variable assignments (VAR=
 # Local environment (if exists)
 [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
-# Install zi if not already installed
-if [[ ! -f $HOME/.zi/bin/zi.zsh ]]; then
-  print -P "%F{33}▓▒░ %F{160}Installing (%F{33}z-shell/zi%F{160})…%f"
-  command mkdir -p "$HOME/.zi" && command chmod go-rwX "$HOME/.zi"
-  command git clone -q --depth=1 --branch "main" https://github.com/z-shell/zi "$HOME/.zi/bin" && \
-    print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-    print -P "%F{160}▓▒░ The clone has failed.%f%b"
+# Language environments
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
 fi
 
-# Load zi
-. "$HOME/.zi/bin/zi.zsh"
-autoload -Uz _zi
-(( ${+_comps} )) && _comps[zi]=_zi
-
-# Load zi annexes and meta-plugins
-zi light-mode for \
-  z-shell/z-a-meta-plugins \
-  @annexes
-
-# Configure OMZP and OMZL shorthands
-zi light z-shell/z-a-patch-dl
-
-# Load core zsh plugins SYNCHRONOUSLY for stability
-zi ice pick"zcomp.zsh" atload"zicompinit_fast" blockf
-zi for \
-    zsh-users/zsh-completions \
-    zsh-users/zsh-autosuggestions \
-    zsh-users/zsh-history-substring-search \
-    zdharma-continuum/fast-syntax-highlighting
-
-# Load git plugin and setup aliases
-zi snippet OMZL::git.zsh
-zi snippet OMZP::git
-
-# Load cloud/container plugins
-# zi wait lucid as"completion" for \
-#   https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker \
-#   https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose
-
-# Tool-specific plugins with conditional loading
-zi wait lucid for \
-  has"aws" \
-    OMZP::aws \
-  has"brew" \
-    OMZP::brew \
-  has"kubectl" \
-    OMZP::kubectl \
-  has"terraform" \
-    OMZP::terraform \
-  has"dotnet" \
-    atload". $DOTFILES/lang/dotnet/env.sh" \
-    OMZP::dotnet \
-  has"go" \
-    atload". $DOTFILES/lang/go/env.sh" \
-    OMZP::golang \
-  has"node" \
-    atload". $DOTFILES/lang/node/env.sh" \
-    OMZP::node \
-  has"yarn" \
-    OMZP::yarn \
-  has"ruby" \
-    atload". $DOTFILES/lang/ruby/env.sh" \
-    OMZP::ruby \
-  has"gcloud" \
-    OMZP::gcloud \
-  has"z" \
-    OMZP::z \
-  has'pip' \
-    OMZP::pip \
-  has"python" \
-    OMZP::python
+# ========================================
+# 👇 Smart Terminals Only
+# ========================================
 
 # Interactive-only settings
 if [[ "$TERM" != "dumb" ]]; then
+
+  # ---------------------------------------
+  # Zi Setup
+  # ---------------------------------------
+
+  # Install zi if not already installed
+  if [[ ! -f $HOME/.zi/bin/zi.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{160}Installing (%F{33}z-shell/zi%F{160})…%f"
+    command mkdir -p "$HOME/.zi" && command chmod go-rwX "$HOME/.zi"
+    command git clone -q --depth=1 --branch "main" https://github.com/z-shell/zi "$HOME/.zi/bin" && \
+      print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+      print -P "%F{160}▓▒░ The clone has failed.%f%b"
+  fi
+
+  # Load zi
+  . "$HOME/.zi/bin/zi.zsh"
+  autoload -Uz _zi
+  (( ${+_comps} )) && _comps[zi]=_zi
+
+  # Load zi annexes and meta-plugins
+  zi light-mode for \
+    z-shell/z-a-meta-plugins \
+    @annexes
+
+  # Configure OMZP and OMZL shorthands
+  zi light z-shell/z-a-patch-dl
+
+  # Load core zsh plugins SYNCHRONOUSLY for stability
+  zi ice pick"zcomp.zsh" atload"zicompinit_fast" blockf
+  zi for \
+      zsh-users/zsh-completions \
+      zsh-users/zsh-autosuggestions \
+      zsh-users/zsh-history-substring-search \
+      zdharma-continuum/fast-syntax-highlighting
+
+  # Load git plugin and setup aliases
+  zi snippet OMZL::git.zsh
+  zi snippet OMZP::git
+
+  # Load cloud/container plugins
+  # zi wait lucid as"completion" for \
+  #   https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker \
+  #   https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose
+
+  # Tool-specific plugins with conditional loading
+  zi wait lucid for \
+    has"aws" \
+      OMZP::aws \
+    has"brew" \
+      OMZP::brew \
+    has"kubectl" \
+      OMZP::kubectl \
+    has"terraform" \
+      OMZP::terraform \
+    has"dotnet" \
+      atload". $DOTFILES/lang/dotnet/env.sh" \
+      OMZP::dotnet \
+    has"go" \
+      atload". $DOTFILES/lang/go/env.sh" \
+      OMZP::golang \
+    has"node" \
+      atload". $DOTFILES/lang/node/env.sh" \
+      OMZP::node \
+    has"yarn" \
+      OMZP::yarn \
+    has"ruby" \
+      atload". $DOTFILES/lang/ruby/env.sh" \
+      OMZP::ruby \
+    has"gcloud" \
+      OMZP::gcloud \
+    has"z" \
+      OMZP::z \
+    has'pip' \
+      OMZP::pip \
+    has"python" \
+      OMZP::python
+
+  # ---------------------------------------
+  # Modern Tools
+  # ---------------------------------------
+
   # Modern prompt
   if command -v starship >/dev/null 2>&1; then
     eval "$(starship init zsh)"
@@ -171,9 +188,4 @@ if [[ "$TERM" != "dumb" ]]; then
   if command -v zoxide >/dev/null 2>&1; then
     eval "$(zoxide init zsh)"
   fi
-fi
-
-# Language environments
-if command -v mise >/dev/null 2>&1; then
-  eval "$(mise activate zsh)"
 fi
