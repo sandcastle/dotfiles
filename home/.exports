@@ -48,6 +48,8 @@ export NODE_REPL_HISTORY_SIZE='32768'
 # Use sloppy mode by default, matching web browsers.
 export NODE_REPL_MODE='sloppy'
 
+export PNPM_HOME="$HOME/Library/pnpm"
+
 # ---------------------------- PYTHON ----------------------------
 
 # Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
@@ -127,7 +129,8 @@ fi
 paths=(
   "$HOME/.local/bin" # ~/.local/bin
   "$HOME/bin" # ~/bin
-  "$HOME/.antigravity/antigravity/bin" # Antigravity
+  "$HOME/Library/pnpm/bin" # PNPM
+  "$HOME/.grok/bin" # Grok
 )
 
 # Add macOS-specific paths
@@ -143,3 +146,8 @@ fi
 # Join paths with colon separator
 joined_paths=$(IFS=:; echo "${paths[*]}")
 export PATH="${joined_paths}:$PATH"
+
+# ---------------------------- COMPLETIONS ----------------------------
+
+# Grok
+[[ -r "$HOME/.grok/completions/bash/grok.bash" ]] && source "$HOME/.grok/completions/bash/grok.bash"

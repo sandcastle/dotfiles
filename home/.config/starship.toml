@@ -4,9 +4,6 @@
 # Inserts a blank line between shell prompts
 add_newline = true
 
-# Increase command timeout to prevent timeouts with Node.js version detection
-command_timeout = 600
-
 # Replace the '❯' symbol in the prompt with '➜'
 [character] # The name of the module we are configuring is 'character'
 success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
@@ -21,9 +18,15 @@ detect_files = ['*.tf', '*.tfvars']
 symbol = '🌱 '
 format = 'on [$symbol$branch(:$remote_branch)]($style) '
 
-[git_state]
-format = '([\[$all_status\] \[$ahead_behind$count\] ( $progress_current of $progress_total)]($style) )'
-cherry_pick = '[🍒 PICKING](bold red)'
+# [git_state]
+# format = '([\[$all_status\] \[$ahead_behind$count\] ( $progress_current of $progress_total)]($style) )'
+# cherry_pick = '[🍒 PICKING](bold red)'
+
+[docker_context]
+disabled = true
+
+[fortran]
+disabled = true
 
 [mise]
 disabled = true

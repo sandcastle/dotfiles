@@ -53,5 +53,3 @@ fi
 
 # Vite+ bin (https://viteplus.dev)
 . "$HOME/.vite-plus/env"
-
-[[ -r ~/.bashrc ]] && source ~/.bashrc
