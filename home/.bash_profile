@@ -50,3 +50,8 @@ fi
 if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate bash)"
 fi
+
+# Vite+ bin (https://viteplus.dev)
+. "$HOME/.vite-plus/env"
+
+[[ -r ~/.bashrc ]] && source ~/.bashrc

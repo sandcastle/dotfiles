@@ -14,10 +14,6 @@ success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set
 [nodejs]
 symbol = '📦 '
 
-[mise]
-format = '🐭 [$health]($style) '
-disabled = false
-
 [terraform]
 detect_files = ['*.tf', '*.tfvars']
 
@@ -29,9 +25,11 @@ format = 'on [$symbol$branch(:$remote_branch)]($style) '
 format = '([\[$all_status\] \[$ahead_behind$count\] ( $progress_current of $progress_total)]($style) )'
 cherry_pick = '[🍒 PICKING](bold red)'
 
+[mise]
+disabled = true
+
 [aws]
 disabled = true
 
 [gcloud]
 disabled = true
-# format = 'on [$symbol\($project\)]($style) '

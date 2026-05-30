@@ -1,5 +1,0 @@
-import = [ "~/.config/alacritty/pane.toml" ]
-
-[window]
-dimensions.columns = 121
-dimensions.lines = 40

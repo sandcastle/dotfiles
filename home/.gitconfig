@@ -128,3 +128,6 @@
 
 [tag]
   forceSignAnnotated = false
+  
+[init]
+	defaultBranch = main
