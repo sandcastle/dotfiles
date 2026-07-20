@@ -51,5 +51,10 @@ if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate bash)"
 fi
 
+# Try (https://try.dev)
+if command -v try >/dev/null 2>&1; then
+  eval "$(try init ~/src/tries)"
+fi
+
 # Vite+ bin (https://viteplus.dev)
 . "$HOME/.vite-plus/env"

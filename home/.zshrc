@@ -189,3 +189,8 @@ if [[ "$TERM" != "dumb" ]]; then
     eval "$(zoxide init zsh)"
   fi
 fi
+
+# Try (https://try.dev)
+if command -v try >/dev/null 2>&1; then
+  eval "$(try init ~/src/tries)"
+fi
