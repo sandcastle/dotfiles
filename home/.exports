@@ -147,6 +147,10 @@ fi
 joined_paths=$(IFS=:; echo "${paths[*]}")
 export PATH="${joined_paths}:$PATH"
 
+# ---------------------------- TRIES ----------------------------
+
+export TRY_PATH=~/Developer/tries
+
 # ---------------------------- COMPLETIONS ----------------------------
 
 # Grok
