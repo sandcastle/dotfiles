@@ -53,7 +53,7 @@ fi
 
 # Try (https://try.dev)
 if command -v try >/dev/null 2>&1; then
-  eval "$(try init ~/src/tries)"
+  eval "$(try init ~/Developer/tries)"
 fi
 
 # Vite+ bin (https://viteplus.dev)
