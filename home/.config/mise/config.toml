@@ -1,0 +1,13 @@
+[tools]
+# languages
+node = "latest"
+pnpm = "latest"
+
+# tools
+gh = "latest"
+
+# packages
+"npm:cf" = "latest"
+
+[settings]
+experimental = true
