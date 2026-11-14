@@ -2,3 +2,4 @@
 *.pyc
 
 **/.gitconfig-*
+**/.gitconfig.local
