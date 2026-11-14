@@ -130,7 +130,7 @@ paths=(
   "$HOME/.local/bin" # ~/.local/bin
   "$HOME/bin" # ~/bin
   "$HOME/Library/pnpm/bin" # PNPM
-  "$HOME/.grok/bin" # Grok
+  "$HOME/.docker/bin" # Docker
 )
 
 # Add macOS-specific paths
@@ -150,8 +150,3 @@ export PATH="${joined_paths}:$PATH"
 # ---------------------------- TRIES ----------------------------
 
 export TRY_PATH=~/Developer/tries
-
-# ---------------------------- COMPLETIONS ----------------------------
-
-# Grok
-[[ -r "$HOME/.grok/completions/bash/grok.bash" ]] && source "$HOME/.grok/completions/bash/grok.bash"
