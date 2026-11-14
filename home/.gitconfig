@@ -1,6 +1,6 @@
 [user]
   name = Glenn Morton
-  email = glenn.morton@komo.tech
+  email = 668657+sandcastle@users.noreply.github.com
 
 [github]
   user = sandcastle
@@ -128,6 +128,12 @@
 
 [tag]
   forceSignAnnotated = false
-  
+
 [init]
 	defaultBranch = main
+[credential "https://github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
